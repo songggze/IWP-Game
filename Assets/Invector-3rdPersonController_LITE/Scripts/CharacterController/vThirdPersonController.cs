@@ -115,14 +115,16 @@ namespace Invector.vCharacterController
         public virtual void Jump()
         {
             // trigger jump behaviour
-            jumpCounter = jumpTimer;
-            isJumping = true;
+            //jumpCounter = jumpTimer;
+            //isJumping = true;
 
             // trigger jump animations
-            if (input.sqrMagnitude < 0.1f)
-                animator.CrossFadeInFixedTime("Jump", 0.1f);
-            else
-                animator.CrossFadeInFixedTime("JumpMove", .2f);
+            //if (input.sqrMagnitude < 0.1f)
+            //    animator.CrossFadeInFixedTime("Jump", 0.1f);
+            //else
+            //    animator.CrossFadeInFixedTime("JumpMove", .2f);
+            
+            animator.CrossFadeInFixedTime("Roll", 5f);
         }
     }
 }
