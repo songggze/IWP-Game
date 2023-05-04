@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     int isWalkingHash;
     int isRunningHash;
+    int isAttackHash;
 
     PlayerInput input;
 
@@ -19,7 +20,6 @@ public class PlayerMovement : MonoBehaviour
     bool movementPressed;
     bool runPressed;
 
-    Rigidbody rb;
     CharacterController controller;
 
     // Called when script instance is called
@@ -29,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
 
         input.PlayerMovement.Move.performed += ctx => {
             currentMovement = ctx.ReadValue<Vector2>();
-            Debug.Log(currentMovement);
             movementPressed = currentMovement.x != 0 || currentMovement.y != 0;
         };
         input.PlayerMovement.Move.canceled += ctx => {
@@ -46,11 +45,11 @@ public class PlayerMovement : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
-        rb = GetComponent<Rigidbody>();
 
         // For input system
         isWalkingHash = Animator.StringToHash("isWalking");
         isRunningHash = Animator.StringToHash("isRunning");
+        isAttackHash = Animator.StringToHash("isAttack");
     }
 
     void Update()
@@ -62,6 +61,11 @@ public class PlayerMovement : MonoBehaviour
     {
         bool isWalking = animator.GetBool(isWalkingHash);
         bool isRunning = animator.GetBool(isRunningHash);
+        bool isAttack = animator.GetBool(isAttackHash);
+         
+        // disable movement when attacking
+        if (isAttack)
+            return;
 
         // bool for Walking
         if (movementPressed && !isWalking){
