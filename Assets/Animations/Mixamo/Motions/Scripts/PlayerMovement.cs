@@ -9,10 +9,13 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] float walkSpeed = 2.0f;
     [SerializeField] float runSpeed = 4.0f;
+    [SerializeField] float rollSpeed = 7.0f;
+    [SerializeField] float setRollTimer = 0.7f;
 
     int isWalkingHash;
     int isRunningHash;
     int isAttackHash;
+    int isDodgingHash;
 
     // Using Unity's input system
     PlayerInput input;
@@ -20,6 +23,10 @@ public class PlayerMovement : MonoBehaviour
     Vector2 currentMovement;
     bool movementPressed;
     bool runPressed;
+    bool rollPressed;
+
+    // Timer for translating character
+    float rollActiveTimer;
 
     CharacterController controller;
 
@@ -40,7 +47,9 @@ public class PlayerMovement : MonoBehaviour
         
         // 'Toggleable' inputs
         input.PlayerMovement.Run.performed += ctx => runPressed = ctx.ReadValueAsButton();
-        input.PlayerMovement.Run.canceled += ctx => runPressed = ctx.ReadValueAsButton();
+        input.PlayerMovement.Run.canceled -= ctx => runPressed = ctx.ReadValueAsButton();
+        input.PlayerMovement.Roll.performed += ctx => rollPressed = ctx.ReadValueAsButton();
+        input.PlayerMovement.Roll.canceled -= ctx => rollPressed = ctx.ReadValueAsButton();
     }
 
     // Start is called before the first frame update
@@ -49,10 +58,13 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
 
+        rollActiveTimer = 0;
+
         // For input system
         isWalkingHash = Animator.StringToHash("isWalking");
         isRunningHash = Animator.StringToHash("isRunning");
         isAttackHash = Animator.StringToHash("isAttack");
+        isDodgingHash = Animator.StringToHash("isDodging");
     }
 
     void Update()
@@ -65,14 +77,25 @@ public class PlayerMovement : MonoBehaviour
         bool isWalking = animator.GetBool(isWalkingHash);
         bool isRunning = animator.GetBool(isRunningHash);
         bool isAttack = animator.GetBool(isAttackHash);
+        bool isDodging = animator.GetBool(isDodgingHash);
+
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Standard Idle") && isDodging){
+            Debug.Log("Returning to idle state (From roll)");
+            animator.SetBool(isDodgingHash, false);
+        }
+        
+        // update position when rolling
+        if (rollActiveTimer > 0){
+            HandleRolling();
+            rollActiveTimer -= Time.deltaTime;
+        }
          
         // disable movement when attacking
-        if (isAttack)
-
+        if (isAttack || isDodging){
+            Debug.Log("Cancelling");
             // disable animations 
-            animator.SetBool(isWalkingHash, false);
-            animator.SetBool(isRunningHash, false);
             return;
+        }
 
         // bool for Walking
         if (movementPressed && !isWalking){
@@ -88,6 +111,14 @@ public class PlayerMovement : MonoBehaviour
         }
         if ((!movementPressed || !runPressed) && isRunning){
             animator.SetBool(isRunningHash, false);
+        }
+
+        // bool for rolling
+        if (rollPressed && !isDodging) {
+            animator.SetTrigger("isRolling");
+            animator.SetBool(isDodgingHash, true);
+            rollPressed = false;
+            rollActiveTimer = setRollTimer;
         }
         
         if (!movementPressed)
@@ -127,6 +158,11 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 direction = cameraForwardProduct + cameraRightProduct;
         return direction;
+    }
+
+    private void HandleRolling()
+    {
+        controller.Move(transform.forward * Time.deltaTime * rollSpeed);
     }
 
     private void HandleRotation(Vector3 direction)

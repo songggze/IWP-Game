@@ -8,6 +8,7 @@ public class PlayerAttack : MonoBehaviour
     Animator animator;
 
     int isAttackHash;
+    int isDodgingHash;
 
     PlayerInput input;
 
@@ -24,6 +25,7 @@ public class PlayerAttack : MonoBehaviour
         input = new PlayerInput();
 
         input.PlayerAttack.LeftAttack.performed += ctx => leftAttackPressed = ctx.ReadValueAsButton();
+        input.PlayerAttack.LeftAttack.canceled -= ctx => leftAttackPressed = ctx.ReadValueAsButton();
         //input.PlayerAttack.RightAttack.performed += ctx => leftAttackPressed = ctx.ReadValueAsButton();
     }
 
@@ -41,18 +43,15 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // FIX: sometimes this goes out of index
-        currentAnimationName = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
         HandleAttack();
     }
      
     void HandleAttack()
     {
         bool isAttack = animator.GetBool(isAttackHash);
-        // FIX: attacking animation sometimes allows movement
 
         // allows movement when entering idle state (what it defaults to from any attack state)
-        if (currentAnimationName == "Standard Idle" && isAttack){
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Standard Idle") && isAttack){
             Debug.Log("Returning to idle state");
             animator.SetBool(isAttackHash, false);
         }
