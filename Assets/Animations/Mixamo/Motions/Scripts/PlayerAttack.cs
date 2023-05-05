@@ -12,8 +12,9 @@ public class PlayerAttack : MonoBehaviour
     PlayerInput input;
 
     bool leftAttackPressed;
+    bool rightAttackPressed;
 
-    CharacterController controller;
+    //CharacterController controller;
      
     string currentAnimationName;
 
@@ -23,6 +24,7 @@ public class PlayerAttack : MonoBehaviour
         input = new PlayerInput();
 
         input.PlayerAttack.LeftAttack.performed += ctx => leftAttackPressed = ctx.ReadValueAsButton();
+        //input.PlayerAttack.RightAttack.performed += ctx => leftAttackPressed = ctx.ReadValueAsButton();
     }
 
     // Start is called before the first frame update
@@ -30,7 +32,7 @@ public class PlayerAttack : MonoBehaviour
     {
         
         animator = GetComponent<Animator>();
-        controller = GetComponent<CharacterController>();
+        //controller = GetComponent<CharacterController>();
 
         // For input system
         isAttackHash = Animator.StringToHash("isAttack");
@@ -39,6 +41,7 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // FIX: sometimes this goes out of index
         currentAnimationName = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
         HandleAttack();
     }
@@ -50,7 +53,7 @@ public class PlayerAttack : MonoBehaviour
 
         // allows movement when entering idle state (what it defaults to from any attack state)
         if (currentAnimationName == "Standard Idle" && isAttack){
-            Debug.Log("Attack ended.");
+            Debug.Log("Returning to idle state");
             animator.SetBool(isAttackHash, false);
         }
 
@@ -59,6 +62,12 @@ public class PlayerAttack : MonoBehaviour
             animator.SetBool(isAttackHash, true);
             leftAttackPressed = false;
         }
+
+        //if (rightAttackPressed && !isAttack) {
+            //animator.SetTrigger("rightAttack");
+            //animator.SetBool(isAttackHash, true);
+            //rightAttackPressed = false;
+        //}
     }
 
     void OnEnable()

@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     int isRunningHash;
     int isAttackHash;
 
+    // Using Unity's input system
     PlayerInput input;
 
     Vector2 currentMovement;
@@ -27,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     {
         input = new PlayerInput();
 
+        // Get vector2 value and bool on movement key press
         input.PlayerMovement.Move.performed += ctx => {
             currentMovement = ctx.ReadValue<Vector2>();
             movementPressed = currentMovement.x != 0 || currentMovement.y != 0;
@@ -36,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
             movementPressed = currentMovement.x != 0 || currentMovement.y != 0;
         };
         
+        // 'Toggleable' inputs
         input.PlayerMovement.Run.performed += ctx => runPressed = ctx.ReadValueAsButton();
         input.PlayerMovement.Run.canceled += ctx => runPressed = ctx.ReadValueAsButton();
     }
@@ -57,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         HandleMovement();
     }
 
-    void HandleMovement()
+    private void HandleMovement()
     {
         bool isWalking = animator.GetBool(isWalkingHash);
         bool isRunning = animator.GetBool(isRunningHash);
@@ -65,6 +68,10 @@ public class PlayerMovement : MonoBehaviour
          
         // disable movement when attacking
         if (isAttack)
+
+            // disable animations 
+            animator.SetBool(isWalkingHash, false);
+            animator.SetBool(isRunningHash, false);
             return;
 
         // bool for Walking
@@ -100,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
      
-    Vector3 Move()
+    private Vector3 Move()
     {
         // Getting direction input from keyboard
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -122,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
         return direction;
     }
 
-    void HandleRotation(Vector3 direction)
+    private void HandleRotation(Vector3 direction)
     {
         Quaternion currentRotation = transform.rotation;
 
@@ -136,12 +143,12 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         input.PlayerMovement.Enable();
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         input.PlayerMovement.Disable();
     }
