@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     {
         input = new PlayerInput();
 
+
         // Get vector2 value and bool on movement key press
         input.PlayerMovement.Move.performed += ctx => {
             currentMovement = ctx.ReadValue<Vector2>();
@@ -47,9 +48,9 @@ public class PlayerMovement : MonoBehaviour
         
         // 'Toggleable' inputs
         input.PlayerMovement.Run.performed += ctx => runPressed = ctx.ReadValueAsButton();
-        input.PlayerMovement.Run.canceled -= ctx => runPressed = ctx.ReadValueAsButton();
+        input.PlayerMovement.Run.canceled += ctx => runPressed = ctx.ReadValueAsButton();
         input.PlayerMovement.Roll.performed += ctx => rollPressed = ctx.ReadValueAsButton();
-        input.PlayerMovement.Roll.canceled -= ctx => rollPressed = ctx.ReadValueAsButton();
+        input.PlayerMovement.Roll.canceled += ctx => rollPressed = ctx.ReadValueAsButton();
     }
 
     // Start is called before the first frame update

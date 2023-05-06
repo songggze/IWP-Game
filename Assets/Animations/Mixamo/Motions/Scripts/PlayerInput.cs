@@ -47,7 +47,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Roll"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""69e1f1fd-a964-4e30-a410-17ede731d0f7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -141,7 +141,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""LeftAttack"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""f3fa208b-3724-4b7a-a6cb-d75cafe861ff"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",

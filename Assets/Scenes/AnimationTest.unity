@@ -368,6 +368,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 3
   runSpeed: 7
+  rollSpeed: 9
+  setRollTimer: 0.8
 --- !u!143 &1231619605
 CharacterController:
   m_ObjectHideFlags: 0
