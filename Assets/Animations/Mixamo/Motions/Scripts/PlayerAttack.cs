@@ -6,6 +6,7 @@ public class PlayerAttack : MonoBehaviour
     PlayerFrameData attackData;
     [SerializeField] GameObject swordHitbox;
 
+    // Inputs
     int isAttackHash;
     int isDodgingHash;
 
@@ -14,12 +15,12 @@ public class PlayerAttack : MonoBehaviour
     bool leftAttackPressed;
     bool rightAttackPressed;
 
+    // Timers
     float timerDelay;
     [SerializeField] float leftClickDelay = 0.3f;
     float leftClickTimer;
 
-    //CharacterController controller;
-     
+    // To switch according to current animation
     string currentAnimationName;
 
     // Called when script instance is called
@@ -75,7 +76,7 @@ public class PlayerAttack : MonoBehaviour
         }
 
         // Combo 1 
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Slash 1") && isAttack && leftAttackPressed){
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Slash 1") && NextAttackCondition(isAttack)){
             animator.SetTrigger("Slash 2");
             attackData.SetValues("Slash 2");
             leftAttackPressed = false;
@@ -83,7 +84,7 @@ public class PlayerAttack : MonoBehaviour
         }
 
         // Finisher
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Slash 2") && isAttack && leftAttackPressed){
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Slash 2") && NextAttackCondition(isAttack)){
             animator.SetTrigger("Slash 3");
             attackData.SetValues("Slash 3");
             leftAttackPressed = false;
@@ -118,6 +119,15 @@ public class PlayerAttack : MonoBehaviour
             //animator.SetBool(isAttackHash, true);
             //rightAttackPressed = false;
         //}
+    }
+    
+    // Conditions for next attack of the combo
+    bool NextAttackCondition(bool isAttack)
+    {
+        if (isAttack && leftAttackPressed && attackData.delayFrames <= 0){
+            return true;
+        }
+        return false;
     }
 
     void OnEnable()
