@@ -32,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
     {
         input = new PlayerInput();
 
-
         // Get vector2 value and bool on movement key press
         input.PlayerMovement.Move.performed += ctx => {
             currentMovement = ctx.ReadValue<Vector2>();

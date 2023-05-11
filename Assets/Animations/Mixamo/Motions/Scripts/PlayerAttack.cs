@@ -3,6 +3,8 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     Animator animator;
+    PlayerFrameData attackData;
+    [SerializeField] GameObject swordHitbox;
 
     int isAttackHash;
     int isDodgingHash;
@@ -35,6 +37,7 @@ public class PlayerAttack : MonoBehaviour
     {
         
         animator = GetComponent<Animator>();
+        attackData = swordHitbox.GetComponent<PlayerFrameData>();
         //controller = GetComponent<CharacterController>();
 
         // For input system
@@ -65,6 +68,7 @@ public class PlayerAttack : MonoBehaviour
         // Starting attack
         if (leftAttackPressed && !isAttack && leftClickTimer <= 0) {
             animator.SetTrigger("Slash 1");
+            attackData.SetValues("Slash 1");
             animator.SetBool(isAttackHash, true);
             leftAttackPressed = false;
             timerDelay = 0.3f;
@@ -73,6 +77,7 @@ public class PlayerAttack : MonoBehaviour
         // Combo 1 
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Slash 1") && isAttack && leftAttackPressed){
             animator.SetTrigger("Slash 2");
+            attackData.SetValues("Slash 2");
             leftAttackPressed = false;
             timerDelay = 0.15f;
         }
@@ -80,6 +85,7 @@ public class PlayerAttack : MonoBehaviour
         // Finisher
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Slash 2") && isAttack && leftAttackPressed){
             animator.SetTrigger("Slash 3");
+            attackData.SetValues("Slash 3");
             leftAttackPressed = false;
         }
         
