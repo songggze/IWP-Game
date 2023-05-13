@@ -2892,9 +2892,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbafeac0093b054db851201782b1f4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delayFrames: 0
   framesPerSecond: 60
   isActive: 0
   playAnimation: 0
+  isHit: 0
+  playerDamageText: {fileID: 4127074000765862998, guid: 8df65f9a5605fc24fa5173e034ae3a2a, type: 3}
 --- !u!54 &7425680349263084274
 Rigidbody:
   m_ObjectHideFlags: 0

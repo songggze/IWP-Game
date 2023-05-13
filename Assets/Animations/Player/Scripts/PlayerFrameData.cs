@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerFrameData : MonoBehaviour
 {
@@ -12,7 +13,6 @@ public class PlayerFrameData : MonoBehaviour
     private double currentFrame;
     private double startUpFrames;
     private double activeFrames;
-    private double recoveryFrames;
     private double totalFrames;
     public double delayFrames;
     [SerializeField] double framesPerSecond = 60;
@@ -22,10 +22,12 @@ public class PlayerFrameData : MonoBehaviour
 
     public bool isActive;
     public bool playAnimation;
+    public bool isHit;
 
     // Debugging
     GameObject hitText;
     GameObject hitBoxDisplay;
+    [SerializeField] GameObject playerDamageText;
 
     // Start is called before the first frame update
     void Start()
@@ -36,12 +38,11 @@ public class PlayerFrameData : MonoBehaviour
         startUpFrames = 0;
         activeFrames = 0;
 
-        // TODO: replace attackdelay with recoveryFrames
-        recoveryFrames = 0;
         delayFrames = 0;
         
         attackModifier = 0;
         isActive = false;
+        isHit = false;
 
         // Debugging
         hitText = GameObject.Find("Debug Hit Text");
@@ -73,10 +74,10 @@ public class PlayerFrameData : MonoBehaviour
     public void SetValues(string animationName)
     {
         switch(animationName){
+            // Left click attacks
             case "Slash 1":
                 startUpFrames = 18;
                 activeFrames = 18;
-                recoveryFrames = 0;
                 attackModifier = 0;
                 delayFrames = 25;
                 break;
@@ -84,7 +85,6 @@ public class PlayerFrameData : MonoBehaviour
             case "Slash 2":
                 startUpFrames = 22;
                 activeFrames = 30;
-                recoveryFrames = 0;
                 attackModifier = 0;
                 delayFrames = 38;
                 break;
@@ -92,7 +92,23 @@ public class PlayerFrameData : MonoBehaviour
             case "Slash 3":
                 startUpFrames = 60;
                 activeFrames = 60;
-                recoveryFrames = 0;
+                attackModifier = 0;
+                delayFrames = 0;
+                break;
+            
+            // Right click attacks
+
+            //TODO: Modify frame data
+            case "Right 1":
+                startUpFrames = 30;
+                activeFrames = 60;
+                attackModifier = 0;
+                delayFrames = 50;
+                break;
+
+            case "Right 2":
+                startUpFrames = 60;
+                activeFrames = 60;
                 attackModifier = 0;
                 delayFrames = 0;
                 break;
@@ -102,8 +118,9 @@ public class PlayerFrameData : MonoBehaviour
                 break;
          }
 
-        totalFrames = startUpFrames + activeFrames + recoveryFrames;
+        totalFrames = startUpFrames + activeFrames;
         currentFrame = 0;
+        isHit = false;
         isActive = true;
         playAnimation = true;
     }
@@ -111,22 +128,34 @@ public class PlayerFrameData : MonoBehaviour
     // Collsion checking
     void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "Enemy" && isActive){
+        if (other.gameObject.tag == "Enemy" && isActive && !isHit){
 
             // do damage
 
             // For debugging
             hitText.SetActive(true);
+
+            // Rendering damage text on canvas
+            GameObject damageText = Instantiate(playerDamageText);
+            damageText.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
+            damageText.transform.Rotate(0, 0, Random.Range(-10f, 0f));
+
+            // Setting text this way because there are two texts in 'damageTxt'
+            TextMeshProUGUI[] setText;
+            setText = damageText.GetComponentsInChildren<TextMeshProUGUI>();
+            setText[0].SetText("Hit!");
+            setText[1].SetText("Hit!");
+            isHit = true;
         }
     }
     
     void OnCollisionExit(Collision other)
     {
         
-        if (other.gameObject.tag == "Enemy"){
-
+        if (other.gameObject.tag == "Enemy" && isHit){
 
             hitText.SetActive(false);
+
         }
     }
     
@@ -136,6 +165,7 @@ public class PlayerFrameData : MonoBehaviour
         if (currentFrame > startUpFrames &&
             currentFrame < startUpFrames + activeFrames)
         {
+            
             Debug.Log("Hbox active");
             isActive = true;
 
