@@ -15,6 +15,7 @@ public class PlayerFrameData : MonoBehaviour
     private double activeFrames;
     private double totalFrames;
     public double delayFrames;
+    public double resetFrame;
     [SerializeField] double framesPerSecond = 60;
 
     // Handle damage data
@@ -23,6 +24,7 @@ public class PlayerFrameData : MonoBehaviour
     public bool isActive;
     public bool playAnimation;
     public bool isHit;
+    public bool isMultiHit;
 
     // Debugging
     GameObject hitText;
@@ -39,10 +41,12 @@ public class PlayerFrameData : MonoBehaviour
         activeFrames = 0;
 
         delayFrames = 0;
+        resetFrame = 0;
         
         attackModifier = 0;
         isActive = false;
         isHit = false;
+        isMultiHit = false;
 
         // Debugging
         hitText = GameObject.Find("Debug Hit Text");
@@ -60,6 +64,7 @@ public class PlayerFrameData : MonoBehaviour
             delayFrames -= Time.deltaTime * framesPerSecond;
 
             CheckActive();
+            HandleMultiHit();
         }
 
         if (currentFrame > totalFrames && playAnimation){
@@ -80,6 +85,7 @@ public class PlayerFrameData : MonoBehaviour
                 activeFrames = 18;
                 attackModifier = 0;
                 delayFrames = 25;
+                isMultiHit = false;
                 break;
 
             case "Slash 2":
@@ -87,30 +93,33 @@ public class PlayerFrameData : MonoBehaviour
                 activeFrames = 30;
                 attackModifier = 0;
                 delayFrames = 38;
+                isMultiHit = false;
                 break;
 
             case "Slash 3":
                 startUpFrames = 60;
-                activeFrames = 60;
+                activeFrames = 30;
                 attackModifier = 0;
                 delayFrames = 0;
+                isMultiHit = false;
                 break;
             
             // Right click attacks
-
-            //TODO: Modify frame data
             case "Right 1":
-                startUpFrames = 30;
+                startUpFrames = 25;
                 activeFrames = 60;
                 attackModifier = 0;
-                delayFrames = 50;
+                delayFrames = 64;
+                isMultiHit = true;
+                resetFrame = 55;
                 break;
 
             case "Right 2":
-                startUpFrames = 60;
-                activeFrames = 60;
+                startUpFrames = 30;
+                activeFrames = 38;
                 attackModifier = 0;
                 delayFrames = 0;
+                isMultiHit = false;
                 break;
 
             default:
@@ -121,12 +130,36 @@ public class PlayerFrameData : MonoBehaviour
         totalFrames = startUpFrames + activeFrames;
         currentFrame = 0;
         isHit = false;
-        isActive = true;
+        isActive = false;
         playAnimation = true;
     }
 
     // Collsion checking
     void OnCollisionEnter(Collision other)
+    {
+
+        if (other.gameObject.tag == "Enemy" && isActive && !isHit){
+
+            // do damage
+
+            // For debugging
+            hitText.SetActive(true);
+
+            // Rendering damage text on canvas
+            GameObject damageText = Instantiate(playerDamageText);
+            damageText.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
+            damageText.transform.Rotate(0, 0, Random.Range(-10f, 0f));
+
+            // Setting text this way because there are two texts in 'damageTxt'
+            TextMeshProUGUI[] setText;
+            setText = damageText.GetComponentsInChildren<TextMeshProUGUI>();
+            setText[0].SetText("Hit!");
+            setText[1].SetText("Hit!");
+            isHit = true;
+        }
+    }
+
+    void OnCollisionStay(Collision other)
     {
         if (other.gameObject.tag == "Enemy" && isActive && !isHit){
 
@@ -176,6 +209,15 @@ public class PlayerFrameData : MonoBehaviour
         {
             isActive = false;
             hitBoxDisplay.SetActive(false);
+        }
+    }
+
+    void HandleMultiHit()
+    {
+        if (isMultiHit && currentFrame > resetFrame)
+        {
+            isMultiHit = false;
+            isHit = false;
         }
     }
 }

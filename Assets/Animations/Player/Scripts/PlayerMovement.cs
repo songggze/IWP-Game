@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     float rollActiveTimer;
 
     CharacterController controller;
+    Vector3 gravity;
 
     // Called when script instance is called
     void Awake()
@@ -54,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
+
+        gravity = Vector3.zero;
 
         rollActiveTimer = 0;
 
@@ -85,6 +88,15 @@ public class PlayerMovement : MonoBehaviour
         if (rollActiveTimer > 0){
             HandleRolling();
             rollActiveTimer -= Time.deltaTime;
+        }
+
+        // gravity when player is not grounded
+        if (!controller.isGrounded){
+            gravity.y += -10 * Time.deltaTime;
+            controller.Move(gravity * Time.deltaTime);
+        }
+        else{
+            gravity.y = 0;
         }
          
         // disable movement when attacking
