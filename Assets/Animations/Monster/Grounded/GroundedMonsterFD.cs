@@ -6,12 +6,16 @@ public class GroundedMonsterFD : MonoBehaviour
     //  Frame data for Grounded Monster. 
     //
 
-    private double currentFrame;
+    public double currentFrame;
     private double startUpFrames;
     private double activeFrames;
     private double totalFrames;
     public double delayFrames;
     public double resetFrame;
+
+    // Frame indicator when to start/stop movement during animation
+    public double movementStart;
+    public double movementStop;
     [SerializeField] double framesPerSecond = 60;
 
     // Handle damage data
@@ -44,12 +48,6 @@ public class GroundedMonsterFD : MonoBehaviour
         isHit = false;
         isMultiHit = false;
 
-        // Debugging
-        hitText = GameObject.Find("Debug Hit Text");
-        hitText.SetActive(false);
-
-        hitBoxDisplay = GameObject.Find("Grounded Monster Hitbox Display");
-        hitBoxDisplay.SetActive(false);
     }
 
 
@@ -57,6 +55,15 @@ public class GroundedMonsterFD : MonoBehaviour
     void Update()
     {
         
+        if (playAnimation){
+            currentFrame += Time.deltaTime * framesPerSecond;
+        }
+
+        //if (currentFrame > totalFrames && playAnimation){
+
+            //Debug.Log("Attack ended");
+            //playAnimation = false;
+        //}
     }
 
     public void SetValues(string animationName)
@@ -67,6 +74,9 @@ public class GroundedMonsterFD : MonoBehaviour
                 activeFrames = 18;
                 attackModifier = 0;
                 delayFrames = 25;
+
+                movementStart = 50;
+                movementStop = 75; 
                 isMultiHit = false;
                 break;
 

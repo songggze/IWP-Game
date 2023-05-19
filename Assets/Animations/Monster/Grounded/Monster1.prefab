@@ -256,8 +256,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4626329989901209702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.24, y: 1.22, z: 3.13}
-  m_LocalScale: {x: 5, y: 3, z: 5}
+  m_LocalPosition: {x: -0.24, y: 1.22, z: 4.72}
+  m_LocalScale: {x: 4, y: 3, z: 9}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1182813068909783221}
@@ -2660,6 +2660,7 @@ GameObject:
   - component: {fileID: 6183788220191203348}
   - component: {fileID: 2214779898686880916}
   - component: {fileID: 6284408365996230399}
+  - component: {fileID: 3080798851401842472}
   m_Layer: 0
   m_Name: Monster1
   m_TagString: Untagged
@@ -2755,7 +2756,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   setStoppingDistance: 10
+  player: {fileID: 8568777682877886850, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
   startAttack: 0
+--- !u!114 &3080798851401842472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465672969339142518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1762b829a7ce167428829c1e7915d4d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentFrame: 0
+  delayFrames: 0
+  resetFrame: 0
+  movementStart: 0
+  movementStop: 0
+  framesPerSecond: 60
+  isActive: 0
+  playAnimation: 0
+  isHit: 0
+  isMultiHit: 0
 --- !u!1 &8465672969339143938
 GameObject:
   m_ObjectHideFlags: 0

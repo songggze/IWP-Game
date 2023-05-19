@@ -5,6 +5,7 @@ public class GroundedMonsterAI : MonoBehaviour
 {
     Animator animator;
     NavMeshAgent navMeshAgent;
+    GroundedMonsterFD frameData;
 
     [SerializeField] float setStoppingDistance = 10;
 
@@ -14,12 +15,7 @@ public class GroundedMonsterAI : MonoBehaviour
     float timerDelay;
     Vector3 velocity;
 
-
-
-    //TODO: raycast may not initate attacks?
-
-
-
+    [SerializeField] GameObject player;
 
     // Will only initiate attacks when player is in line of sight
     public bool startAttack;
@@ -29,6 +25,8 @@ public class GroundedMonsterAI : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        // TODO: change this to include hitbox gameobject later
+        frameData = GetComponent<GroundedMonsterFD>();
 
         isWalkingHash = Animator.StringToHash("isWalking");
         isAttackingHash = Animator.StringToHash("isAttack");
@@ -52,7 +50,7 @@ public class GroundedMonsterAI : MonoBehaviour
         }
 
         bool isWalking = animator.GetBool(isWalkingHash);
-        if (!isWalking && !isAttack && startAttack){
+        if (isWalking && !isAttack && startAttack){
             HandleAttacks();
         }
 
@@ -72,6 +70,11 @@ public class GroundedMonsterAI : MonoBehaviour
             // Reset triggers in case it gets buffered during animation
             animator.ResetTrigger("Horn Attack");
         }
+        
+        // Monster will rotate towards player when it is close enough before attacking
+        if (!startAttack && isWalking && !isAttack && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance){
+            FaceTarget();
+        }
 
         if (timerDelay > 0){
             timerDelay -= Time.deltaTime;
@@ -80,39 +83,45 @@ public class GroundedMonsterAI : MonoBehaviour
 
     void HandleAttacks()
     {
+        animator.SetBool(isWalkingHash, false);
+        // To prevent movement while attacking
         // Setting stoppingDistance to 999 as for some reason enabling/disabling the agent breaks the navmesh 
         navMeshAgent.stoppingDistance = 999;
 
         // Horn Attack
         animator.SetTrigger("Horn Attack");
+        frameData.SetValues("Horn Attack");
         animator.SetBool(isAttackingHash, true);
 
         // To prevent idle animation when transitioning to an attack animation
-        timerDelay = 0.3f;
+        timerDelay = 0.9f;
     }
 
     void HandleMovement()
     {
-        if (navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance){
-            animator.SetBool(isWalkingHash, true);
-        }
-        else{
-            animator.SetBool(isWalkingHash, false);
-        }
-
+        animator.SetBool(isWalkingHash, true);
     }
 
     void HandleAnimations()
     {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
+            frameData.currentFrame < frameData.movementStart ||
+            frameData.currentFrame > frameData.movementStop)
             return;
 
         switch (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name)
         {
             case "Horn Attack":
-                velocity += transform.forward * 10 * Time.deltaTime;
+                velocity += transform.forward * 50 * Time.deltaTime;
                 navMeshAgent.Move(velocity * Time.deltaTime);
                 break;
         }
+    }
+
+    private void FaceTarget()
+    {
+        Vector3 direction = (player.transform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 1.5f);
     }
 }
