@@ -3,6 +3,13 @@ using UnityEngine.AI;
 
 public class GroundedMonster : MonoBehaviour
 {
+    //enum State{
+        //Idle,
+        //Walking,
+        //Running,
+        //Attack,
+    //}
+
     GameObject player;
     Vector3 direction;
     [SerializeField] float walkSpeed = 2;

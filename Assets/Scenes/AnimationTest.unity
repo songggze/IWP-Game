@@ -1074,8 +1074,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2214779898686880916, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2214779898686880916, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: avoidancePriority
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2214779898686880916, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4886122359102581873, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: m_Enabled
@@ -1091,7 +1099,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6820757289915607591, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7058444464285498639, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: m_Enabled
@@ -1152,6 +1160,14 @@ PrefabInstance:
     - target: {fileID: 8465672969339142518, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: m_Name
       value: Monster1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465672969346494170, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 521b4832669b2fe45b465490ce7e29b2, type: 2}
+    - target: {fileID: 8465672969346494170, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8813488641025542798, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
