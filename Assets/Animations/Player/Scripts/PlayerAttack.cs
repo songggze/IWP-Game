@@ -43,6 +43,7 @@ public class PlayerAttack : MonoBehaviour
 
         // For input system
         isAttackHash = Animator.StringToHash("isAttack");
+        isDodgingHash = Animator.StringToHash("isDodging");
          
         // To prevent going to idle animation when starting an attack
         timerDelay = 0;
@@ -59,11 +60,15 @@ public class PlayerAttack : MonoBehaviour
      
     void HandleAttack()
     {
+        
+        bool isDodging = animator.GetBool(isDodgingHash);
+        if (isDodging){
+            return;
+        }
 
         //-------------------------------//
         //      Left-click attacks 
         //-------------------------------//
-
 
         if (leftAttackPressed)
             LeftAttack();

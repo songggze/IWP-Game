@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     // Timer for translating character
     float rollActiveTimer;
 
+    float timerDelay;
     CharacterController controller;
     Vector3 gravity;
 
@@ -47,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         input.PlayerMovement.Run.performed += ctx => runPressed = ctx.ReadValueAsButton();
         input.PlayerMovement.Run.canceled += ctx => runPressed = ctx.ReadValueAsButton();
         input.PlayerMovement.Roll.performed += ctx => rollPressed = ctx.ReadValueAsButton();
-        input.PlayerMovement.Roll.canceled += ctx => rollPressed = ctx.ReadValueAsButton();
+        input.PlayerMovement.Roll.canceled -= ctx => rollPressed = ctx.ReadValueAsButton();
     }
 
     // Start is called before the first frame update
@@ -55,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
+        timerDelay = 0;
 
         gravity = Vector3.zero;
 
@@ -70,6 +72,10 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         HandleMovement();
+
+        if (timerDelay > 0){
+            timerDelay -= Time.deltaTime;
+        }
     }
 
     private void HandleMovement()
@@ -79,9 +85,13 @@ public class PlayerMovement : MonoBehaviour
         bool isAttack = animator.GetBool(isAttackHash);
         bool isDodging = animator.GetBool(isDodgingHash);
 
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Standard Idle") && isDodging){
+        // when rolling animations ends
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Standard Idle") && isDodging && timerDelay <= 0){
             Debug.Log("Returning to idle state (From roll)");
             animator.SetBool(isDodgingHash, false);
+
+            // Reset triggers in case it gets buffered during animation
+            input.FindAction("Roll").Enable();
         }
         
         // update position when rolling
@@ -91,50 +101,32 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // gravity when player is not grounded
-        if (!controller.isGrounded){
-            gravity.y += -10 * Time.deltaTime;
-            controller.Move(gravity * Time.deltaTime);
-        }
-        else{
-            gravity.y = 0;
-        }
+        HandleGravity();
          
         // disable movement when attacking
         if (isAttack || isDodging){
-            Debug.Log("Cancelling");
-            // disable animations 
             return;
         }
 
-        // bool for Walking
-        if (movementPressed && !isWalking){
-            animator.SetBool(isWalkingHash, true);
-        }
-        if (!movementPressed && isWalking){
-            animator.SetBool(isWalkingHash, false);
-        }
-
-        // bool for Running
-        if ((movementPressed && runPressed) && !isRunning){
-            animator.SetBool(isRunningHash, true);
-        }
-        if ((!movementPressed || !runPressed) && isRunning){
-            animator.SetBool(isRunningHash, false);
-        }
+        // set booleans based on keyboard press
+        SetMovementBool(isWalking, isRunning);
 
         // bool for rolling
         if (rollPressed && !isDodging) {
-            animator.SetTrigger("isRolling");
+            animator.SetTrigger("Roll");
             animator.SetBool(isDodgingHash, true);
             rollPressed = false;
             rollActiveTimer = setRollTimer;
+
+            input.FindAction("Roll").Disable();
+            timerDelay = 0.4f;
         }
         
         if (!movementPressed)
             return;
         
         // Moves character based on camera space
-        Vector3 direction = Move();
+        Vector3 direction = GetDirection();
         // Rotates character based on camera space
         HandleRotation(direction);
 
@@ -147,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
      
-    private Vector3 Move()
+    private Vector3 GetDirection()
     {
         // Getting direction input from keyboard
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -169,6 +161,17 @@ public class PlayerMovement : MonoBehaviour
         return direction;
     }
 
+    void HandleGravity()
+    {
+        if (!controller.isGrounded){
+            gravity.y += -10 * Time.deltaTime;
+            controller.Move(gravity * Time.deltaTime);
+        }
+        else{
+            gravity.y = 0;
+        }
+    }
+
     private void HandleRolling()
     {
         controller.Move(transform.forward * Time.deltaTime * rollSpeed);
@@ -186,6 +189,25 @@ public class PlayerMovement : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(targetPosition);
         transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, 10 * Time.deltaTime);
 
+    }
+
+    private void SetMovementBool(bool isWalking, bool isRunning)
+    {
+        // bool for Walking
+        if (movementPressed && !isWalking){
+            animator.SetBool(isWalkingHash, true);
+        }
+        if (!movementPressed && isWalking){
+            animator.SetBool(isWalkingHash, false);
+        }
+
+        // bool for Running
+        if ((movementPressed && runPressed) && !isRunning){
+            animator.SetBool(isRunningHash, true);
+        }
+        if ((!movementPressed || !runPressed) && isRunning){
+            animator.SetBool(isRunningHash, false);
+        }
     }
 
     private void OnEnable()
