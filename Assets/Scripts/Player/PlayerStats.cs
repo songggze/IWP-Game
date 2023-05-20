@@ -7,17 +7,34 @@ public class PlayerStats : MonoBehaviour
 
     [SerializeField] float faintsLife = 100;
 
-    private float health;
-    private float stamina;
+    public float health;
+    public float stamina;
+    [SerializeField] float iFrames = 1;
+    public float iFrameTimer;
+
+    public bool isHit;
 
     void Start()
     {
         health = maxHealth;
         stamina = maxStamina;
+
+        iFrameTimer = 0;
     }
 
     void Update()
     {
         
+        if (iFrameTimer > 0){
+            iFrames -= Time.deltaTime;
+        }
+        else{
+            isHit = false;
+        }
+    }
+
+    public void SetIFrames()
+    {
+        iFrameTimer = iFrames;
     }
 }

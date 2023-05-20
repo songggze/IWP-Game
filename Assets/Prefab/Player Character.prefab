@@ -2930,6 +2930,8 @@ GameObject:
   - component: {fileID: 8803130131990803237}
   - component: {fileID: 8803130131990803240}
   - component: {fileID: 8803130131990803239}
+  - component: {fileID: 2477868582621071604}
+  - component: {fileID: 6216228866178139012}
   m_Layer: 0
   m_Name: Player Character
   m_TagString: Player
@@ -3040,6 +3042,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   swordHitbox: {fileID: 8548698847708033989}
   leftClickDelay: 0.3
+--- !u!114 &2477868582621071604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8568777682877886850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea50a748fb7c91f47b74b52d0435015d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+--- !u!114 &6216228866178139012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8568777682877886850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a1a85cb075ffc4699748556ff7f90d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  maxStamina: 100
+  faintsLife: 100
+  health: 0
+  stamina: 0
 --- !u!1 &8661585699590327957
 GameObject:
   m_ObjectHideFlags: 0

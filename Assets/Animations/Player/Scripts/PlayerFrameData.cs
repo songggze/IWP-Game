@@ -27,7 +27,6 @@ public class PlayerFrameData : MonoBehaviour
     public bool isMultiHit;
 
     // Debugging
-    GameObject hitText;
     GameObject hitBoxDisplay;
     [SerializeField] GameObject playerDamageText;
 
@@ -49,9 +48,6 @@ public class PlayerFrameData : MonoBehaviour
         isMultiHit = false;
 
         // Debugging
-        hitText = GameObject.Find("Debug Hit Text");
-        hitText.SetActive(false);
-
         hitBoxDisplay = GameObject.Find("Sword Hitbox Display");
         hitBoxDisplay.SetActive(false);
     }
@@ -143,7 +139,6 @@ public class PlayerFrameData : MonoBehaviour
             // do damage
 
             // For debugging
-            hitText.SetActive(true);
 
             // Rendering damage text on canvas
             GameObject damageText = Instantiate(playerDamageText);
@@ -166,7 +161,6 @@ public class PlayerFrameData : MonoBehaviour
             // do damage
 
             // For debugging
-            hitText.SetActive(true);
 
             // Rendering damage text on canvas
             GameObject damageText = Instantiate(playerDamageText);
@@ -185,11 +179,6 @@ public class PlayerFrameData : MonoBehaviour
     void OnCollisionExit(Collision other)
     {
         
-        if (other.gameObject.tag == "Enemy" && isHit){
-
-            hitText.SetActive(false);
-
-        }
     }
     
     void CheckActive()

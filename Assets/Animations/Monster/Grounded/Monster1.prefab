@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 7781854472212276255}
   - component: {fileID: 7147490006994924521}
   - component: {fileID: 3540510219042067440}
+  - component: {fileID: 1225233658842948881}
   m_Layer: 0
   m_Name: Body HB
   m_TagString: Enemy
@@ -130,6 +131,20 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1225233658842948881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719879057454810412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0075e4846ea53dc4b9cf8143c0a1a35d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8568777682877886850, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+  monster: {fileID: 8465672969339142518}
 --- !u!1 &2795365201181551323
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,6 +157,7 @@ GameObject:
   - component: {fileID: 3721643937501390636}
   - component: {fileID: 7058444464285498639}
   - component: {fileID: 5070551261384118184}
+  - component: {fileID: 2389942993256773077}
   m_Layer: 0
   m_Name: Head HB
   m_TagString: Enemy
@@ -228,6 +244,20 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2389942993256773077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2795365201181551323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0075e4846ea53dc4b9cf8143c0a1a35d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8568777682877886850, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+  monster: {fileID: 8465672969339142518}
 --- !u!1 &4626329989901209702
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,6 +381,7 @@ GameObject:
   - component: {fileID: 1247308723027219964}
   - component: {fileID: 6007258703212789778}
   - component: {fileID: 272491531372240670}
+  - component: {fileID: 7931722725856646660}
   m_Layer: 0
   m_Name: Left Arm HB
   m_TagString: Enemy
@@ -437,6 +468,20 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &7931722725856646660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5117513907130657917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0075e4846ea53dc4b9cf8143c0a1a35d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8568777682877886850, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+  monster: {fileID: 8465672969339142518}
 --- !u!1 &6944620184235046414
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,6 +494,7 @@ GameObject:
   - component: {fileID: 7930392678178916310}
   - component: {fileID: 7289814466140191868}
   - component: {fileID: 4425854401383400808}
+  - component: {fileID: 1692795411607988635}
   m_Layer: 0
   m_Name: Left Leg HB
   m_TagString: Enemy
@@ -535,6 +581,20 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1692795411607988635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6944620184235046414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0075e4846ea53dc4b9cf8143c0a1a35d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8568777682877886850, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+  monster: {fileID: 8465672969339142518}
 --- !u!1 &7000037596947110005
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,6 +607,7 @@ GameObject:
   - component: {fileID: 1107687119665697023}
   - component: {fileID: 549391147886863622}
   - component: {fileID: 6913615139497136840}
+  - component: {fileID: 9106416793736316528}
   m_Layer: 0
   m_Name: Right Arm HB
   m_TagString: Enemy
@@ -633,6 +694,20 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &9106416793736316528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7000037596947110005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0075e4846ea53dc4b9cf8143c0a1a35d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8568777682877886850, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+  monster: {fileID: 8465672969339142518}
 --- !u!1 &7162121305114779124
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,6 +720,7 @@ GameObject:
   - component: {fileID: 2336522537099699994}
   - component: {fileID: 6820757289915607591}
   - component: {fileID: 1375758916307888879}
+  - component: {fileID: 1254152781212118037}
   m_Layer: 0
   m_Name: Tail HB
   m_TagString: Enemy
@@ -731,6 +807,20 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1254152781212118037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7162121305114779124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0075e4846ea53dc4b9cf8143c0a1a35d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8568777682877886850, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+  monster: {fileID: 8465672969339142518}
 --- !u!1 &7166397987191998788
 GameObject:
   m_ObjectHideFlags: 0
@@ -3399,6 +3489,7 @@ GameObject:
   - component: {fileID: 230076244248500993}
   - component: {fileID: 6421692371634098177}
   - component: {fileID: 2610429601753287021}
+  - component: {fileID: 3404443173114695748}
   m_Layer: 0
   m_Name: Right Leg HB
   m_TagString: Enemy
@@ -3485,3 +3576,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &3404443173114695748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8688153700388464050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0075e4846ea53dc4b9cf8143c0a1a35d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8568777682877886850, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+  monster: {fileID: 8465672969339142518}
