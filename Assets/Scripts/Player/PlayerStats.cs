@@ -20,13 +20,14 @@ public class PlayerStats : MonoBehaviour
         stamina = maxStamina;
 
         iFrameTimer = 0;
+        isHit = false;
     }
 
     void Update()
     {
         
         if (iFrameTimer > 0){
-            iFrames -= Time.deltaTime;
+            iFrameTimer -= Time.deltaTime;
         }
         else{
             isHit = false;

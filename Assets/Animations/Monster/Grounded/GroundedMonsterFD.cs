@@ -7,8 +7,8 @@ public class GroundedMonsterFD : MonoBehaviour
     //
 
     public double currentFrame;
-    private double startUpFrames;
-    private double activeFrames;
+    public double startUpFrames;
+    public double activeFrames;
     private double totalFrames;
     public double delayFrames;
     public double resetFrame;
@@ -70,8 +70,8 @@ public class GroundedMonsterFD : MonoBehaviour
     {
         switch(animationName){
             case "Horn Attack":
-                startUpFrames = 18;
-                activeFrames = 18;
+                startUpFrames = 50;
+                activeFrames = 25;
                 attackModifier = 0;
                 delayFrames = 25;
 

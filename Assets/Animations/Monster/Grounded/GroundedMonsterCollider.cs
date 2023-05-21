@@ -8,6 +8,8 @@ public class GroundedMonsterCollider : MonoBehaviour
 
     [SerializeField] GameObject monster;
     private Animator monsterAnimator;
+     
+    private GroundedMonsterFD frameData;
 
     int isAttackingHash;
 
@@ -17,16 +19,28 @@ public class GroundedMonsterCollider : MonoBehaviour
         playerStats = player.GetComponent<PlayerStats>();
         monsterAnimator = monster.GetComponent<Animator>();
 
+        frameData = monster.GetComponent<GroundedMonsterFD>();
+
         isAttackingHash = Animator.StringToHash("isAttack");
     }
 
-    void OnTriggerStay()
+    void OnCollisionEnter()
     {
 
         // TODO: add a hitbox which should be bigger than monster's hitbox
 
         bool isAttack = monsterAnimator.GetBool(isAttackingHash);
-        if (!playerStats.isHit){
+
+        // To be able hit the player:
+        //---------------------------------------------------------------------------------
+        // - The player is not in invincibility state
+        // - The monster is in an attacking state
+        // - The attack animation as be within the "active frames" period, which determines
+        //   how long the hitboxes last
+        //----------------------------------------------------------------------------------
+        if (!playerStats.isHit && isAttack &&
+            frameData.currentFrame > frameData.startUpFrames &&
+            frameData.currentFrame < frameData.startUpFrames + frameData.activeFrames){
 
             Debug.Log("testing");
             playerStats.isHit = true;

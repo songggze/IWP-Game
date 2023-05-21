@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 7147490006994924521}
   - component: {fileID: 3540510219042067440}
   - component: {fileID: 1225233658842948881}
+  - component: {fileID: 3600986214632323089}
   m_Layer: 0
   m_Name: Body HB
   m_TagString: Enemy
@@ -82,7 +83,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 719879057454810412}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -145,6 +146,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 8568777682877886850, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
   monster: {fileID: 8465672969339142518}
+--- !u!114 &3600986214632323089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719879057454810412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef5590fbe1f8d6e4fb5e24a95e919eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8465672969339104790}
 --- !u!1 &2795365201181551323
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,6 +172,7 @@ GameObject:
   - component: {fileID: 7058444464285498639}
   - component: {fileID: 5070551261384118184}
   - component: {fileID: 2389942993256773077}
+  - component: {fileID: 3207574139920292912}
   m_Layer: 0
   m_Name: Head HB
   m_TagString: Enemy
@@ -173,8 +188,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2795365201181551323}
   m_LocalRotation: {x: -0.698451, y: 0.000000011666224, z: -0.00000001906567, w: 0.7156579}
-  m_LocalPosition: {x: -0.02, y: 2.78, z: 3.08}
-  m_LocalScale: {x: 2.3, y: 1.3, z: 2.5}
+  m_LocalPosition: {x: -0.02, y: 3.04, z: 3.09}
+  m_LocalScale: {x: 2.3, y: 1.3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 747965320853378157}
@@ -195,7 +210,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2795365201181551323}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -258,6 +273,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 8568777682877886850, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
   monster: {fileID: 8465672969339142518}
+--- !u!114 &3207574139920292912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2795365201181551323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef5590fbe1f8d6e4fb5e24a95e919eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8465672969339109666}
 --- !u!1 &4626329989901209702
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,6 +410,7 @@ GameObject:
   - component: {fileID: 6007258703212789778}
   - component: {fileID: 272491531372240670}
   - component: {fileID: 7931722725856646660}
+  - component: {fileID: 6494706946686797008}
   m_Layer: 0
   m_Name: Left Arm HB
   m_TagString: Enemy
@@ -398,7 +427,7 @@ Transform:
   m_GameObject: {fileID: 5117513907130657917}
   m_LocalRotation: {x: -0.222238, y: -0, z: -0.000000022351742, w: 0.9749925}
   m_LocalPosition: {x: -2.73, y: 1.15, z: 1.0599995}
-  m_LocalScale: {x: 1.3, y: 1.5, z: 1.2}
+  m_LocalScale: {x: 1.5, y: 1.7, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 747965320853378157}
@@ -419,7 +448,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5117513907130657917}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -482,6 +511,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 8568777682877886850, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
   monster: {fileID: 8465672969339142518}
+--- !u!114 &6494706946686797008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5117513907130657917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef5590fbe1f8d6e4fb5e24a95e919eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8465672969339086992}
 --- !u!1 &6944620184235046414
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,6 +537,7 @@ GameObject:
   - component: {fileID: 7289814466140191868}
   - component: {fileID: 4425854401383400808}
   - component: {fileID: 1692795411607988635}
+  - component: {fileID: 3140262820221948931}
   m_Layer: 0
   m_Name: Left Leg HB
   m_TagString: Enemy
@@ -532,7 +575,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6944620184235046414}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -595,6 +638,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 8568777682877886850, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
   monster: {fileID: 8465672969339142518}
+--- !u!114 &3140262820221948931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6944620184235046414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef5590fbe1f8d6e4fb5e24a95e919eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8465672969339138870}
 --- !u!1 &7000037596947110005
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,6 +664,7 @@ GameObject:
   - component: {fileID: 549391147886863622}
   - component: {fileID: 6913615139497136840}
   - component: {fileID: 9106416793736316528}
+  - component: {fileID: 5079350953952643098}
   m_Layer: 0
   m_Name: Right Arm HB
   m_TagString: Enemy
@@ -624,7 +681,7 @@ Transform:
   m_GameObject: {fileID: 7000037596947110005}
   m_LocalRotation: {x: -0.222238, y: -0, z: -0.000000022351742, w: 0.9749925}
   m_LocalPosition: {x: 2.6299999, y: 1.1500001, z: 1.0599995}
-  m_LocalScale: {x: 1.3, y: 1.5, z: 1.2}
+  m_LocalScale: {x: 1.5, y: 1.7, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 747965320853378157}
@@ -645,7 +702,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7000037596947110005}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -708,6 +765,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 8568777682877886850, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
   monster: {fileID: 8465672969339142518}
+--- !u!114 &5079350953952643098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7000037596947110005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef5590fbe1f8d6e4fb5e24a95e919eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8465672969339153790}
 --- !u!1 &7162121305114779124
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,6 +791,7 @@ GameObject:
   - component: {fileID: 6820757289915607591}
   - component: {fileID: 1375758916307888879}
   - component: {fileID: 1254152781212118037}
+  - component: {fileID: 7746206282624765059}
   m_Layer: 0
   m_Name: Tail HB
   m_TagString: Enemy
@@ -758,7 +829,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7162121305114779124}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -821,6 +892,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 8568777682877886850, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
   monster: {fileID: 8465672969339142518}
+--- !u!114 &7746206282624765059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7162121305114779124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef5590fbe1f8d6e4fb5e24a95e919eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8465672969339088350}
 --- !u!1 &7166397987191998788
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,7 +914,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 747965320853378157}
-  - component: {fileID: 1010567908772487578}
   m_Layer: 0
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -860,32 +943,6 @@ Transform:
   m_Father: {fileID: 8465672969338783760}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1010567908772487578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7166397987191998788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef5590fbe1f8d6e4fb5e24a95e919eff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftArm: {fileID: 8465672969339153790}
-  leftArm_Hurtbox: {fileID: 5117513907130657917}
-  rightArm: {fileID: 8465672969339086992}
-  rightArm_Hurtbox: {fileID: 7000037596947110005}
-  leftLeg: {fileID: 8465672969339105340}
-  leftLeg_Hurtbox: {fileID: 6944620184235046414}
-  rightLeg: {fileID: 8465672969339138870}
-  rightLeg_Hurtbox: {fileID: 8688153700388464050}
-  body: {fileID: 8465672969339104790}
-  body_Hurtbox: {fileID: 719879057454810412}
-  head: {fileID: 8465672969339085660}
-  head_Hurtbox: {fileID: 2795365201181551323}
-  tail: {fileID: 8465672969339088350}
-  tail_Hurtbox: {fileID: 7162121305114779124}
 --- !u!1 &8465672969339044832
 GameObject:
   m_ObjectHideFlags: 0
@@ -3490,6 +3547,7 @@ GameObject:
   - component: {fileID: 6421692371634098177}
   - component: {fileID: 2610429601753287021}
   - component: {fileID: 3404443173114695748}
+  - component: {fileID: 1153408474429608871}
   m_Layer: 0
   m_Name: Right Leg HB
   m_TagString: Enemy
@@ -3527,7 +3585,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8688153700388464050}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3590,3 +3648,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 8568777682877886850, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
   monster: {fileID: 8465672969339142518}
+--- !u!114 &1153408474429608871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8688153700388464050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef5590fbe1f8d6e4fb5e24a95e919eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8465672969339105340}

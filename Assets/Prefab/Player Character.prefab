@@ -2993,7 +2993,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.2
-  m_SlopeLimit: 45
+  m_SlopeLimit: 40
   m_StepOffset: 1
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
@@ -3054,7 +3054,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea50a748fb7c91f47b74b52d0435015d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  healthbar: {fileID: 0}
 --- !u!114 &6216228866178139012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3072,6 +3072,9 @@ MonoBehaviour:
   faintsLife: 100
   health: 0
   stamina: 0
+  iFrames: 1
+  iFrameTimer: 0
+  isHit: 0
 --- !u!1 &8661585699590327957
 GameObject:
   m_ObjectHideFlags: 0
