@@ -8,6 +8,7 @@ public class PlayerAttack : MonoBehaviour
 
     // Inputs
     int isAttackHash;
+    int isRunningHash;
     int isDodgingHash;
 
     PlayerInput input;
@@ -43,6 +44,7 @@ public class PlayerAttack : MonoBehaviour
 
         // For input system
         isAttackHash = Animator.StringToHash("isAttack");
+        isRunningHash = Animator.StringToHash("isRunning");
         isDodgingHash = Animator.StringToHash("isDodging");
          
         // To prevent going to idle animation when starting an attack
@@ -119,6 +121,8 @@ public class PlayerAttack : MonoBehaviour
             animator.SetBool(isAttackHash, true);
             leftAttackPressed = false;
             timerDelay = 0.3f;
+            
+            animator.SetBool(isRunningHash, false);
         }
 
         // Combo 1 
@@ -152,6 +156,8 @@ public class PlayerAttack : MonoBehaviour
             animator.SetBool(isAttackHash, true);
             rightAttackPressed = false;
             timerDelay = 0.3f;
+
+            animator.SetBool(isRunningHash, false);
         }
 
         // Combo 1 

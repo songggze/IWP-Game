@@ -10,7 +10,7 @@ public class GroundedMonsterCollider : MonoBehaviour
     private Animator monsterAnimator;
      
     private GroundedMonsterFD frameData;
-
+    
     int isAttackingHash;
 
     // Start is called before the first frame update
@@ -22,6 +22,17 @@ public class GroundedMonsterCollider : MonoBehaviour
         frameData = monster.GetComponent<GroundedMonsterFD>();
 
         isAttackingHash = Animator.StringToHash("isAttack");
+    }
+    
+    // For debugging
+    void Update()
+    {
+        bool isAttack = monsterAnimator.GetBool(isAttackingHash);
+        if (isAttack &&
+            frameData.currentFrame > frameData.startUpFrames &&
+            frameData.currentFrame < frameData.startUpFrames + frameData.activeFrames){
+            Debug.Log("Monster hitbox active");
+        }
     }
 
     void OnCollisionEnter()
@@ -49,4 +60,5 @@ public class GroundedMonsterCollider : MonoBehaviour
             playerStats.health -= 20;
         }
     }
+
 }

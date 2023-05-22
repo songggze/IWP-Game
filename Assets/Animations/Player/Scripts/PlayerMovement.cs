@@ -29,6 +29,9 @@ public class PlayerMovement : MonoBehaviour
     CharacterController controller;
     Vector3 gravity;
 
+    // Player Stats
+    private PlayerStats playerStats;
+
     // Called when script instance is called
     void Awake()
     {
@@ -58,6 +61,8 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         timerDelay = 0;
 
+        playerStats = GetComponent<PlayerStats>();
+
         gravity = Vector3.zero;
 
         rollActiveTimer = 0;
@@ -84,6 +89,21 @@ public class PlayerMovement : MonoBehaviour
         bool isRunning = animator.GetBool(isRunningHash);
         bool isAttack = animator.GetBool(isAttackHash);
         bool isDodging = animator.GetBool(isDodgingHash);
+
+        // Stamina Management
+        if (isRunning || isDodging){
+            // Stamina consumption when running
+            if (isRunning && !isAttack && !isDodging && playerStats.stamina > 0){
+                playerStats.stamina -= 18 * Time.deltaTime;
+            }
+        }
+        else {
+            // Recover stamina when not running or rolling
+            if (playerStats.stamina < playerStats.maxStamina)
+            {
+                RecoverStamina();
+            }
+        }
 
         // when rolling animations ends
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Standard Idle") && isDodging && timerDelay <= 0){
@@ -112,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
         SetMovementBool(isWalking, isRunning);
 
         // bool for rolling
-        if (rollPressed && !isDodging) {
+        if (rollPressed && !isDodging && playerStats.stamina > 20) {
             animator.SetTrigger("Roll");
             animator.SetBool(isDodgingHash, true);
             rollPressed = false;
@@ -120,6 +140,8 @@ public class PlayerMovement : MonoBehaviour
 
             input.FindAction("Roll").Disable();
             timerDelay = 0.4f;
+
+            playerStats.stamina -= 20;
         }
         
         if (!movementPressed)
@@ -193,6 +215,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void SetMovementBool(bool isWalking, bool isRunning)
     {
+        bool isAttack = animator.GetBool(isDodgingHash);
+
         // bool for Walking
         if (movementPressed && !isWalking){
             animator.SetBool(isWalkingHash, true);
@@ -202,12 +226,18 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // bool for Running
-        if ((movementPressed && runPressed) && !isRunning){
+        if ((movementPressed && runPressed) && !isRunning && playerStats.stamina > 0){
+
             animator.SetBool(isRunningHash, true);
         }
-        if ((!movementPressed || !runPressed) && isRunning){
+        if ((!movementPressed || !runPressed) && isRunning  || playerStats.stamina <= 0){
             animator.SetBool(isRunningHash, false);
         }
+    }
+
+    private void RecoverStamina()
+    {
+        playerStats.stamina += 20 * Time.deltaTime;
     }
 
     private void OnEnable()

@@ -6,11 +6,13 @@ public class GroundedMonsterAI : MonoBehaviour
     Animator animator;
     NavMeshAgent navMeshAgent;
     GroundedMonsterFD frameData;
+    GroundedMonster monsterStats;
 
     [SerializeField] float setStoppingDistance = 10;
 
     int isWalkingHash;
     int isAttackingHash;
+    int isDeadHash;
     
     float timerDelay;
     Vector3 velocity;
@@ -25,11 +27,12 @@ public class GroundedMonsterAI : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        // TODO: change this to include hitbox gameobject later
         frameData = GetComponent<GroundedMonsterFD>();
+        monsterStats = GetComponent<GroundedMonster>();
 
         isWalkingHash = Animator.StringToHash("isWalking");
         isAttackingHash = Animator.StringToHash("isAttack");
+        isDeadHash = Animator.StringToHash("isDead");
 
         navMeshAgent.stoppingDistance = setStoppingDistance;
         velocity = Vector3.zero;
@@ -44,6 +47,19 @@ public class GroundedMonsterAI : MonoBehaviour
         
         // Convert hash into bool
         bool isAttack = animator.GetBool(isAttackingHash);
+        bool isDead = animator.GetBool(isDeadHash);
+
+        // Check if dead
+        if (monsterStats.health <= 0 && !isDead){
+            animator.Play("Idle");
+            animator.SetBool(isDeadHash, true);
+        }
+        if (isDead){
+
+            animator.SetBool(isWalkingHash, false);
+            animator.SetBool(isAttackingHash, false);
+            return;
+        }
 
         if (!isAttack){
             HandleMovement();
@@ -57,7 +73,6 @@ public class GroundedMonsterAI : MonoBehaviour
         // Applying movement to attack animations since root motion is disabled for the controller
         HandleAnimations();
 
-        Debug.Log(isAttack);
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !isWalking && timerDelay <= 0){
             animator.SetBool(isAttackingHash, false);
 
@@ -69,6 +84,7 @@ public class GroundedMonsterAI : MonoBehaviour
 
             // Reset triggers in case it gets buffered during animation
             animator.ResetTrigger("Horn Attack");
+            animator.ResetTrigger("Jump");
         }
         
         // Monster will rotate towards player when it is close enough before attacking
@@ -88,10 +104,41 @@ public class GroundedMonsterAI : MonoBehaviour
         // Setting stoppingDistance to 999 as for some reason enabling/disabling the agent breaks the navmesh 
         navMeshAgent.stoppingDistance = 999;
 
-        // Horn Attack
-        animator.SetTrigger("Horn Attack");
-        frameData.SetValues("Horn Attack");
-        animator.SetBool(isAttackingHash, true);
+
+        // TODO: please put this in a function later
+        int rand = Random.Range(1, 5);
+
+        switch(rand){
+            case 1:
+                //Horn Attack
+                animator.SetTrigger("Horn Attack");
+                frameData.SetValues("Horn Attack");
+                animator.SetBool(isAttackingHash, true);
+                break;
+
+            case 2:
+                // Horn Attack
+                animator.SetTrigger("Jump");
+                frameData.SetValues("Jump");
+                animator.SetBool(isAttackingHash, true);
+                break;
+
+            case 3:
+                // Bite attack
+                animator.SetTrigger("Bite");
+                frameData.SetValues("Bite");
+                animator.SetBool(isAttackingHash, true);
+                break;
+
+            case 4:
+                // Bite attack
+                animator.SetTrigger("Rush");
+                frameData.SetValues("Rush");
+                animator.SetBool(isAttackingHash, true);
+                break;
+        }
+
+
 
         // To prevent idle animation when transitioning to an attack animation
         timerDelay = 0.9f;
@@ -109,10 +156,9 @@ public class GroundedMonsterAI : MonoBehaviour
             frameData.currentFrame > frameData.movementStop)
             return;
 
-        switch (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name)
-        {
+        switch (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name){
             case "Horn Attack":
-                velocity += transform.forward * 50 * Time.deltaTime;
+                velocity += transform.forward * 60 * Time.deltaTime;
                 navMeshAgent.Move(velocity * Time.deltaTime);
                 break;
         }

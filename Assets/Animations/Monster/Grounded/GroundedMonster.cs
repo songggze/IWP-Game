@@ -10,6 +10,9 @@ public class GroundedMonster : MonoBehaviour
         //Attack,
     //}
 
+    // Stats
+    [SerializeField] public int health = 100;
+
     GameObject player;
     Vector3 direction;
     [SerializeField] float walkSpeed = 2;

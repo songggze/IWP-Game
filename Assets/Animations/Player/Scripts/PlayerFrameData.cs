@@ -9,6 +9,9 @@ public class PlayerFrameData : MonoBehaviour
         //Slash_3
     //}
 
+    [SerializeField] GameObject monster;
+    GroundedMonster monsterStats;
+
     // Frame data for attack collisions
     private double currentFrame;
     private double startUpFrames;
@@ -46,6 +49,8 @@ public class PlayerFrameData : MonoBehaviour
         isActive = false;
         isHit = false;
         isMultiHit = false;
+
+        monsterStats = monster.GetComponent<GroundedMonster>();
 
         // Debugging
         hitBoxDisplay = GameObject.Find("Sword Hitbox Display");
@@ -151,6 +156,9 @@ public class PlayerFrameData : MonoBehaviour
             setText[0].SetText("Hit!");
             setText[1].SetText("Hit!");
             isHit = true;
+
+            monsterStats.health--;
+            Debug.Log("Monster Health: " + monsterStats.health);
         }
     }
 
@@ -173,6 +181,9 @@ public class PlayerFrameData : MonoBehaviour
             setText[0].SetText("Hit!");
             setText[1].SetText("Hit!");
             isHit = true;
+            
+            monsterStats.health--;
+            Debug.Log("Monster Health: " + monsterStats.health);
         }
     }
     

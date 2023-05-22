@@ -27,8 +27,9 @@ public class GroundedMonsterFD : MonoBehaviour
     public bool isMultiHit;
 
     // Debugging
-    GameObject hitText;
-    GameObject hitBoxDisplay;
+    [SerializeField] GameObject hitboxTextDisplay;
+    //GameObject hitText;
+    //GameObject hitBoxDisplay;
     //[SerializeField] GameObject playerDamageText;
 
     // Start is called before the first frame update
@@ -48,6 +49,7 @@ public class GroundedMonsterFD : MonoBehaviour
         isHit = false;
         isMultiHit = false;
 
+        hitboxTextDisplay.SetActive(false);
     }
 
 
@@ -58,6 +60,9 @@ public class GroundedMonsterFD : MonoBehaviour
         if (playAnimation){
             currentFrame += Time.deltaTime * framesPerSecond;
         }
+
+        // For debugging
+        ShowHitboxDisplay();
 
         //if (currentFrame > totalFrames && playAnimation){
 
@@ -76,7 +81,34 @@ public class GroundedMonsterFD : MonoBehaviour
                 delayFrames = 25;
 
                 movementStart = 50;
-                movementStop = 75; 
+                movementStop = 80; 
+                isMultiHit = false;
+                break;
+
+            case "Jump":
+                startUpFrames = 100;
+                activeFrames = 13;
+                attackModifier = 0;
+                delayFrames = 25;
+
+                isMultiHit = false;
+                break;
+
+            case "Bite":
+                startUpFrames = 40;
+                activeFrames = 15;
+                attackModifier = 0;
+                delayFrames = 25;
+
+                isMultiHit = false;
+                break;
+
+            case "Rush":
+                startUpFrames = 20;
+                activeFrames = 200;
+                attackModifier = 0;
+                delayFrames = 25;
+
                 isMultiHit = false;
                 break;
 
@@ -90,5 +122,17 @@ public class GroundedMonsterFD : MonoBehaviour
         isHit = false;
         isActive = false;
         playAnimation = true;
+    }
+
+    void ShowHitboxDisplay(){
+
+        if (currentFrame > startUpFrames &&
+            currentFrame < startUpFrames + activeFrames)
+        {
+            hitboxTextDisplay.SetActive(true);
+        }
+        else{
+            hitboxTextDisplay.SetActive(false);
+        }
     }
 }

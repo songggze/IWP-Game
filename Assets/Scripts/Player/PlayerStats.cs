@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     [SerializeField] float maxHealth = 100;
-    [SerializeField] float maxStamina = 100;
+    [SerializeField] public float maxStamina = 100;
 
     [SerializeField] float faintsLife = 100;
 
