@@ -9,14 +9,17 @@ public class GroundedMonsterFD : MonoBehaviour
     public double currentFrame;
     public double startUpFrames;
     public double activeFrames;
-    private double totalFrames;
+    public double totalFrames;
     public double delayFrames;
-    public double resetFrame;
 
     // Frame indicator when to start/stop movement during animation
     public double movementStart;
     public double movementStop;
-    [SerializeField] double framesPerSecond = 60;
+    [SerializeField] double framesPerSecond = 1000;
+
+    // For attack animations that multi phases
+    public double repeatFrames;
+    public double repeatTimer;
 
     // Handle damage data
     private float attackModifier;
@@ -25,6 +28,7 @@ public class GroundedMonsterFD : MonoBehaviour
     public bool playAnimation;
     public bool isHit;
     public bool isMultiHit;
+    public bool isRepeat;
 
     // Debugging
     [SerializeField] GameObject hitboxTextDisplay;
@@ -40,14 +44,17 @@ public class GroundedMonsterFD : MonoBehaviour
         currentFrame = 0;
         startUpFrames = 0;
         activeFrames = 0;
+        playAnimation = false;
 
         delayFrames = 0;
-        resetFrame = 0;
+        repeatTimer = 0;
+        repeatFrames = 0;
         
         attackModifier = 0;
         isActive = false;
         isHit = false;
         isMultiHit = false;
+        isRepeat = false;
 
         hitboxTextDisplay.SetActive(false);
     }
@@ -59,6 +66,10 @@ public class GroundedMonsterFD : MonoBehaviour
         
         if (playAnimation){
             currentFrame += Time.deltaTime * framesPerSecond;
+        }
+
+        if (isRepeat){
+            repeatTimer += Time.deltaTime * framesPerSecond;
         }
 
         // For debugging
@@ -80,9 +91,11 @@ public class GroundedMonsterFD : MonoBehaviour
                 attackModifier = 0;
                 delayFrames = 25;
 
+                // Attack has movement
                 movementStart = 50;
                 movementStop = 80; 
                 isMultiHit = false;
+                isRepeat = false;
                 break;
 
             case "Jump":
@@ -92,6 +105,7 @@ public class GroundedMonsterFD : MonoBehaviour
                 delayFrames = 25;
 
                 isMultiHit = false;
+                isRepeat = false;
                 break;
 
             case "Bite":
@@ -101,15 +115,21 @@ public class GroundedMonsterFD : MonoBehaviour
                 delayFrames = 25;
 
                 isMultiHit = false;
+                isRepeat = false;
                 break;
 
             case "Rush":
-                startUpFrames = 20;
-                activeFrames = 200;
+                startUpFrames = 80;
+                activeFrames = 500;
                 attackModifier = 0;
                 delayFrames = 25;
 
+                // Attack has movement
+                movementStart = 80;
+                movementStop = 580; 
                 isMultiHit = false;
+                isRepeat = true;
+                repeatFrames = 150;
                 break;
 
             default:
@@ -122,6 +142,7 @@ public class GroundedMonsterFD : MonoBehaviour
         isHit = false;
         isActive = false;
         playAnimation = true;
+        repeatTimer = 0;
     }
 
     void ShowHitboxDisplay(){

@@ -13,6 +13,7 @@ public class GroundedMonsterAI : MonoBehaviour
     int isWalkingHash;
     int isAttackingHash;
     int isDeadHash;
+    int isRushingHash;
     
     float timerDelay;
     Vector3 velocity;
@@ -33,6 +34,7 @@ public class GroundedMonsterAI : MonoBehaviour
         isWalkingHash = Animator.StringToHash("isWalking");
         isAttackingHash = Animator.StringToHash("isAttack");
         isDeadHash = Animator.StringToHash("isDead");
+        isRushingHash = Animator.StringToHash("isRushing");
 
         navMeshAgent.stoppingDistance = setStoppingDistance;
         velocity = Vector3.zero;
@@ -44,7 +46,7 @@ public class GroundedMonsterAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         // Convert hash into bool
         bool isAttack = animator.GetBool(isAttackingHash);
         bool isDead = animator.GetBool(isDeadHash);
@@ -61,18 +63,21 @@ public class GroundedMonsterAI : MonoBehaviour
             return;
         }
 
+        // Movement
         if (!isAttack){
             HandleMovement();
         }
 
+        // Attack
         bool isWalking = animator.GetBool(isWalkingHash);
         if (isWalking && !isAttack && startAttack){
             HandleAttacks();
         }
 
-        // Applying movement to attack animations since root motion is disabled for the controller
-        HandleAnimations();
+        // Some attack animatons will have movement
+        AttackAnimationMovement();
 
+        // Return to idle state after attack atnimaton ends
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !isWalking && timerDelay <= 0){
             animator.SetBool(isAttackingHash, false);
 
@@ -85,6 +90,8 @@ public class GroundedMonsterAI : MonoBehaviour
             // Reset triggers in case it gets buffered during animation
             animator.ResetTrigger("Horn Attack");
             animator.ResetTrigger("Jump");
+
+            animator.SetBool(isRushingHash, false);
         }
         
         // Monster will rotate towards player when it is close enough before attacking
@@ -100,6 +107,7 @@ public class GroundedMonsterAI : MonoBehaviour
     void HandleAttacks()
     {
         animator.SetBool(isWalkingHash, false);
+
         // To prevent movement while attacking
         // Setting stoppingDistance to 999 as for some reason enabling/disabling the agent breaks the navmesh 
         navMeshAgent.stoppingDistance = 999;
@@ -108,37 +116,41 @@ public class GroundedMonsterAI : MonoBehaviour
         // TODO: please put this in a function later
         int rand = Random.Range(1, 5);
 
-        switch(rand){
-            case 1:
-                //Horn Attack
-                animator.SetTrigger("Horn Attack");
-                frameData.SetValues("Horn Attack");
-                animator.SetBool(isAttackingHash, true);
-                break;
+        //switch(rand){
+            //case 1:
+                ////Horn Attack
+                //animator.SetTrigger("Horn Attack");
+                //frameData.SetValues("Horn Attack");
+                //animator.SetBool(isAttackingHash, true);
+                //break;
 
-            case 2:
-                // Horn Attack
-                animator.SetTrigger("Jump");
-                frameData.SetValues("Jump");
-                animator.SetBool(isAttackingHash, true);
-                break;
+            //case 2:
+                //// Horn Attack
+                //animator.SetTrigger("Jump");
+                //frameData.SetValues("Jump");
+                //animator.SetBool(isAttackingHash, true);
+                //break;
 
-            case 3:
-                // Bite attack
-                animator.SetTrigger("Bite");
-                frameData.SetValues("Bite");
-                animator.SetBool(isAttackingHash, true);
-                break;
+            //case 3:
+                //// Bite attack
+                //animator.SetTrigger("Bite");
+                //frameData.SetValues("Bite");
+                //animator.SetBool(isAttackingHash, true);
+                //break;
 
-            case 4:
-                // Bite attack
-                animator.SetTrigger("Rush");
+            //case 4:
+                //// Rush aittask
+                //animator.SetBool("isRushing", true);
+                //frameData.SetValues("Rush");
+                //animator.SetBool(isAttackingHash, true);
+                //break;
+        //}
+
+
+                // Rush aittask
+                animator.SetBool(isRushingHash, true);
                 frameData.SetValues("Rush");
                 animator.SetBool(isAttackingHash, true);
-                break;
-        }
-
-
 
         // To prevent idle animation when transitioning to an attack animation
         timerDelay = 0.9f;
@@ -149,17 +161,46 @@ public class GroundedMonsterAI : MonoBehaviour
         animator.SetBool(isWalkingHash, true);
     }
 
-    void HandleAnimations()
+    void AttackAnimationMovement()
     {
+
+        // Stop the rush attack
+        if (frameData.currentFrame > frameData.totalFrames)
+        {
+            animator.SetBool(isRushingHash, false);
+        }
+
+        // This will move monster for a specific period of time
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
             frameData.currentFrame < frameData.movementStart ||
             frameData.currentFrame > frameData.movementStop)
             return;
 
+            
         switch (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name){
             case "Horn Attack":
                 velocity += transform.forward * 60 * Time.deltaTime;
                 navMeshAgent.Move(velocity * Time.deltaTime);
+                break;
+
+            case "Rush":
+
+                // Add a velocity limit to the rush attack
+                if (velocity.x + velocity.z < 10){
+                    velocity += transform.forward * 60 * Time.deltaTime;
+                }
+                navMeshAgent.Move(velocity * Time.deltaTime);
+
+                // This attack will track the player periodially
+                if (frameData.isRepeat && frameData.repeatTimer > frameData.repeatFrames){
+                    Vector3 direction = (player.transform.position - transform.position).normalized;
+                    Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10);
+                    velocity = Vector3.zero;
+
+                    frameData.repeatTimer = 0;
+                }
+
                 break;
         }
     }
