@@ -44,6 +44,7 @@ public class GroundedMonsterSetCollider : MonoBehaviour
 
     void SetCollider()
     {
+        Debug.Log(monsterAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         switch (monsterAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name){
             case "Jump":
                 jump_hitbox.SetActive(true);

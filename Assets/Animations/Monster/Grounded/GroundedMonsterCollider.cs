@@ -5,6 +5,7 @@ public class GroundedMonsterCollider : MonoBehaviour
 
     [SerializeField] GameObject player;
     private PlayerStats playerStats;
+    private Animator playerAnimator;
 
     [SerializeField] GameObject monster;
     private Animator monsterAnimator;
@@ -17,6 +18,7 @@ public class GroundedMonsterCollider : MonoBehaviour
     void Start()
     {
         playerStats = player.GetComponent<PlayerStats>();
+        playerAnimator = player.GetComponent<Animator>();
         monsterAnimator = monster.GetComponent<Animator>();
 
         frameData = monster.GetComponent<GroundedMonsterFD>();
@@ -53,8 +55,8 @@ public class GroundedMonsterCollider : MonoBehaviour
             frameData.currentFrame > frameData.startUpFrames &&
             frameData.currentFrame < frameData.startUpFrames + frameData.activeFrames){
 
-            Debug.Log("testing");
             playerStats.isHit = true;
+            playerAnimator.SetTrigger("Hurt");
             playerStats.SetIFrames();
 
             playerStats.health -= 20;

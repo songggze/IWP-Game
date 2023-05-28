@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     int isRunningHash;
     int isAttackHash;
     int isDodgingHash;
+    int isHurtHash;
 
     // Using Unity's input system
     PlayerInput input;
@@ -72,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
         isRunningHash = Animator.StringToHash("isRunning");
         isAttackHash = Animator.StringToHash("isAttack");
         isDodgingHash = Animator.StringToHash("isDodging");
+        isDodgingHash = Animator.StringToHash("isHurt");
     }
 
     void Update()
@@ -89,6 +91,12 @@ public class PlayerMovement : MonoBehaviour
         bool isRunning = animator.GetBool(isRunningHash);
         bool isAttack = animator.GetBool(isAttackHash);
         bool isDodging = animator.GetBool(isDodgingHash);
+        bool isHurt = animator.GetBool(isHurtHash);
+
+        // Player is damaged
+        if (isHurt){
+            return;
+        }
 
         // Stamina Management
         if (isRunning || isDodging){

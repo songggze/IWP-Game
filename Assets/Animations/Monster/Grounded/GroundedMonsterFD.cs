@@ -68,8 +68,12 @@ public class GroundedMonsterFD : MonoBehaviour
             currentFrame += Time.deltaTime * framesPerSecond;
         }
 
-        if (isRepeat){
+        if (isRepeat && currentFrame > startUpFrames){
             repeatTimer += Time.deltaTime * framesPerSecond;
+
+            if (repeatTimer > repeatFrames){
+                repeatTimer = 0;
+            }
         }
 
         // For debugging
@@ -120,13 +124,13 @@ public class GroundedMonsterFD : MonoBehaviour
 
             case "Rush":
                 startUpFrames = 80;
-                activeFrames = 500;
+                activeFrames = 580;
                 attackModifier = 0;
                 delayFrames = 25;
 
                 // Attack has movement
                 movementStart = 80;
-                movementStop = 580; 
+                movementStop = 660; 
                 isMultiHit = false;
                 isRepeat = true;
                 repeatFrames = 150;

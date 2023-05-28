@@ -116,41 +116,37 @@ public class GroundedMonsterAI : MonoBehaviour
         // TODO: please put this in a function later
         int rand = Random.Range(1, 5);
 
-        //switch(rand){
-            //case 1:
-                ////Horn Attack
-                //animator.SetTrigger("Horn Attack");
-                //frameData.SetValues("Horn Attack");
-                //animator.SetBool(isAttackingHash, true);
-                //break;
+        switch(rand){
+            case 1:
+                //Horn Attack
+                animator.SetTrigger("Horn Attack");
+                frameData.SetValues("Horn Attack");
+                animator.SetBool(isAttackingHash, true);
+                break;
 
-            //case 2:
-                //// Horn Attack
-                //animator.SetTrigger("Jump");
-                //frameData.SetValues("Jump");
-                //animator.SetBool(isAttackingHash, true);
-                //break;
+            case 2:
+                // Horn Attack
+                animator.SetTrigger("Jump");
+                frameData.SetValues("Jump");
+                animator.SetBool(isAttackingHash, true);
+                break;
 
-            //case 3:
-                //// Bite attack
-                //animator.SetTrigger("Bite");
-                //frameData.SetValues("Bite");
-                //animator.SetBool(isAttackingHash, true);
-                //break;
+            case 3:
+                // Bite attack
+                animator.SetTrigger("Bite");
+                frameData.SetValues("Bite");
+                animator.SetBool(isAttackingHash, true);
+                break;
 
-            //case 4:
-                //// Rush aittask
-                //animator.SetBool("isRushing", true);
-                //frameData.SetValues("Rush");
-                //animator.SetBool(isAttackingHash, true);
-                //break;
-        //}
-
-
-                // Rush aittask
-                animator.SetBool(isRushingHash, true);
+            case 4:
+                // Rush attack
+                animator.SetBool("isRushing", true);
                 frameData.SetValues("Rush");
                 animator.SetBool(isAttackingHash, true);
+                break;
+        }
+
+
 
         // To prevent idle animation when transitioning to an attack animation
         timerDelay = 0.9f;
@@ -186,21 +182,19 @@ public class GroundedMonsterAI : MonoBehaviour
             case "Rush":
 
                 // Add a velocity limit to the rush attack
-                if (velocity.x + velocity.z < 10){
-                    velocity += transform.forward * 60 * Time.deltaTime;
+                if (velocity.magnitude < 30){
+                    velocity += transform.forward * 40 * Time.deltaTime;
                 }
                 navMeshAgent.Move(velocity * Time.deltaTime);
 
                 // This attack will track the player periodially
-                if (frameData.isRepeat && frameData.repeatTimer > frameData.repeatFrames){
+                if (frameData.isRepeat && frameData.repeatTimer > frameData.repeatFrames - 20){
                     Vector3 direction = (player.transform.position - transform.position).normalized;
                     Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 20);
                     velocity = Vector3.zero;
 
-                    frameData.repeatTimer = 0;
                 }
-
                 break;
         }
     }
