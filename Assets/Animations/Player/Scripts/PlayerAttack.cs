@@ -4,6 +4,7 @@ public class PlayerAttack : MonoBehaviour
 {
     Animator animator;
     PlayerFrameData attackData;
+    PlayerStats playerStats;
     [SerializeField] GameObject swordHitbox;
 
     // Inputs
@@ -41,6 +42,7 @@ public class PlayerAttack : MonoBehaviour
         
         animator = GetComponent<Animator>();
         attackData = swordHitbox.GetComponent<PlayerFrameData>();
+        playerStats = GetComponent<PlayerStats>();
 
         // For input system
         isAttackHash = Animator.StringToHash("isAttack");
@@ -64,7 +66,7 @@ public class PlayerAttack : MonoBehaviour
     {
         
         bool isDodging = animator.GetBool(isDodgingHash);
-        if (isDodging){
+        if (isDodging || playerStats.isHit){
             return;
         }
 

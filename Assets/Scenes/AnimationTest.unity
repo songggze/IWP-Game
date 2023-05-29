@@ -1264,7 +1264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6183788220191203348, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: health
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6183788220191203348, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: walkSpeed
@@ -2169,6 +2169,30 @@ PrefabInstance:
       propertyPath: monster
       value: 
       objectReference: {fileID: 1510270048}
+    - target: {fileID: 5715839804161898915, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+      propertyPath: runSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5715839804161898915, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5715839804161898915, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+      propertyPath: rollSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5715839804161898915, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+      propertyPath: walkSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5715839804161898915, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+      propertyPath: setRollTimer
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6216228866178139012, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+      propertyPath: iFrames
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 7737795783806255781, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
       propertyPath: staminabar
       value: 

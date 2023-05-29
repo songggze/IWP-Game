@@ -3023,7 +3023,7 @@ GameObject:
   - component: {fileID: 3116936927869579586}
   - component: {fileID: 8803130131990803241}
   - component: {fileID: 8803130131990803237}
-  - component: {fileID: 8803130131990803240}
+  - component: {fileID: 5715839804161898915}
   - component: {fileID: 8803130131990803239}
   - component: {fileID: 2477868582621071604}
   - component: {fileID: 7737795783806255781}
@@ -3109,7 +3109,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1.05, z: 0}
---- !u!114 &8803130131990803240
+--- !u!114 &5715839804161898915
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3121,10 +3121,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cda40f074f43cc47b773627b6256ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 4
-  runSpeed: 8
-  rollSpeed: 10
-  setRollTimer: 0.8
+  walkSpeed: 2
+  runSpeed: 4
+  rollSpeed: 7
+  setRollTimer: 0.7
 --- !u!114 &8803130131990803239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3182,9 +3182,10 @@ MonoBehaviour:
   faintsLife: 100
   health: 0
   stamina: 0
-  iFrames: 1
+  iFrames: 1.2
   iFrameTimer: 0
   isHit: 0
+  playHurtAnimation: 0
 --- !u!1 &8661585699590327957
 GameObject:
   m_ObjectHideFlags: 0

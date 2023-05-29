@@ -13,7 +13,14 @@ public class PlayerStats : MonoBehaviour
     public float iFrameTimer;
 
     public bool isHit;
+    public bool playHurtAnimation;
 
+    private Animator animator;
+
+    int isAttackingHash;
+    int isWalkingHash;
+    int isRunningHash;
+    int isDodgingHash;
     void Start()
     {
         health = maxHealth;
@@ -21,6 +28,13 @@ public class PlayerStats : MonoBehaviour
 
         iFrameTimer = 0;
         isHit = false;
+        playHurtAnimation = false;
+        
+        animator = GetComponent<Animator>();
+        isAttackingHash = Animator.StringToHash("isAttack");
+        isWalkingHash = Animator.StringToHash("isWalking");
+        isRunningHash = Animator.StringToHash("isRunning");
+        isDodgingHash = Animator.StringToHash("isDodging");
     }
 
     void Update()
@@ -31,11 +45,21 @@ public class PlayerStats : MonoBehaviour
         }
         else{
             isHit = false;
+            playHurtAnimation = false;
         }
     }
 
     public void SetIFrames()
     {
         iFrameTimer = iFrames;
+        if (!playHurtAnimation){
+
+            animator.SetTrigger("Hurt");
+            animator.SetBool(isAttackingHash, false);
+            animator.SetBool(isWalkingHash, false);
+            animator.SetBool(isRunningHash, false);
+            animator.SetBool(isDodgingHash, false);
+            playHurtAnimation = true;
+        }
     }
 }

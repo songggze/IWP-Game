@@ -199,7 +199,6 @@ public class PlayerFrameData : MonoBehaviour
             currentFrame < startUpFrames + activeFrames)
         {
             
-            Debug.Log("Hbox active");
             isActive = true;
 
             // Hitbox display for debugging

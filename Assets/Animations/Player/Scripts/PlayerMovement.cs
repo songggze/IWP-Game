@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
     int isRunningHash;
     int isAttackHash;
     int isDodgingHash;
-    int isHurtHash;
 
     // Using Unity's input system
     PlayerInput input;
@@ -73,7 +72,6 @@ public class PlayerMovement : MonoBehaviour
         isRunningHash = Animator.StringToHash("isRunning");
         isAttackHash = Animator.StringToHash("isAttack");
         isDodgingHash = Animator.StringToHash("isDodging");
-        isDodgingHash = Animator.StringToHash("isHurt");
     }
 
     void Update()
@@ -91,10 +89,10 @@ public class PlayerMovement : MonoBehaviour
         bool isRunning = animator.GetBool(isRunningHash);
         bool isAttack = animator.GetBool(isAttackHash);
         bool isDodging = animator.GetBool(isDodgingHash);
-        bool isHurt = animator.GetBool(isHurtHash);
 
         // Player is damaged
-        if (isHurt){
+        if (playerStats.isHit){
+
             return;
         }
 
@@ -113,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         // when rolling animations ends
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Standard Idle") && isDodging && timerDelay <= 0){
             Debug.Log("Returning to idle state (From roll)");
@@ -223,7 +222,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void SetMovementBool(bool isWalking, bool isRunning)
     {
-        bool isAttack = animator.GetBool(isDodgingHash);
 
         // bool for Walking
         if (movementPressed && !isWalking){

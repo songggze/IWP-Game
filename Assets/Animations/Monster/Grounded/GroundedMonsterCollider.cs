@@ -23,7 +23,6 @@ public class GroundedMonsterCollider : MonoBehaviour
 
         frameData = monster.GetComponent<GroundedMonsterFD>();
 
-        isAttackingHash = Animator.StringToHash("isAttack");
     }
     
     // For debugging
@@ -56,7 +55,7 @@ public class GroundedMonsterCollider : MonoBehaviour
             frameData.currentFrame < frameData.startUpFrames + frameData.activeFrames){
 
             playerStats.isHit = true;
-            playerAnimator.SetTrigger("Hurt");
+
             playerStats.SetIFrames();
 
             playerStats.health -= 20;

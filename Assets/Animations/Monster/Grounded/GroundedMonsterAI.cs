@@ -114,7 +114,10 @@ public class GroundedMonsterAI : MonoBehaviour
 
 
         // TODO: please put this in a function later
-        int rand = Random.Range(1, 5);
+        //int rand = Random.Range(1, 5);
+
+        // Debug Stuff
+        int rand = PressAttack();
 
         switch(rand){
             case 1:
@@ -150,6 +153,36 @@ public class GroundedMonsterAI : MonoBehaviour
 
         // To prevent idle animation when transitioning to an attack animation
         timerDelay = 0.9f;
+    }
+
+    int PressAttack()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            return 0;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+
+            return 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+
+            return 2;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+
+            return 3;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+
+            return 4;
+        }
+
+        return -1;
     }
 
     void HandleMovement()
