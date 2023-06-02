@@ -8,6 +8,8 @@ public class PlayerFrameData : MonoBehaviour
         //Slash_2,
         //Slash_3
     //}
+    [SerializeField] GameObject player;
+    PlayerStats playerStats;
 
     [SerializeField] GameObject monster;
     GroundedMonster monsterStats;
@@ -28,6 +30,10 @@ public class PlayerFrameData : MonoBehaviour
     public bool playAnimation;
     public bool isHit;
     public bool isMultiHit;
+
+    // Camera shake effect
+    [SerializeField] GameObject camera;
+    CameraShake vcam;
 
     // Debugging
     GameObject hitBoxDisplay;
@@ -50,6 +56,9 @@ public class PlayerFrameData : MonoBehaviour
         isHit = false;
         isMultiHit = false;
 
+        vcam = camera.GetComponent<CameraShake>();
+
+        playerStats = player.GetComponent<PlayerStats>();
         monsterStats = monster.GetComponent<GroundedMonster>();
 
         // Debugging
@@ -59,8 +68,16 @@ public class PlayerFrameData : MonoBehaviour
 
     void Update()
     {
-
+        // Attack animation is playing
         if (playAnimation){
+
+
+            // Cancel animation when player hurt
+            if (playerStats.isHit){
+                playAnimation = false;
+                return;
+            }
+
             currentFrame += Time.deltaTime * framesPerSecond;
             delayFrames -= Time.deltaTime * framesPerSecond;
 
@@ -135,6 +152,36 @@ public class PlayerFrameData : MonoBehaviour
         playAnimation = true;
     }
 
+    
+    void CheckActive()
+    {
+        // Set active hitbox for sword
+        if (currentFrame > startUpFrames &&
+            currentFrame < startUpFrames + activeFrames)
+        {
+            
+            isActive = true;
+
+            // Hitbox display for debugging
+            hitBoxDisplay.SetActive(true);
+        }
+        else
+        {
+            isActive = false;
+            hitBoxDisplay.SetActive(false);
+        }
+    }
+
+    // For attack which have multiple hiboxes in a single animation
+    void HandleMultiHit()
+    {
+        if (isMultiHit && currentFrame > resetFrame)
+        {
+            isMultiHit = false;
+            isHit = false;
+        }
+    }
+
     // Collsion checking
     void OnCollisionEnter(Collision other)
     {
@@ -159,6 +206,9 @@ public class PlayerFrameData : MonoBehaviour
 
             monsterStats.health--;
             Debug.Log("Monster Health: " + monsterStats.health);
+
+            // Begin camera shake when hit
+            vcam.SetShake();
         }
     }
 
@@ -184,39 +234,14 @@ public class PlayerFrameData : MonoBehaviour
             
             monsterStats.health--;
             Debug.Log("Monster Health: " + monsterStats.health);
+
+            // Begin camera shake when hit
+            vcam.SetShake();
         }
     }
     
     void OnCollisionExit(Collision other)
     {
         
-    }
-    
-    void CheckActive()
-    {
-        // Set active hitbox for sword
-        if (currentFrame > startUpFrames &&
-            currentFrame < startUpFrames + activeFrames)
-        {
-            
-            isActive = true;
-
-            // Hitbox display for debugging
-            hitBoxDisplay.SetActive(true);
-        }
-        else
-        {
-            isActive = false;
-            hitBoxDisplay.SetActive(false);
-        }
-    }
-
-    void HandleMultiHit()
-    {
-        if (isMultiHit && currentFrame > resetFrame)
-        {
-            isMultiHit = false;
-            isHit = false;
-        }
     }
 }

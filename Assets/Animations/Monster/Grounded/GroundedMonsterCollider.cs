@@ -9,10 +9,10 @@ public class GroundedMonsterCollider : MonoBehaviour
 
     [SerializeField] GameObject monster;
     private Animator monsterAnimator;
-     
+
     private GroundedMonsterFD frameData;
     
-    int isAttackingHash;
+    int isAttackHash;
 
     // Start is called before the first frame update
     void Start()
@@ -23,12 +23,13 @@ public class GroundedMonsterCollider : MonoBehaviour
 
         frameData = monster.GetComponent<GroundedMonsterFD>();
 
+        isAttackHash = Animator.StringToHash("isAttack");
     }
     
     // For debugging
     void Update()
     {
-        bool isAttack = monsterAnimator.GetBool(isAttackingHash);
+        bool isAttack = monsterAnimator.GetBool(isAttackHash);
         if (isAttack &&
             frameData.currentFrame > frameData.startUpFrames &&
             frameData.currentFrame < frameData.startUpFrames + frameData.activeFrames){
@@ -41,7 +42,7 @@ public class GroundedMonsterCollider : MonoBehaviour
 
         // TODO: add a hitbox which should be bigger than monster's hitbox
 
-        bool isAttack = monsterAnimator.GetBool(isAttackingHash);
+        bool isAttack = monsterAnimator.GetBool(isAttackHash);
 
         // To be able hit the player:
         //---------------------------------------------------------------------------------

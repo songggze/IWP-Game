@@ -2986,6 +2986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbafeac0093b054db851201782b1f4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 8568777682877886850}
   monster: {fileID: 0}
   delayFrames: 0
   resetFrame: 0
@@ -3125,6 +3126,7 @@ MonoBehaviour:
   runSpeed: 4
   rollSpeed: 7
   setRollTimer: 0.7
+  rollActiveTimer: 0
 --- !u!114 &8803130131990803239
 MonoBehaviour:
   m_ObjectHideFlags: 0

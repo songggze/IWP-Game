@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     bool rollPressed;
 
     // Timer for translating character
-    float rollActiveTimer;
+    [SerializeField] float rollActiveTimer;
 
     float timerDelay;
     CharacterController controller;
@@ -92,7 +92,6 @@ public class PlayerMovement : MonoBehaviour
 
         // Player is damaged
         if (playerStats.isHit){
-
             return;
         }
 
@@ -111,14 +110,10 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         // when rolling animations ends
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Standard Idle") && isDodging && timerDelay <= 0){
             Debug.Log("Returning to idle state (From roll)");
             animator.SetBool(isDodgingHash, false);
-
-            // Reset triggers in case it gets buffered during animation
-            input.FindAction("Roll").Enable();
         }
         
         // update position when rolling
@@ -138,14 +133,13 @@ public class PlayerMovement : MonoBehaviour
         // set booleans based on keyboard press
         SetMovementBool(isWalking, isRunning);
 
-        // bool for rolling
+        // Input to set roll animation
         if (rollPressed && !isDodging && playerStats.stamina > 20) {
             animator.SetTrigger("Roll");
             animator.SetBool(isDodgingHash, true);
             rollPressed = false;
             rollActiveTimer = setRollTimer;
 
-            input.FindAction("Roll").Disable();
             timerDelay = 0.4f;
 
             playerStats.stamina -= 20;
@@ -222,6 +216,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void SetMovementBool(bool isWalking, bool isRunning)
     {
+        bool isAttack = animator.GetBool(isDodgingHash);
 
         // bool for Walking
         if (movementPressed && !isWalking){

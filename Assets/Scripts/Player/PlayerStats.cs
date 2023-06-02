@@ -15,6 +15,7 @@ public class PlayerStats : MonoBehaviour
     public bool isHit;
     public bool playHurtAnimation;
 
+
     private Animator animator;
 
     int isAttackingHash;
@@ -48,6 +49,7 @@ public class PlayerStats : MonoBehaviour
             playHurtAnimation = false;
         }
     }
+
 
     public void SetIFrames()
     {
