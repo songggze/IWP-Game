@@ -746,6 +746,7 @@ GameObject:
   - component: {fileID: 1273116975}
   - component: {fileID: 1273116974}
   - component: {fileID: 1273116976}
+  - component: {fileID: 1273116978}
   - component: {fileID: 1273116977}
   m_Layer: 0
   m_Name: Player Camera
@@ -858,6 +859,25 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1273116978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273116973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aecf9ea1f7ce2145851374ecf34129a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 1273116974}
+  player: {fileID: 1920467246}
+  moveSpeed: 3
+  moveDistance: 0.03
+  shakeLength: 0.05
+  isShaking: 0
+  moveUpward: 0
 --- !u!1 &1406463515
 GameObject:
   m_ObjectHideFlags: 0
@@ -2166,6 +2186,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1181956285}
     - target: {fileID: 3174250840239834731, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 1273116973}
+    - target: {fileID: 3174250840239834731, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
       propertyPath: monster
       value: 
       objectReference: {fileID: 1510270048}
@@ -2190,8 +2214,12 @@ PrefabInstance:
       value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 6216228866178139012, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 1273116973}
+    - target: {fileID: 6216228866178139012, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
       propertyPath: iFrames
-      value: 1.2
+      value: 1.05
       objectReference: {fileID: 0}
     - target: {fileID: 7737795783806255781, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
       propertyPath: staminabar

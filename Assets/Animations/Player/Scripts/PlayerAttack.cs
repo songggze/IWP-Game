@@ -10,11 +10,13 @@ public class PlayerAttack : MonoBehaviour
     // Inputs
     int isAttackHash;
     int isDodgingHash;
+    int isRunningHash;
 
     PlayerInput input;
 
-    bool leftAttackPressed;
-    bool rightAttackPressed;
+    private bool leftAttackPressed;
+    private bool rightAttackPressed;
+    public bool finalAttack;
 
     // Timers
     float timerDelay;
@@ -52,6 +54,8 @@ public class PlayerAttack : MonoBehaviour
         
         // Timer delay till to start an attack again
         leftClickTimer = 0;
+
+        finalAttack = false;
     }
 
     // Update is called once per frame
@@ -68,13 +72,10 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
 
-        //-------------------------------//
-        //      Left-click attacks 
-        //-------------------------------//
-
-        if (leftAttackPressed)
+        // Handle attack clicking
+        if (leftAttackPressed && !finalAttack)
             LeftAttack();
-        else if (rightAttackPressed)
+        else if (rightAttackPressed && !finalAttack)
             RightAttack();
         
 
@@ -84,7 +85,8 @@ public class PlayerAttack : MonoBehaviour
             Debug.Log("Returning to idle state");
             animator.SetBool(isAttackHash, false);
             leftClickTimer = leftClickDelay;
-            
+            finalAttack = false;
+
             // Reset triggers in case it gets buffered during animation
             animator.ResetTrigger("Slash 1");
             animator.ResetTrigger("Slash 2");
@@ -121,7 +123,6 @@ public class PlayerAttack : MonoBehaviour
             animator.SetBool(isAttackHash, true);
             leftAttackPressed = false;
             timerDelay = 0.3f;
-            
         }
 
         // Combo 1 
@@ -137,6 +138,9 @@ public class PlayerAttack : MonoBehaviour
             animator.SetTrigger("Slash 3");
             attackData.SetValues("Slash 3");
             leftAttackPressed = false;
+
+            // To prevent going in attack function during transition
+            finalAttack = true;
         }
     }
 
@@ -155,7 +159,6 @@ public class PlayerAttack : MonoBehaviour
             animator.SetBool(isAttackHash, true);
             rightAttackPressed = false;
             timerDelay = 0.3f;
-
         }
 
         // Combo 1 
@@ -171,6 +174,9 @@ public class PlayerAttack : MonoBehaviour
             animator.SetTrigger("Right 2");
             attackData.SetValues("Right 2");
             rightAttackPressed = false;
+
+            // To prevent going in attack function during transition
+            finalAttack = true;
         }
     }
     

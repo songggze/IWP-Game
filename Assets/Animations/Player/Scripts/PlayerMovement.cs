@@ -90,13 +90,9 @@ public class PlayerMovement : MonoBehaviour
         bool isAttack = animator.GetBool(isAttackHash);
         bool isDodging = animator.GetBool(isDodgingHash);
 
-        // Player is damaged
-        if (playerStats.isHit){
-            return;
-        }
 
         // Stamina Management
-        if (isRunning || isDodging){
+        if ((isRunning || isDodging) && !isAttack){
             // Stamina consumption when running
             if (isRunning && !isAttack && !isDodging && playerStats.stamina > 0){
                 playerStats.stamina -= 18 * Time.deltaTime;
@@ -108,6 +104,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 RecoverStamina();
             }
+        }
+
+        // Player is damaged
+        if (playerStats.isHit){
+            return;
         }
 
         // when rolling animations ends

@@ -35,6 +35,9 @@ public class PlayerFrameData : MonoBehaviour
     [SerializeField] GameObject camera;
     CameraShake vcam;
 
+    // Particle effect when hit enemy
+    [SerializeField] GameObject hitEffect;
+
     // Debugging
     GameObject hitBoxDisplay;
     [SerializeField] GameObject playerDamageText;
@@ -75,6 +78,8 @@ public class PlayerFrameData : MonoBehaviour
             // Cancel animation when player hurt
             if (playerStats.isHit){
                 playAnimation = false;
+                isActive = false;
+                hitBoxDisplay.SetActive(false);
                 return;
             }
 
@@ -209,6 +214,10 @@ public class PlayerFrameData : MonoBehaviour
 
             // Begin camera shake when hit
             vcam.SetShake();
+
+            // Render particle effects
+            GameObject effect = Instantiate(hitEffect);
+            effect.transform.position = this.transform.position;
         }
     }
 
@@ -237,6 +246,10 @@ public class PlayerFrameData : MonoBehaviour
 
             // Begin camera shake when hit
             vcam.SetShake();
+
+            // Render particle effects
+            GameObject effect = Instantiate(hitEffect);
+            effect.transform.position = this.transform.position;
         }
     }
     

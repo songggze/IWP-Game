@@ -2995,6 +2995,8 @@ MonoBehaviour:
   playAnimation: 0
   isHit: 0
   isMultiHit: 0
+  camera: {fileID: 0}
+  hitEffect: {fileID: 1713326151470364612, guid: e4f871669d3142246a86ed9f4b1ee6c7, type: 3}
   playerDamageText: {fileID: 4127074000765862998, guid: 8df65f9a5605fc24fa5173e034ae3a2a, type: 3}
 --- !u!54 &7425680349263084274
 Rigidbody:
@@ -3140,6 +3142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordHitbox: {fileID: 8548698847708033989}
+  finalAttack: 0
   leftClickDelay: 0.3
 --- !u!114 &2477868582621071604
 MonoBehaviour:
@@ -3184,7 +3187,7 @@ MonoBehaviour:
   faintsLife: 100
   health: 0
   stamina: 0
-  iFrames: 1.2
+  iFrames: 1.05
   iFrameTimer: 0
   isHit: 0
   playHurtAnimation: 0

@@ -307,7 +307,7 @@ AnimatorStateTransition:
   m_ExitTime: 0.6511628
   m_HasExitTime: 0
   m_HasFixedDuration: 1
-  m_InterruptionSource: 0
+  m_InterruptionSource: 2
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
 --- !u!1109 &-4706136342689981225
@@ -640,7 +640,7 @@ AnimatorController:
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
   - serializedVersion: 5
-    m_Name: Hurt
+    m_Name: Hurt Animation
     m_StateMachine: {fileID: 6732358251521779669}
     m_Mask: {fileID: 0}
     m_Motions: []
@@ -742,7 +742,7 @@ AnimatorStateTransition:
   m_ExitTime: 0.65116274
   m_HasExitTime: 0
   m_HasFixedDuration: 0
-  m_InterruptionSource: 2
+  m_InterruptionSource: 1
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
 --- !u!1101 &2320933893808085382
@@ -767,7 +767,7 @@ AnimatorStateTransition:
   m_ExitTime: 0.9166667
   m_HasExitTime: 0
   m_HasFixedDuration: 0
-  m_InterruptionSource: 1
+  m_InterruptionSource: 2
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
 --- !u!1101 &2374374268847179807
@@ -844,7 +844,7 @@ AnimatorStateTransition:
   m_ExitTime: 0.78571427
   m_HasExitTime: 0
   m_HasFixedDuration: 1
-  m_InterruptionSource: 0
+  m_InterruptionSource: 2
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
 --- !u!1101 &6225181613392191478
@@ -928,7 +928,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hurt
+  m_Name: Hurt Animation
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -7240441350151223245}
@@ -1042,7 +1042,7 @@ AnimatorStateTransition:
   m_ExitTime: 0.8986486
   m_HasExitTime: 1
   m_HasFixedDuration: 1
-  m_InterruptionSource: 0
+  m_InterruptionSource: 1
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
 --- !u!1102 &7906267306283143533
