@@ -54,7 +54,7 @@ public class GroundedMonster : MonoBehaviour
                 return 1.4f;
 
             case "Limb":
-                return 1.2f;
+                return 1f;
 
             case "Body":
                 return 0.7f;

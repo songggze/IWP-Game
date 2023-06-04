@@ -36,9 +36,12 @@ public class PlayerFrameData : MonoBehaviour
     // Particle effect when hit enemy
     [SerializeField] GameObject hitEffect;
 
+    // Damage Text Display
+    [SerializeField] GameObject playerDamageTextStrong;
+    [SerializeField] GameObject playerDamageTextWeak;
+
     // Debugging
     GameObject hitBoxDisplay;
-    [SerializeField] GameObject playerDamageText;
 
     // Start is called before the first frame update
     void Start()
@@ -235,7 +238,17 @@ public class PlayerFrameData : MonoBehaviour
         monsterStats.health -= totalDamage;
 
         // Damage Text rendering
-        GameObject damageText = Instantiate(playerDamageText);
+        GameObject damageText;
+
+        // Render yellow text if part is a weakspot, else grey text
+        if (partModifier >= 1.2f){
+            damageText = Instantiate(playerDamageTextStrong);
+        }
+        else{
+            damageText = Instantiate(playerDamageTextWeak);
+        }
+
+        // Setting transformations
         damageText.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
         damageText.transform.Rotate(0, 0, Random.Range(-10f, 0f));
 

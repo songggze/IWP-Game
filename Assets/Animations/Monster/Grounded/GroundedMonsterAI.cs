@@ -19,6 +19,7 @@ public class GroundedMonsterAI : MonoBehaviour
     Vector3 velocity;
 
     [SerializeField] GameObject player;
+    PlayerStats playerStats;
 
     // Will only initiate attacks when player is in line of sight
     public bool startAttack;
@@ -33,6 +34,7 @@ public class GroundedMonsterAI : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         frameData = GetComponent<GroundedMonsterFD>();
         monsterStats = GetComponent<GroundedMonster>();
+        playerStats = player.GetComponent<PlayerStats>();
 
         isWalkingHash = Animator.StringToHash("isWalking");
         isAttackingHash = Animator.StringToHash("isAttack");
@@ -115,6 +117,9 @@ public class GroundedMonsterAI : MonoBehaviour
         // Setting stoppingDistance to 999 as for some reason enabling/disabling the agent breaks the navmesh 
         navMeshAgent.stoppingDistance = 999;
 
+        if (playerStats.isDead){
+            return;
+        }
 
         // Choose Attacks
         int rand;

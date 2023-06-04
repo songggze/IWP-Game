@@ -63,7 +63,7 @@ public class GroundedMonsterCollider : MonoBehaviour
 
                 playerStats.SetIFrames();
 
-                playerStats.health -= 20;
+                playerStats.health -= 15;
             }
 
             Debug.Log("Position is reverted");

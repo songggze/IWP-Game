@@ -8,6 +8,7 @@ TagManager:
   - Player Weapon
   - Canvas
   - Player Model
+  - Enemy Body
   layers:
   - Default
   - TransparentFX
