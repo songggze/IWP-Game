@@ -61,7 +61,9 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleAttack();
+        if (!playerStats.isDead){
+            HandleAttack();
+        }
     }
      
     void HandleAttack()

@@ -7,6 +7,11 @@ public class PlayerStats : MonoBehaviour
 
     [SerializeField] float faintsLife = 100;
 
+    // Equipment Stats, put in seperate script later
+    [SerializeField] public float attack = 8;
+
+    public Vector3 prevPosition;
+
     public float health;
     public float stamina;
     [SerializeField] float iFrames = 1;
@@ -14,6 +19,9 @@ public class PlayerStats : MonoBehaviour
 
     public bool isHit;
     public bool playHurtAnimation;
+
+    public bool isDead;
+    public bool playDeadAnimation;
 
     private Animator animator;
     private PlayerAttack playerAttack;
@@ -27,9 +35,13 @@ public class PlayerStats : MonoBehaviour
         health = maxHealth;
         stamina = maxStamina;
 
+        prevPosition = gameObject.transform.position;
+
         iFrameTimer = 0;
         isHit = false;
         playHurtAnimation = false;
+
+        isDead = false;
         
         animator = GetComponent<Animator>();
         playerAttack = GetComponent<PlayerAttack>();
@@ -49,6 +61,8 @@ public class PlayerStats : MonoBehaviour
             isHit = false;
             playHurtAnimation = false;
         }
+
+        CheckHealthStatus();
     }
 
 
@@ -67,6 +81,17 @@ public class PlayerStats : MonoBehaviour
             animator.SetBool(isDodgingHash, false);
             playHurtAnimation = true;
             playerAttack.finalAttack = false;
+        }
+    }
+
+    private void CheckHealthStatus()
+    {
+
+        if (health <= 0){
+            isDead = true;
+            if (!playDeadAnimation){
+                animator.Play("Player Death");
+            }
         }
     }
 }

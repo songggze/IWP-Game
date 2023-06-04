@@ -23,6 +23,9 @@ public class GroundedMonsterAI : MonoBehaviour
     // Will only initiate attacks when player is in line of sight
     public bool startAttack;
 
+    // Debugging
+    [SerializeField] bool debugAttacking = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -113,11 +116,15 @@ public class GroundedMonsterAI : MonoBehaviour
         navMeshAgent.stoppingDistance = 999;
 
 
-        // TODO: please put this in a function later
-        //int rand = Random.Range(1, 5);
-
-        // Debug Stuff
-        int rand = PressAttack();
+        // Choose Attacks
+        int rand;
+        if (!debugAttacking){
+            rand = Random.Range(1, 5);
+        }
+        else{
+            // Debug Stuff
+            rand = PressAttack();
+        }
 
         switch(rand){
             case 1:
@@ -155,6 +162,7 @@ public class GroundedMonsterAI : MonoBehaviour
         timerDelay = 0.9f;
     }
 
+    // For debugging
     int PressAttack()
     {
         if (Input.GetKeyDown(KeyCode.Alpha0))

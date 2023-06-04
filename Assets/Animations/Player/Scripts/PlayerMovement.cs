@@ -76,7 +76,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        HandleMovement();
+        if (!playerStats.isDead){
+            HandleMovement();
+        }
 
         if (timerDelay > 0){
             timerDelay -= Time.deltaTime;

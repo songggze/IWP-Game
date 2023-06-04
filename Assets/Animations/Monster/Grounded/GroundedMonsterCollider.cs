@@ -11,6 +11,7 @@ public class GroundedMonsterCollider : MonoBehaviour
     private Animator monsterAnimator;
 
     private GroundedMonsterFD frameData;
+    [SerializeField] public string bodyType = "NULL";
     
     int isAttackHash;
 
@@ -35,32 +36,61 @@ public class GroundedMonsterCollider : MonoBehaviour
             frameData.currentFrame < frameData.startUpFrames + frameData.activeFrames){
             Debug.Log("Monster hitbox active");
         }
+
+        playerStats.prevPosition = player.transform.position;
     }
 
-    void OnCollisionEnter()
+    void OnCollisionEnter(Collision other)
     {
 
-        // TODO: add a hitbox which should be bigger than monster's hitbox
+        if (other.gameObject.tag == "Player"){
 
-        bool isAttack = monsterAnimator.GetBool(isAttackHash);
+            bool isAttack = monsterAnimator.GetBool(isAttackHash);
 
-        // To be able hit the player:
-        //---------------------------------------------------------------------------------
-        // - The player is not in invincibility state
-        // - The monster is in an attacking state
-        // - The attack animation as be within the "active frames" period, which determines
-        //   how long the hitboxes last
-        //----------------------------------------------------------------------------------
-        if (!playerStats.isHit && isAttack &&
-            frameData.currentFrame > frameData.startUpFrames &&
-            frameData.currentFrame < frameData.startUpFrames + frameData.activeFrames){
+            // To be able hit the player:
+            //---------------------------------------------------------------------------------
+            // - The player is not in invincibility state
+            // - The monster is in an attacking state
+            // - The attack animation as be within the "active frames" period, which determines
+            //   how long the hitboxes last
+            //----------------------------------------------------------------------------------
+            if (!playerStats.isHit && isAttack &&
+                frameData.currentFrame > frameData.startUpFrames &&
+                frameData.currentFrame < frameData.startUpFrames + frameData.activeFrames)
+            {
 
-            playerStats.isHit = true;
+                playerStats.isHit = true;
 
-            playerStats.SetIFrames();
+                playerStats.SetIFrames();
 
-            playerStats.health -= 20;
+                playerStats.health -= 20;
+            }
+
+            Debug.Log("Position is reverted");
+            player.transform.position = playerStats.prevPosition;
+
+            if (playerStats.isHit)
+            {
+
+                player.transform.position -= player.transform.forward * 10 * Time.deltaTime;
+            }
         }
     }
+
+    void OnCollisionStay(Collision other)
+    {  
+        if (other.gameObject.tag == "Player"){
+
+            Debug.Log("Inside");
+            player.transform.position = playerStats.prevPosition;
+
+            if (playerStats.isHit)
+            {
+
+                player.transform.position -= player.transform.forward * 10 * Time.deltaTime;
+            }
+        }
+    }
+
 
 }

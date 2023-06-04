@@ -42,4 +42,29 @@ public class GroundedMonster : MonoBehaviour
         //Quaternion targetRotation = Quaternion.LookRotation(targetPosition);
         //transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, Time.deltaTime);
     }
+
+    public float GetHitzoneModifier(string part)
+    {
+        switch (part)
+        {
+            case "Head":
+                return 2;
+
+            case "Arm":
+                return 1.4f;
+
+            case "Limb":
+                return 1.2f;
+
+            case "Body":
+                return 0.7f;
+
+            case "Tail":
+                return 1;
+            
+            default:
+                Debug.Log("Body Part does not exist!!");
+                return 0;
+        }
+    }
 }

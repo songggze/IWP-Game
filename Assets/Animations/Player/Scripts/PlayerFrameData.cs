@@ -23,9 +23,7 @@ public class PlayerFrameData : MonoBehaviour
     public double resetFrame;
     [SerializeField] double framesPerSecond = 60;
 
-    // Handle damage data
-    private float attackModifier;
-
+    float attackModifier;
     public bool isActive;
     public bool playAnimation;
     public bool isHit;
@@ -104,43 +102,43 @@ public class PlayerFrameData : MonoBehaviour
         switch(animationName){
             // Left click attacks
             case "Slash 1":
+                attackModifier = 1.2f;
                 startUpFrames = 18;
                 activeFrames = 18;
-                attackModifier = 0;
                 delayFrames = 25;
                 isMultiHit = false;
                 break;
 
             case "Slash 2":
+                attackModifier = 1.3f;
                 startUpFrames = 22;
                 activeFrames = 30;
-                attackModifier = 0;
                 delayFrames = 38;
                 isMultiHit = false;
                 break;
 
             case "Slash 3":
+                attackModifier = 2.5f;
                 startUpFrames = 60;
                 activeFrames = 30;
-                attackModifier = 0;
                 delayFrames = 0;
                 isMultiHit = false;
                 break;
             
             // Right click attacks
             case "Right 1":
+                attackModifier = 0.8f;
                 startUpFrames = 25;
                 activeFrames = 60;
-                attackModifier = 0;
                 delayFrames = 64;
                 isMultiHit = true;
                 resetFrame = 55;
                 break;
 
             case "Right 2":
+                attackModifier = 1.7f;
                 startUpFrames = 30;
                 activeFrames = 38;
-                attackModifier = 0;
                 delayFrames = 0;
                 isMultiHit = false;
                 break;
@@ -193,24 +191,8 @@ public class PlayerFrameData : MonoBehaviour
 
         if (other.gameObject.tag == "Enemy" && isActive && !isHit){
 
-            // do damage
-
-            // For debugging
-
-            // Rendering damage text on canvas
-            GameObject damageText = Instantiate(playerDamageText);
-            damageText.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
-            damageText.transform.Rotate(0, 0, Random.Range(-10f, 0f));
-
-            // Setting text this way because there are two texts in 'damageTxt'
-            TextMeshProUGUI[] setText;
-            setText = damageText.GetComponentsInChildren<TextMeshProUGUI>();
-            setText[0].SetText("Hit!");
-            setText[1].SetText("Hit!");
-            isHit = true;
-
-            monsterStats.health--;
-            Debug.Log("Monster Health: " + monsterStats.health);
+            // Handle monster damaging and rendering damage numbers
+            DamageMonster(other.gameObject);
 
             // Begin camera shake when hit
             vcam.SetShake();
@@ -225,24 +207,9 @@ public class PlayerFrameData : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy" && isActive && !isHit){
 
-            // do damage
-
-            // For debugging
-
-            // Rendering damage text on canvas
-            GameObject damageText = Instantiate(playerDamageText);
-            damageText.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
-            damageText.transform.Rotate(0, 0, Random.Range(-10f, 0f));
-
-            // Setting text this way because there are two texts in 'damageTxt'
-            TextMeshProUGUI[] setText;
-            setText = damageText.GetComponentsInChildren<TextMeshProUGUI>();
-            setText[0].SetText("Hit!");
-            setText[1].SetText("Hit!");
-            isHit = true;
             
-            monsterStats.health--;
-            Debug.Log("Monster Health: " + monsterStats.health);
+            // Handle monster damaging and rendering damage numbers
+            DamageMonster(other.gameObject);
 
             // Begin camera shake when hit
             vcam.SetShake();
@@ -256,5 +223,29 @@ public class PlayerFrameData : MonoBehaviour
     void OnCollisionExit(Collision other)
     {
         
+    }
+
+    private void DamageMonster(GameObject target)
+    {
+        // Get the attack mulitplier based on what body part is affected
+        float partModifier = monsterStats.GetHitzoneModifier(target.GetComponent<GroundedMonsterCollider>().bodyType);
+
+        // Damage calculation, rounded up
+        int totalDamage = (int) Mathf.Ceil((playerStats.attack * attackModifier) * partModifier);
+        monsterStats.health -= totalDamage;
+
+        // Damage Text rendering
+        GameObject damageText = Instantiate(playerDamageText);
+        damageText.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
+        damageText.transform.Rotate(0, 0, Random.Range(-10f, 0f));
+
+        // Setting text this way because there are two texts in 'damageTxt'
+        TextMeshProUGUI[] setText;
+        setText = damageText.GetComponentsInChildren<TextMeshProUGUI>();
+        setText[0].SetText(totalDamage.ToString());
+        setText[1].SetText(totalDamage.ToString());
+        isHit = true;
+
+        Debug.Log("Monster Health: " + monsterStats.health);
     }
 }
