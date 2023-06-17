@@ -34,7 +34,7 @@ public class GroundedMonsterCollider : MonoBehaviour
         if (isAttack &&
             frameData.currentFrame > frameData.startUpFrames &&
             frameData.currentFrame < frameData.startUpFrames + frameData.activeFrames){
-            Debug.Log("Monster hitbox active");
+            //Debug.Log("Monster hitbox active");
         }
 
         playerStats.prevPosition = player.transform.position;

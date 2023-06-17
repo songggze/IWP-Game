@@ -2,34 +2,36 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    // Status
+    public float health, stamina;
     [SerializeField] float maxHealth = 100;
     [SerializeField] public float maxStamina = 100;
 
-    [SerializeField] float faintsLife = 100;
-
+    ///////////////////////////////////////////////////
     // Equipment Stats, put in seperate script later
     [SerializeField] public float attack = 8;
+    ///////////////////////////////////////////////////
 
+    // Get previous pos for collision checking
     public Vector3 prevPosition;
 
-    public float health;
-    public float stamina;
+    // Frame Data
     [SerializeField] float iFrames = 1;
     public float iFrameTimer;
 
-    public bool isHit;
-    public bool playHurtAnimation;
-
-    public bool isDead;
-    public bool playDeadAnimation;
+    // Set animation states
+    public bool isHit, playHurtAnimation;
+    public bool isDead, playDeadAnimation;
 
     private Animator animator;
     private PlayerAttack playerAttack;
 
+    // Animator bool checking
     int isAttackingHash;
     int isWalkingHash;
     int isRunningHash;
     int isDodgingHash;
+
     void Start()
     {
         health = maxHealth;
@@ -62,6 +64,7 @@ public class PlayerStats : MonoBehaviour
             playHurtAnimation = false;
         }
 
+        // Check if health == 0
         CheckHealthStatus();
     }
 

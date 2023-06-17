@@ -7,7 +7,6 @@ public class GroundedMonsterRaycast : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Player"){
-            Debug.Log("iretnisrnortnostnrnoisrt");
             monster.GetComponent<GroundedMonsterAI>().startAttack = true;
         }
     }

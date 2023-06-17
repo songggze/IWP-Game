@@ -15,14 +15,18 @@ public class PlayerFrameData : MonoBehaviour
     GroundedMonster monsterStats;
 
     // Frame data for attack collisions
+    
+    //   During animation data
     private double currentFrame;
     private double startUpFrames;
     private double activeFrames;
     private double totalFrames;
+    //   Post-animation data
     public double delayFrames;
     public double resetFrame;
     [SerializeField] double framesPerSecond = 60;
 
+    // Attack data
     float attackModifier;
     public bool isActive;
     public bool playAnimation;
@@ -30,7 +34,7 @@ public class PlayerFrameData : MonoBehaviour
     public bool isMultiHit;
 
     // Camera shake effect
-    [SerializeField] GameObject camera;
+    [SerializeField] GameObject cameraObject;
     CameraShake vcam;
 
     // Particle effect when hit enemy
@@ -60,7 +64,7 @@ public class PlayerFrameData : MonoBehaviour
         isHit = false;
         isMultiHit = false;
 
-        vcam = camera.GetComponent<CameraShake>();
+        vcam = cameraObject.GetComponent<CameraShake>();
 
         playerStats = player.GetComponent<PlayerStats>();
         monsterStats = monster.GetComponent<GroundedMonster>();
@@ -74,7 +78,6 @@ public class PlayerFrameData : MonoBehaviour
     {
         // Attack animation is playing
         if (playAnimation){
-
 
             // Cancel animation when player hurt
             if (playerStats.isHit){
@@ -197,7 +200,7 @@ public class PlayerFrameData : MonoBehaviour
             // Handle monster damaging and rendering damage numbers
             DamageMonster(other.gameObject);
 
-            // Begin camera shake when hit
+            // Begin cameraObject shake when hit
             vcam.SetShake();
 
             // Render particle effects
@@ -214,18 +217,13 @@ public class PlayerFrameData : MonoBehaviour
             // Handle monster damaging and rendering damage numbers
             DamageMonster(other.gameObject);
 
-            // Begin camera shake when hit
+            // Begin cameraObject shake when hit
             vcam.SetShake();
 
             // Render particle effects
             GameObject effect = Instantiate(hitEffect);
             effect.transform.position = this.transform.position;
         }
-    }
-    
-    void OnCollisionExit(Collision other)
-    {
-        
     }
 
     private void DamageMonster(GameObject target)

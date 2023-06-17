@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerDamageText : MonoBehaviour
 {
@@ -18,10 +19,18 @@ public class PlayerDamageText : MonoBehaviour
     {
         timer -= Time.deltaTime;
 
-        if (timer > 0.2f)
+        if (timer > 0.4f)
         {
-            pos.y += 220 * Time.deltaTime;
+            pos.y += 440 * Time.deltaTime;
             transform.position = pos;
+        }
+        
+        if (timer < 0.3f)
+        {
+            foreach (Transform child in transform){
+                Debug.Log(child.GetComponent<TextMeshProUGUI>().alpha);
+                child.GetComponent<TextMeshProUGUI>().alpha -= 1.5f * Time.deltaTime;
+            }
         }
 
         if (timer <= 0)
