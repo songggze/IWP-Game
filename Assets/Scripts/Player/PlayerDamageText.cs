@@ -9,7 +9,7 @@ public class PlayerDamageText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timer = 0.5;
+        timer = 0.6;
         pos = transform.position;
         pos.x += Random.Range(-50, 50);
     }
@@ -19,13 +19,13 @@ public class PlayerDamageText : MonoBehaviour
     {
         timer -= Time.deltaTime;
 
-        if (timer > 0.4f)
+        if (timer > 0.48f)
         {
-            pos.y += 440 * Time.deltaTime;
+            pos.y += 400 * Time.deltaTime;
             transform.position = pos;
         }
         
-        if (timer < 0.3f)
+        if (timer < 0.4f)
         {
             foreach (Transform child in transform){
                 Debug.Log(child.GetComponent<TextMeshProUGUI>().alpha);

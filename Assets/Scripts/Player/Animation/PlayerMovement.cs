@@ -80,6 +80,13 @@ public class PlayerMovement : MonoBehaviour
             HandleMovement();
         }
 
+        if (playerStats.stamina <= 0 && !playerStats.isTired){
+            playerStats.isTired = true;
+        }
+        else if(playerStats.stamina >= playerStats.maxStamina && playerStats.isTired){
+            playerStats.isTired = false;
+        }
+
         if (timerDelay > 0){
             timerDelay -= Time.deltaTime;
         }
@@ -94,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         // Stamina Management
-        if ((isRunning || isDodging) && !isAttack){
+        if ((isRunning || isDodging) && !isAttack && !playerStats.isTired){
             // Stamina consumption when running
             if (isRunning && !isAttack && !isDodging && playerStats.stamina > 0){
                 playerStats.stamina -= 18 * Time.deltaTime;
@@ -137,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
         SetMovementBool(isWalking, isRunning);
 
         // Input to set roll animation
-        if (rollPressed && !isDodging && playerStats.stamina > 20) {
+        if (rollPressed && !isDodging && !playerStats.isTired && playerStats.stamina > 20) {
             animator.SetTrigger("Roll");
             animator.SetBool(isDodgingHash, true);
             rollPressed = false;
@@ -234,7 +241,7 @@ public class PlayerMovement : MonoBehaviour
 
             animator.SetBool(isRunningHash, true);
         }
-        if ((!movementPressed || !runPressed) && isRunning  || playerStats.stamina <= 0){
+        if ((!movementPressed || !runPressed) && isRunning || playerStats.stamina <= 0 || playerStats.isTired){
             animator.SetBool(isRunningHash, false);
         }
     }

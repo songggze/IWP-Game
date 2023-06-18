@@ -4,6 +4,7 @@ public class PlayerStats : MonoBehaviour
 {
     // Status
     public float health, stamina;
+    public bool isTired;
     [SerializeField] float maxHealth = 100;
     [SerializeField] public float maxStamina = 100;
 
@@ -36,6 +37,7 @@ public class PlayerStats : MonoBehaviour
     {
         health = maxHealth;
         stamina = maxStamina;
+        isTired = false;
 
         prevPosition = gameObject.transform.position;
 
