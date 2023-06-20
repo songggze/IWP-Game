@@ -28,7 +28,6 @@ public class PlayerDamageText : MonoBehaviour
         if (timer < 0.4f)
         {
             foreach (Transform child in transform){
-                Debug.Log(child.GetComponent<TextMeshProUGUI>().alpha);
                 child.GetComponent<TextMeshProUGUI>().alpha -= 1.5f * Time.deltaTime;
             }
         }

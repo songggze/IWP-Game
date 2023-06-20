@@ -36,8 +36,6 @@ public class CameraShake : MonoBehaviour
         
         if (shakeTimer > 0 && isShaking){
 
-            Debug.Log("camera is shaking i guess?");
-
             // Apply shake effect
             if (moveUpward){
                 vcam.m_Offset += new Vector3(moveSpeed, moveSpeed, 0) * Time.deltaTime;
