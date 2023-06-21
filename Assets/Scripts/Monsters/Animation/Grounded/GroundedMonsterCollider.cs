@@ -45,6 +45,8 @@ public class GroundedMonsterCollider : MonoBehaviour
 
         if (other.gameObject.tag == "Player"){
 
+            Debug.Log(frameData.damage);
+
             bool isAttack = monsterAnimator.GetBool(isAttackHash);
 
             // To be able hit the player:
@@ -63,7 +65,7 @@ public class GroundedMonsterCollider : MonoBehaviour
 
                 playerStats.SetIFrames();
 
-                playerStats.health -= 15;
+                playerStats.health -= frameData.damage;
             }
 
             Debug.Log("Position is reverted");

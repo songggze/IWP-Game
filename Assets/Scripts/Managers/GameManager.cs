@@ -87,7 +87,6 @@ public class GameManager : MonoBehaviour
 
             if (winGame){
 
-                // win canvas
                 winCanvas.GetComponent<CanvasGroup>().alpha += 0.5f * Time.deltaTime;
 
                 // Display time taken to clear quest
@@ -100,10 +99,10 @@ public class GameManager : MonoBehaviour
             }
             else{
 
-                // lose canvas
                 loseCanvas.GetComponent<CanvasGroup>().alpha += 1 * Time.deltaTime;
 
-                if (Input.GetKeyDown(KeyCode.E)){
+                // Restart game
+                if (Input.GetKeyDown(KeyCode.R)){
                     SceneManager.LoadScene("AnimationTest");
                 }
             }

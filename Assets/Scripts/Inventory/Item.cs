@@ -10,10 +10,14 @@ public class Item : ScriptableObject
 
     public Sprite itemIcon;
 
+    // Item stats
+    public string itemType;
+    public int itemPower;
+
     // Constructor
-    Item(int _id, string _name, int _count){
-        itemId = _id;
-        itemName = _name;
-        itemCount = _count;
-    }
+    //Item(int _id, string _name, int _count){
+        //itemId = _id;
+        //itemName = _name;
+        //itemCount = _count;
+    //}
 }

@@ -5,7 +5,7 @@ public class PlayerStats : MonoBehaviour
     // Status
     public float health, stamina;
     public bool isTired;
-    [SerializeField] float maxHealth = 100;
+    [SerializeField] public float maxHealth = 100;
     [SerializeField] public float maxStamina = 100;
 
     ///////////////////////////////////////////////////

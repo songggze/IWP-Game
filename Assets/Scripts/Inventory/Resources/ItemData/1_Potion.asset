@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 1
   itemName: Potion
-  count: 4
+  itemCount: 4
   maxCount: 10
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 55f4ef99b09d90a4a990cc224381762d, type: 3}

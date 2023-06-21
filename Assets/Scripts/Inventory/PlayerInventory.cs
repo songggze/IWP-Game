@@ -14,14 +14,19 @@ public class PlayerInventory : MonoBehaviour
     bool init = false;
 
     int selectedItem;
-    int selectorMaxCount;
+    int itemTypeCount;
 
     // Item Selector Stuff
     [SerializeField] GameObject itemHolders;
 
+    [SerializeField] GameObject player;
+    private PlayerStats playerStats;
+
     // Start is called before the first frame update
     void Start()
-    {
+    { 
+        playerStats = player.GetComponent<PlayerStats>();
+
         // Get item data which contains scriptable objects
         itemList = Resources.LoadAll<Item>("ItemData").ToList();
 
@@ -36,7 +41,7 @@ public class PlayerInventory : MonoBehaviour
         }
 
         selectedItem = 0;
-        selectorMaxCount = itemList.Count() - 1;
+        itemTypeCount = itemList.Count() - 1;
 
         // Set initial display for the item holders
         UpdateHolder();
@@ -46,6 +51,7 @@ public class PlayerInventory : MonoBehaviour
     void Update()
     {
         
+        // To show list at start of game
         if (!init){
             PrintList();
             init = true;
@@ -55,20 +61,24 @@ public class PlayerInventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) || Input.GetAxis("Mouse ScrollWheel") < 0){
             selectedItem--;
             if (selectedItem < 0){
-                selectedItem = selectorMaxCount;
+                selectedItem = itemTypeCount;
             }
             UpdateHolder();
-            Debug.Log($"Selected Item: {itemList[selectedItem].itemName}");
         }
         else if (Input.GetKeyDown(KeyCode.E) || Input.GetAxis("Mouse ScrollWheel") > 0){
 
             selectedItem++;
-            if (selectedItem > selectorMaxCount){
+            if (selectedItem > itemTypeCount){
 
                 selectedItem = 0;
             }
             UpdateHolder();
-            Debug.Log($"Selected Item: {itemList[selectedItem].itemName}");
+        }
+
+
+        // Use item
+        if (Input.GetKeyDown(KeyCode.F)){
+            UseItem();
         }
     }
 
@@ -87,6 +97,11 @@ public class PlayerInventory : MonoBehaviour
 
     void UpdateHolder()
     {
+        if (itemTypeCount < 0){
+            return;
+        }
+
+        Debug.Log($"Selected Item: {itemList[selectedItem].itemName}");
         // Update the item icons for all panels based on current selected item
         for (int index = 0; index < itemHolders.transform.childCount; index++){
 
@@ -99,19 +114,82 @@ public class PlayerInventory : MonoBehaviour
         GameObject.Find("Item Selected Count").GetComponent<TextMeshProUGUI>().text = itemList[selectedItem].itemCount.ToString();
     }
 
+    void DisplayEmptyHolders()
+    {
+        // Set everything to empty
+        for (int index = 0; index < itemHolders.transform.childCount; index++){
+
+            var panelIcon = itemHolders.transform.GetChild(index).gameObject.transform.Find("Icon").gameObject;
+            panelIcon.GetComponent<Image>().sprite = null;
+            panelIcon.GetComponent<CanvasRenderer>().SetAlpha(0);
+        }
+
+        GameObject.Find("Item Selected Text").GetComponent<TextMeshProUGUI>().text = null;
+        GameObject.Find("Item Selected Count").GetComponent<TextMeshProUGUI>().text = null;
+    }
+
     int SelectedIndex(int offset)
     {
         int result = selectedItem + offset;
 
         // "Wrapping" if overshoot    
         if (result < 0){
-            result = selectorMaxCount;
+            result = itemTypeCount;
         }
-        if (result > selectorMaxCount){
+        if (result > itemTypeCount){
 
             result = 0;
         }
 
         return result;
+    }
+
+    void UseItem()
+    {
+        // If inventory is empty
+        if (itemTypeCount < 0){
+            return;
+        }
+
+        switch(itemList[selectedItem].itemType)
+        {
+            // Restores health
+            case "Heal":
+
+                playerStats.health += itemList[selectedItem].itemPower;
+                if (playerStats.health >= playerStats.maxHealth){
+                    playerStats.health = playerStats.maxHealth;
+                }
+
+                break;
+
+            // Immobolizes monster
+            case "Trap":
+                break;
+
+            // Sharpens weapon
+            case "Sharpen":
+                break;
+        }
+
+        // Decrease the item count by one
+        itemList[selectedItem].itemCount -= 1;
+         
+        // Remove from itemList if item count is 0
+        if (itemList[selectedItem].itemCount <= 0){
+            itemList.RemoveAt(selectedItem);
+            itemTypeCount -= 1;
+
+            if (selectedItem > itemTypeCount){
+                selectedItem = 0;
+            }
+        }
+
+        if (itemTypeCount >= 0){
+            UpdateHolder();
+        }
+        else{
+            DisplayEmptyHolders();
+        }
     }
 }

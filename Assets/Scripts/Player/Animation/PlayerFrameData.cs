@@ -248,7 +248,7 @@ public class PlayerFrameData : MonoBehaviour
 
         // Setting transformations
         damageText.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
-        damageText.transform.Rotate(0, 0, Random.Range(-10f, 0f));
+        //damageText.transform.Rotate(0, 0, Random.Range(-10f, 0f));
 
         // Setting text this way because there are two texts in 'damageTxt'
         TextMeshProUGUI[] setText;

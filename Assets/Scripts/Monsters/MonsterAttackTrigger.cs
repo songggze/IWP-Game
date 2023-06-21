@@ -5,12 +5,16 @@ public class MonsterAttackTrigger : MonoBehaviour
     [SerializeField] GameObject player;
     private PlayerStats playerStats;
 
+    [SerializeField] GameObject monster;
+    private GroundedMonsterFD frameData;
+
     // Start is called before the first frame update
     void Start()
     {
         gameObject.SetActive(false);
 
         playerStats = player.GetComponent<PlayerStats>();
+        frameData = monster.GetComponent<GroundedMonsterFD>();
     }
 
     void OnTriggerEnter()
@@ -21,7 +25,7 @@ public class MonsterAttackTrigger : MonoBehaviour
             playerStats.isHit = true;
             playerStats.SetIFrames();
 
-            playerStats.health -= 20;
+            playerStats.health -= frameData.damage;
         }
     }
 }

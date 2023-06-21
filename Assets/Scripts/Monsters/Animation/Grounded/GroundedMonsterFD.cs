@@ -22,7 +22,7 @@ public class GroundedMonsterFD : MonoBehaviour
     public double repeatTimer;
 
     // Handle damage data
-    private float attackModifier;
+    public float damage;
 
     public bool isActive;
     public bool playAnimation;
@@ -50,7 +50,7 @@ public class GroundedMonsterFD : MonoBehaviour
         repeatTimer = 0;
         repeatFrames = 0;
         
-        attackModifier = 0;
+        damage = 0;
         isActive = false;
         isHit = false;
         isMultiHit = false;
@@ -90,9 +90,10 @@ public class GroundedMonsterFD : MonoBehaviour
     {
         switch(animationName){
             case "Horn Attack":
+                damage = 20;
+
                 startUpFrames = 50;
                 activeFrames = 25;
-                attackModifier = 0;
                 delayFrames = 25;
 
                 // Attack has movement
@@ -103,9 +104,10 @@ public class GroundedMonsterFD : MonoBehaviour
                 break;
 
             case "Jump":
+                damage = 30;
+
                 startUpFrames = 100;
                 activeFrames = 13;
-                attackModifier = 0;
                 delayFrames = 25;
 
                 isMultiHit = false;
@@ -113,9 +115,10 @@ public class GroundedMonsterFD : MonoBehaviour
                 break;
 
             case "Bite":
+                damage = 15;
+
                 startUpFrames = 40;
                 activeFrames = 15;
-                attackModifier = 0;
                 delayFrames = 25;
 
                 isMultiHit = false;
@@ -123,9 +126,10 @@ public class GroundedMonsterFD : MonoBehaviour
                 break;
 
             case "Rush":
+                damage = 35;
+
                 startUpFrames = 80;
                 activeFrames = 580;
-                attackModifier = 0;
                 delayFrames = 25;
 
                 // Attack has movement
