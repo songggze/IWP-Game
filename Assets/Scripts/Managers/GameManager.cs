@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
 
                 // Restart game
                 if (Input.GetKeyDown(KeyCode.R)){
-                    SceneManager.LoadScene("AnimationTest");
+                    SceneManager.LoadScene("Forest");
                 }
             }
         }

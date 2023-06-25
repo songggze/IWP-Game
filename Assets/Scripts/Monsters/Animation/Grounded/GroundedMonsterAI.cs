@@ -124,7 +124,12 @@ public class GroundedMonsterAI : MonoBehaviour
         // Choose Attacks
         int rand;
         if (!debugAttacking){
-            rand = Random.Range(1, 5);
+            if (monsterStats.isEnraged){
+                rand = Random.Range(1, 5);
+            }
+            else{
+                rand = Random.Range(1, 4);
+            }
         }
         else{
             // Debug Stuff

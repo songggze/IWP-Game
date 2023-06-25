@@ -30,6 +30,8 @@ public class GroundedMonsterFD : MonoBehaviour
     public bool isMultiHit;
     public bool isRepeat;
 
+    Animator animator;
+
     // Debugging
     [SerializeField] GameObject hitboxTextDisplay;
     //GameObject hitText;
@@ -57,6 +59,7 @@ public class GroundedMonsterFD : MonoBehaviour
         isRepeat = false;
 
         hitboxTextDisplay.SetActive(false);
+        animator = GetComponent<Animator>();
     }
 
 
@@ -65,11 +68,11 @@ public class GroundedMonsterFD : MonoBehaviour
     {
         
         if (playAnimation){
-            currentFrame += Time.deltaTime * framesPerSecond;
+            currentFrame += Time.deltaTime * framesPerSecond * animator.speed;
         }
 
         if (isRepeat && currentFrame > startUpFrames){
-            repeatTimer += Time.deltaTime * framesPerSecond;
+            repeatTimer += Time.deltaTime * framesPerSecond * animator.speed;
 
             if (repeatTimer > repeatFrames){
                 repeatTimer = 0;
@@ -129,7 +132,7 @@ public class GroundedMonsterFD : MonoBehaviour
                 damage = 35;
 
                 startUpFrames = 80;
-                activeFrames = 580;
+                activeFrames = 500;
                 delayFrames = 25;
 
                 // Attack has movement
@@ -137,7 +140,7 @@ public class GroundedMonsterFD : MonoBehaviour
                 movementStop = 660; 
                 isMultiHit = false;
                 isRepeat = true;
-                repeatFrames = 150;
+                repeatFrames = 130;
                 break;
 
             default:

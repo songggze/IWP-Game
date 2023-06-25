@@ -234,6 +234,7 @@ public class PlayerFrameData : MonoBehaviour
         // Damage calculation, rounded up
         int totalDamage = (int) Mathf.Ceil((playerStats.attack * attackModifier) * partModifier);
         monsterStats.health -= totalDamage;
+        monsterStats.enrageThreshold -= totalDamage;
 
         // Damage Text rendering
         GameObject damageText;
