@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
                 if (timeSecond == 60)
                 {
                     timeMinute++;
-                    timeMinute = 0;
+                    timeSecond = 0;
                 }
             }
         }
