@@ -55,15 +55,20 @@ public class StaminaBar : MonoBehaviour
             barColor = setYellow;
         }
 
+
         if (flashingBar){
             HandleFlashingBar();
         }
+        else{
+
+            // Set to yellow color
+            barColor = Color.Lerp(barColor, setYellow, 30 * Time.deltaTime);
+        }
+
     }
-
-
     void HandleFlashingBar()
     {
-        Debug.Log(barColor);
+        
 
         // Flashing will alternate to red and orange colors        
         if (flashRed){

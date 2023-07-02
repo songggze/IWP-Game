@@ -18,6 +18,7 @@ public class GroundedMonsterSetCollider : MonoBehaviour
     [SerializeField] GameObject jump_hitbox;
     [SerializeField] GameObject lunge_hitbox;
     [SerializeField] GameObject running_hitbox;
+    [SerializeField] GameObject bite_hitbox;
 
     // Particle Effects
     bool playParticleEffect;
@@ -35,6 +36,7 @@ public class GroundedMonsterSetCollider : MonoBehaviour
         jump_hitbox.SetActive(false);
         lunge_hitbox.SetActive(false);
         running_hitbox.SetActive(false);
+        bite_hitbox.SetActive(false);
 
         playerStats = player.GetComponent<PlayerStats>();
         monsterAnimator = monster.GetComponent<Animator>();
@@ -92,7 +94,7 @@ public class GroundedMonsterSetCollider : MonoBehaviour
 
             case "Bite":
 
-                lunge_hitbox.SetActive(true);
+                bite_hitbox.SetActive(true);
 
                 break;
         }
@@ -103,6 +105,7 @@ public class GroundedMonsterSetCollider : MonoBehaviour
         jump_hitbox.SetActive(false);
         lunge_hitbox.SetActive(false);
         running_hitbox.SetActive(false);
+        bite_hitbox.SetActive(false);
         playParticleEffect = false;
     }
 

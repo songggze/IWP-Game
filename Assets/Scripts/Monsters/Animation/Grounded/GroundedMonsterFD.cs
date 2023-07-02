@@ -110,7 +110,7 @@ public class GroundedMonsterFD : MonoBehaviour
                 damage = 30;
 
                 startUpFrames = 100;
-                activeFrames = 13;
+                activeFrames = 6;
                 delayFrames = 25;
 
                 isMultiHit = false;
@@ -120,8 +120,8 @@ public class GroundedMonsterFD : MonoBehaviour
             case "Bite":
                 damage = 15;
 
-                startUpFrames = 40;
-                activeFrames = 15;
+                startUpFrames = 53;
+                activeFrames = 10;
                 delayFrames = 25;
 
                 isMultiHit = false;

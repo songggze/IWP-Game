@@ -2903,8 +2903,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8548698847708033989}
   m_LocalRotation: {x: 0.08103501, y: 0.7024482, z: -0.08103488, w: 0.70244807}
-  m_LocalPosition: {x: -0.622, y: 0.236, z: 0.04}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1.7}
+  m_LocalPosition: {x: -0.71, y: 0.26, z: 0.04}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1.9}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7881751201175969301}
@@ -2995,7 +2995,7 @@ MonoBehaviour:
   playAnimation: 0
   isHit: 0
   isMultiHit: 0
-  camera: {fileID: 0}
+  cameraObject: {fileID: 0}
   hitEffect: {fileID: 1713326151470364612, guid: e4f871669d3142246a86ed9f4b1ee6c7, type: 3}
   playerDamageTextStrong: {fileID: 4127074000765862998, guid: 8df65f9a5605fc24fa5173e034ae3a2a, type: 3}
   playerDamageTextWeak: {fileID: 4127074000765862998, guid: ba5beb72bf0000946839e89d5112c401, type: 3}
@@ -3170,7 +3170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4689cb6deb5a00448024989872c5899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  staminabar: {fileID: 0}
+  staminaBar: {fileID: 0}
 --- !u!114 &6216228866178139012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3183,13 +3183,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a1a85cb075ffc4699748556ff7f90d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  maxStamina: 100
-  faintsLife: 100
-  attack: 8
-  prevPosition: {x: 0, y: 0, z: 0}
   health: 0
   stamina: 0
+  isTired: 0
+  maxHealth: 100
+  maxStamina: 100
+  attack: 8
+  prevPosition: {x: 0, y: 0, z: 0}
   iFrames: 1.05
   iFrameTimer: 0
   isHit: 0

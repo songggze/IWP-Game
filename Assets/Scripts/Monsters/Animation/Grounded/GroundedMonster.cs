@@ -26,12 +26,18 @@ public class GroundedMonster : MonoBehaviour
         // Speed/attack modifers when enraged
         public float enrageSpeedModifier = 1.25f;
         public float enrageAttackModifier = 1.4f;
+    
+    // Stagger Stats
+        public float set_staggerCounter = 300;
+        public float staggerCounter = 300;
 
     GameObject player;
     Vector3 direction;
     NavMeshAgent navMeshAgent;
 
     Animator animator;
+    int isDeadHash;
+    int isAttackingHash;
 
     // Start is called before the first frame update
     void Start()
@@ -40,9 +46,13 @@ public class GroundedMonster : MonoBehaviour
         player = GameObject.Find("Player Character");
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        animator.speed = 0.8f;
+        animator.speed = 0.75f;
 
         enrageThreshold = set_enrageThreshold;
+        isDeadHash = Animator.StringToHash("isDead");
+        isAttackingHash = Animator.StringToHash("isAttack");
+
+        staggerCounter = set_staggerCounter;
     }
 
     // Update is called once per frame
@@ -53,6 +63,9 @@ public class GroundedMonster : MonoBehaviour
 
         // Check for enraged status
         HandleEnragedStatus();
+
+        // Handle stagger
+        HandleStagger();
     }
 
     public float GetHitzoneModifier(string part)
@@ -82,8 +95,12 @@ public class GroundedMonster : MonoBehaviour
 
     void HandleEnragedStatus()
     {
+        bool isDead = animator.GetBool(isDeadHash);
+
         // Enrage when player does enough damage
-        if (!isEnraged && enrageThreshold <= 0){
+        if (!isEnraged && enrageThreshold <= 0 && !isDead){
+
+            animator.SetBool(isAttackingHash, false);
 
             isEnraged = true;
             enrageTimer = set_enrageTimer;
@@ -101,8 +118,20 @@ public class GroundedMonster : MonoBehaviour
             if (enrageTimer <= 0){
                 isEnraged = false;
                 enrageThreshold = set_enrageThreshold;
-                animator.speed = 1;
+                animator.speed = 0.75f;
             }
+        }
+    }
+
+    void HandleStagger()
+    {
+        // Play staggered animation if staggerCounter reaches 0
+        if (staggerCounter <= 0){
+
+            animator.SetBool(isAttackingHash, false);
+            animator.Play("Stagger");
+
+            staggerCounter = set_staggerCounter;            
         }
     }
 }

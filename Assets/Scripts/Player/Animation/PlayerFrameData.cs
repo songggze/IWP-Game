@@ -108,7 +108,7 @@ public class PlayerFrameData : MonoBehaviour
         switch(animationName){
             // Left click attacks
             case "Slash 1":
-                attackModifier = 1.2f;
+                attackModifier = 1.1f;
                 startUpFrames = 18;
                 activeFrames = 18;
                 delayFrames = 25;
@@ -124,7 +124,7 @@ public class PlayerFrameData : MonoBehaviour
                 break;
 
             case "Slash 3":
-                attackModifier = 2.5f;
+                attackModifier = 3f;
                 startUpFrames = 60;
                 activeFrames = 30;
                 delayFrames = 0;
@@ -133,7 +133,7 @@ public class PlayerFrameData : MonoBehaviour
             
             // Right click attacks
             case "Right 1":
-                attackModifier = 0.8f;
+                attackModifier = 1;
                 startUpFrames = 25;
                 activeFrames = 60;
                 delayFrames = 64;
@@ -142,7 +142,7 @@ public class PlayerFrameData : MonoBehaviour
                 break;
 
             case "Right 2":
-                attackModifier = 1.7f;
+                attackModifier = 2.5f;
                 startUpFrames = 30;
                 activeFrames = 38;
                 delayFrames = 0;
@@ -234,7 +234,10 @@ public class PlayerFrameData : MonoBehaviour
         // Damage calculation, rounded up
         int totalDamage = (int) Mathf.Ceil((playerStats.attack * attackModifier) * partModifier);
         monsterStats.health -= totalDamage;
+
+        // Monster's enrage and stagger
         monsterStats.enrageThreshold -= totalDamage;
+        monsterStats.staggerCounter -= totalDamage;
 
         // Damage Text rendering
         GameObject damageText;

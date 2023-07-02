@@ -20,8 +20,11 @@ public class PlayerAttack : MonoBehaviour
 
     // Timers
     float timerDelay;
-    [SerializeField] float leftClickDelay = 0.3f;
+    [SerializeField] float leftClickDelay = 0.1f;
     float leftClickTimer;
+    
+    float buttonDelay;
+    float setButtonDelay = 0.15f;
 
     // To switch according to current animation
     string currentAnimationName;
@@ -32,9 +35,9 @@ public class PlayerAttack : MonoBehaviour
         input = new PlayerInput();
 
         input.PlayerAttack.LeftAttack.performed += ctx => leftAttackPressed = ctx.ReadValueAsButton();
-        input.PlayerAttack.LeftAttack.canceled -= ctx => leftAttackPressed = ctx.ReadValueAsButton();
+        //input.PlayerAttack.LeftAttack.canceled -= ctx => leftAttackPressed = ctx.ReadValueAsButton();
         input.PlayerAttack.RightAttack.performed += ctx => rightAttackPressed = ctx.ReadValueAsButton();
-        input.PlayerAttack.RightAttack.canceled -= ctx => rightAttackPressed = ctx.ReadValueAsButton();
+        //input.PlayerAttack.RightAttack.canceled -= ctx => rightAttackPressed = ctx.ReadValueAsButton();
     }
 
     // Start is called before the first frame update
@@ -75,10 +78,25 @@ public class PlayerAttack : MonoBehaviour
         }
 
         // Handle attack clicking
-        if (leftAttackPressed && !finalAttack)
-            LeftAttack();
-        else if (rightAttackPressed && !finalAttack)
-            RightAttack();
+        if (buttonDelay <= 0){
+            if (leftAttackPressed && rightAttackPressed){
+                Debug.Log("Both");
+                buttonDelay += setButtonDelay;
+            }
+            else if (leftAttackPressed && !finalAttack){
+                LeftAttack();
+                buttonDelay += setButtonDelay;
+            }
+            else if (rightAttackPressed && !finalAttack){
+
+                RightAttack();
+                buttonDelay += setButtonDelay;
+            }
+        }
+        else{
+            buttonDelay -= Time.deltaTime;
+        }
+
         
 
         bool isAttack = animator.GetBool(isAttackHash);
