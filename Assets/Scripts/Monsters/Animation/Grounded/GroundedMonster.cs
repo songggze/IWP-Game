@@ -112,7 +112,6 @@ public class GroundedMonster : MonoBehaviour
         if (isEnraged & enrageTimer > 0){
 
             enrageTimer -= Time.deltaTime;
-            Debug.Log(enrageTimer);
 
             // Disable enrage status
             if (enrageTimer <= 0){

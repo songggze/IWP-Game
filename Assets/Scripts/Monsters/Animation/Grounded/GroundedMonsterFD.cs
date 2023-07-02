@@ -31,6 +31,7 @@ public class GroundedMonsterFD : MonoBehaviour
     public bool isRepeat;
 
     Animator animator;
+    GroundedMonster monster;
 
     // Debugging
     [SerializeField] GameObject hitboxTextDisplay;
@@ -60,6 +61,7 @@ public class GroundedMonsterFD : MonoBehaviour
 
         hitboxTextDisplay.SetActive(false);
         animator = GetComponent<Animator>();
+        monster = GetComponent<GroundedMonster>();
     }
 
 
@@ -141,6 +143,24 @@ public class GroundedMonsterFD : MonoBehaviour
                 isMultiHit = false;
                 isRepeat = true;
                 repeatFrames = 130;
+                break;
+
+            case "Claw Attack":
+                damage = 20;
+
+                startUpFrames = 83;
+                activeFrames = 32;
+                delayFrames = 5;
+
+                movementStart = 83;
+                movementStop = 93; 
+
+                isMultiHit = false;
+                isRepeat = false;
+                
+                // if (monster.isEnraged){
+                //     animator.speed = 0.9f;
+                // }
                 break;
 
             default:

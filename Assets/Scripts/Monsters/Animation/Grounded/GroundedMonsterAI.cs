@@ -23,6 +23,7 @@ public class GroundedMonsterAI : MonoBehaviour
 
     // Will only initiate attacks when player is in line of sight
     public bool startAttack;
+    public bool mirrorAttack = false;
 
     // Debugging
     [SerializeField] bool debugAttacking = false;
@@ -90,7 +91,15 @@ public class GroundedMonsterAI : MonoBehaviour
             navMeshAgent.stoppingDistance = setStoppingDistance;
             velocity = Vector3.zero;
 
+            // if (monsterStats.isEnraged){
+            //     animator.speed = monsterStats.enrageSpeedModifier;
+            // }
+            // else{
+            //     animator.speed = 0.75f;
+            // }
+
             startAttack = false;
+            mirrorAttack = false;
 
             // Reset triggers in case it gets buffered during animation
             animator.ResetTrigger("Horn Attack");
@@ -102,6 +111,13 @@ public class GroundedMonsterAI : MonoBehaviour
         // Monster will rotate towards player when it is close enough before attacking
         if (!startAttack && isWalking && !isAttack && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance){
             FaceTarget();
+        }
+
+        if (mirrorAttack){
+            this.transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else{
+            this.transform.localScale = new Vector3(1, 1, 1);
         }
 
         if (timerDelay > 0){
@@ -125,10 +141,11 @@ public class GroundedMonsterAI : MonoBehaviour
         int rand;
         if (!debugAttacking){
             if (monsterStats.isEnraged){
-                rand = Random.Range(1, 5);
+                rand = Random.Range(1, 7);
+                // rand = Random.Range(5, 7);
             }
             else{
-                rand = Random.Range(1, 4);
+                rand = Random.Range(5, 7);
             }
         }
         else{
@@ -164,8 +181,21 @@ public class GroundedMonsterAI : MonoBehaviour
                 frameData.SetValues("Rush");
                 animator.SetBool(isAttackingHash, true);
                 break;
-        }
+            case 5:
+                // Claw attack
+                animator.SetTrigger("Claw");
+                frameData.SetValues("Claw Attack");
+                animator.SetBool(isAttackingHash, true);
+                break;
+            case 6:
+                // Claw attack mirror
+                animator.SetTrigger("Claw");
+                frameData.SetValues("Claw Attack");
+                animator.SetBool(isAttackingHash, true);
 
+                mirrorAttack = true;
+                break;
+        }
 
 
         // To prevent idle animation when transitioning to an attack animation
@@ -199,6 +229,16 @@ public class GroundedMonsterAI : MonoBehaviour
 
             return 4;
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+
+            return 5;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+
+            return 6;
+        }
 
         return -1;
     }
@@ -229,6 +269,16 @@ public class GroundedMonsterAI : MonoBehaviour
                 velocity += transform.forward * 60 * Time.deltaTime;
                 navMeshAgent.Move(velocity * Time.deltaTime);
                 break;
+            case "Claw Attack":
+                if (mirrorAttack){
+                    velocity += transform.right * 80 * Time.deltaTime;
+                }
+                else{
+                    velocity -= transform.right * 80 * Time.deltaTime;
+                }
+                velocity += transform.forward * 25 * ClawDistance() * Time.deltaTime;
+                navMeshAgent.Move(velocity * Time.deltaTime);
+                break;
 
             case "Rush":
 
@@ -255,5 +305,14 @@ public class GroundedMonsterAI : MonoBehaviour
         Vector3 direction = (player.transform.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 1.5f);
+    }
+
+    float ClawDistance(){
+
+        float dist = Vector3.Distance(transform.position, player.transform.position);
+        if (dist > 7){
+            dist = 7;
+        }
+        return dist;
     }
 }

@@ -19,6 +19,7 @@ public class GroundedMonsterSetCollider : MonoBehaviour
     [SerializeField] GameObject lunge_hitbox;
     [SerializeField] GameObject running_hitbox;
     [SerializeField] GameObject bite_hitbox;
+    [SerializeField] GameObject claw_hitbox;
 
     // Particle Effects
     bool playParticleEffect;
@@ -37,6 +38,7 @@ public class GroundedMonsterSetCollider : MonoBehaviour
         lunge_hitbox.SetActive(false);
         running_hitbox.SetActive(false);
         bite_hitbox.SetActive(false);
+        claw_hitbox.SetActive(false);
 
         playerStats = player.GetComponent<PlayerStats>();
         monsterAnimator = monster.GetComponent<Animator>();
@@ -97,6 +99,10 @@ public class GroundedMonsterSetCollider : MonoBehaviour
                 bite_hitbox.SetActive(true);
 
                 break;
+            case "Claw Attack":
+                claw_hitbox.SetActive(true);
+
+                break;
         }
     }
 
@@ -106,6 +112,7 @@ public class GroundedMonsterSetCollider : MonoBehaviour
         lunge_hitbox.SetActive(false);
         running_hitbox.SetActive(false);
         bite_hitbox.SetActive(false);
+        claw_hitbox.SetActive(false);
         playParticleEffect = false;
     }
 
