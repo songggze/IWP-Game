@@ -470,6 +470,7 @@ GameObject:
   m_Component:
   - component: {fileID: 479475523}
   - component: {fileID: 479475522}
+  - component: {fileID: 479475524}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -554,6 +555,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &479475524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479475521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &530622060 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8781561884674502242, guid: 835ed983c54e70b4db3c637a0ef33e42, type: 3}
@@ -2936,7 +2957,7 @@ PrefabInstance:
       objectReference: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 549391147886863622, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 719879057454810412, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: m_TagString
@@ -3038,6 +3059,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1920467246}
+    - target: {fileID: 3856137549487349297, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1920467246}
+    - target: {fileID: 3856137549487349297, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
+      propertyPath: monster
+      value: 
+      objectReference: {fileID: 1510270048}
     - target: {fileID: 4886122359102581873, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -3060,7 +3089,7 @@ PrefabInstance:
       objectReference: {fileID: 1510270048}
     - target: {fileID: 6007258703212789778, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6133446998425878370, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: m_IsTrigger
@@ -3086,26 +3115,34 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1920467246}
+    - target: {fileID: 6284408365996230399, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
+      propertyPath: debugAttacking
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6421692371634098177, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6820757289915607591, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7058444464285498639, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7147490006994924521, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7289814466140191868, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7532711671434387716, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
+      propertyPath: monster
+      value: 
+      objectReference: {fileID: 1510270048}
     - target: {fileID: 7931722725856646660, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: player
       value: 
@@ -5247,3 +5284,28 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 8803130131990803242, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+--- !u!1 &8803130130796934461 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 522769052828121514, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+  m_PrefabInstance: {fileID: 8803130130796934460}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8803130130796934462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8803130130796934461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}

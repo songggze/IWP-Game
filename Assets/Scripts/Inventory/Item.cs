@@ -14,6 +14,10 @@ public class Item : ScriptableObject
     public string itemType;
     public int itemPower;
 
+    #region Shop Data
+    public string itemDescription;
+    public int itemCost;
+    #endregion
     // Constructor
     //Item(int _id, string _name, int _count){
         //itemId = _id;

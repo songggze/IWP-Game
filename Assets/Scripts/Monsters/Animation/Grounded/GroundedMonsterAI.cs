@@ -199,7 +199,7 @@ public class GroundedMonsterAI : MonoBehaviour
 
 
         // To prevent idle animation when transitioning to an attack animation
-        timerDelay = 0.9f;
+        timerDelay = 0.3f;
     }
 
     // For debugging
