@@ -14,6 +14,7 @@ public class ShopItemData : MonoBehaviour
     [SerializeField] GameObject _itemTitle;
     [SerializeField] GameObject _itemDescription;
     [SerializeField] GameObject _itemCost;
+    [SerializeField] GameObject _itemCount;
     #endregion
 
     void Start()
@@ -25,6 +26,7 @@ public class ShopItemData : MonoBehaviour
         _itemTitle = GameObject.Find("Item Title");
         _itemDescription = GameObject.Find("Item Description");
         _itemCost = GameObject.Find("Item Cost");
+        _itemCount = GameObject.Find("Item Count");
     }
 
     public void OnButtonClick()
@@ -44,6 +46,7 @@ public class ShopItemData : MonoBehaviour
 
         _itemTitle.GetComponent<TextMeshProUGUI>().text = itemData.itemName;
         _itemDescription.GetComponent<TextMeshProUGUI>().text = itemData.itemDescription;
-        _itemCost.GetComponent<TextMeshProUGUI>().text = "Cost: " + itemData.itemCost.ToString();
+        _itemCount.GetComponent<TextMeshProUGUI>().text = itemData.itemCount.ToString();
+        _itemCost.GetComponent<TextMeshProUGUI>().text = itemData.itemCost.ToString() + " G";
     }
 }
