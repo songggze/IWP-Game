@@ -220,8 +220,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1268468171583055532}
-  - component: {fileID: 7804667936302648127}
   - component: {fileID: 1513738303540262754}
+  - component: {fileID: 1307540973628968178}
   m_Layer: 5
   m_Name: Purchase Result
   m_TagString: Untagged
@@ -251,22 +251,6 @@ RectTransform:
   m_AnchoredPosition: {x: 66, y: 0}
   m_SizeDelta: {x: 545.1055, y: 82.8886}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!111 &7804667936302648127
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9064645089803236075}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 8f91811259720f342819fc7c8de5f4fb, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 8f91811259720f342819fc7c8de5f4fb, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &1513738303540262754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,3 +264,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 2
+--- !u!111 &1307540973628968178
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9064645089803236075}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: bccb35442a075744bb83119dfbfee033, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: bccb35442a075744bb83119dfbfee033, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0

@@ -83,7 +83,7 @@ public class PlayerAttack : MonoBehaviour
                 Debug.Log("Both");
                 buttonDelay += setButtonDelay;
             }
-            else if (leftAttackPressed && !finalAttack){
+            else if ((leftAttackPressed && !finalAttack) || Input.GetKeyDown(KeyCode.J)){
                 LeftAttack();
                 buttonDelay += setButtonDelay;
             }

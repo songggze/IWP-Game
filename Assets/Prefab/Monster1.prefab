@@ -8394,6 +8394,8 @@ MonoBehaviour:
   enrageAttackModifier: 1.4
   set_staggerCounter: 300
   staggerCounter: 300
+  model: {fileID: 8465672969339078194}
+  animator: {fileID: 0}
 --- !u!114 &6284408365996230399
 MonoBehaviour:
   m_ObjectHideFlags: 0

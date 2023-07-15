@@ -91,21 +91,26 @@ public class GroundedMonsterAI : MonoBehaviour
             navMeshAgent.stoppingDistance = setStoppingDistance;
             velocity = Vector3.zero;
 
-            // if (monsterStats.isEnraged){
-            //     animator.speed = monsterStats.enrageSpeedModifier;
-            // }
-            // else{
-            //     animator.speed = 0.75f;
-            // }
+            if (monsterStats.isEnraged){
+                animator.speed = monsterStats.enrageSpeedModifier;
+            }
+            else{
+                animator.speed = 0.75f;
+            }
 
             startAttack = false;
             mirrorAttack = false;
 
             // Reset triggers in case it gets buffered during animation
-            animator.ResetTrigger("Horn Attack");
-            animator.ResetTrigger("Jump");
+            // animator.ResetTrigger("Horn Attack");
+            // animator.ResetTrigger("Jump");
 
             animator.SetBool(isRushingHash, false);
+        }
+
+        // brute force thing
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")){
+            frameData.currentFrame = 0;
         }
         
         // Monster will rotate towards player when it is close enough before attacking
@@ -145,7 +150,7 @@ public class GroundedMonsterAI : MonoBehaviour
                 // rand = Random.Range(5, 7);
             }
             else{
-                rand = Random.Range(5, 7);
+                rand = Random.Range(1, 3);
             }
         }
         else{
@@ -159,6 +164,7 @@ public class GroundedMonsterAI : MonoBehaviour
                 animator.SetTrigger("Horn Attack");
                 frameData.SetValues("Horn Attack");
                 animator.SetBool(isAttackingHash, true);
+
                 break;
 
             case 2:
@@ -166,6 +172,7 @@ public class GroundedMonsterAI : MonoBehaviour
                 animator.SetTrigger("Jump");
                 frameData.SetValues("Jump");
                 animator.SetBool(isAttackingHash, true);
+
                 break;
 
             case 3:
@@ -173,6 +180,7 @@ public class GroundedMonsterAI : MonoBehaviour
                 animator.SetTrigger("Bite");
                 frameData.SetValues("Bite");
                 animator.SetBool(isAttackingHash, true);
+
                 break;
 
             case 4:
@@ -180,12 +188,14 @@ public class GroundedMonsterAI : MonoBehaviour
                 animator.SetBool("isRushing", true);
                 frameData.SetValues("Rush");
                 animator.SetBool(isAttackingHash, true);
+
                 break;
             case 5:
                 // Claw attack
                 animator.SetTrigger("Claw");
                 frameData.SetValues("Claw Attack");
                 animator.SetBool(isAttackingHash, true);
+
                 break;
             case 6:
                 // Claw attack mirror
@@ -197,9 +207,8 @@ public class GroundedMonsterAI : MonoBehaviour
                 break;
         }
 
-
         // To prevent idle animation when transitioning to an attack animation
-        timerDelay = 0.3f;
+        timerDelay = 2f;
     }
 
     // For debugging
@@ -261,12 +270,18 @@ public class GroundedMonsterAI : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
             frameData.currentFrame < frameData.movementStart ||
             frameData.currentFrame > frameData.movementStop)
+        {
             return;
+        }
+
+        if (animator.GetCurrentAnimatorClipInfo(0).Length == 0){
+            return;
+        }
 
             
         switch (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name){
             case "Horn Attack":
-                velocity += transform.forward * 60 * Time.deltaTime;
+                velocity += transform.forward * 80 * Time.deltaTime * animator.speed;
                 navMeshAgent.Move(velocity * Time.deltaTime);
                 break;
             case "Claw Attack":

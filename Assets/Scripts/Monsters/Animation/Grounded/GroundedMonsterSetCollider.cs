@@ -68,6 +68,9 @@ public class GroundedMonsterSetCollider : MonoBehaviour
     void SetCollider()
     {
         //Debug.Log(monsterAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+        if (monsterAnimator.GetCurrentAnimatorClipInfo(0).Length == 0){
+            return;
+        }
         switch (monsterAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name)
         {
             case "Jump":

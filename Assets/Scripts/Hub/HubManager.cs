@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class HubManager : MonoBehaviour
@@ -8,6 +9,9 @@ public class HubManager : MonoBehaviour
 
     // Canvases
     [SerializeField] GameObject shopCanvas;
+    [SerializeField] GameObject forgeCanvas;
+
+    [SerializeField] Button quitButton;
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +76,15 @@ public class HubManager : MonoBehaviour
                 isSelectedBuilding = true;
                 shopCanvas.SetActive(true);
                 break;
+            case "Forge":
+                isSelectedBuilding = true;
+                forgeCanvas.SetActive(true);
+                break;
         }
+    }
+
+    public void OnButtonQuit()
+    {
+        SceneManager.LoadScene("Main Menu");
     }
 }

@@ -30,6 +30,7 @@ public class GroundedMonsterFD : MonoBehaviour
     public bool isMultiHit;
     public bool isRepeat;
 
+
     Animator animator;
     GroundedMonster monster;
 
@@ -62,24 +63,27 @@ public class GroundedMonsterFD : MonoBehaviour
         hitboxTextDisplay.SetActive(false);
         animator = GetComponent<Animator>();
         monster = GetComponent<GroundedMonster>();
+
+        framesPerSecond = 1.0f / Time.deltaTime;
     }
 
 
     // Update is called once per frame
-    void LateUpdate()
+    void Update()
     {
         
         if (playAnimation){
-            currentFrame += Time.deltaTime * framesPerSecond * animator.speed;
+            currentFrame += Time.deltaTime * framesPerSecond * animator.speed * (60.0f / framesPerSecond);
         }
 
         if (isRepeat && currentFrame > startUpFrames){
-            repeatTimer += Time.deltaTime * framesPerSecond * animator.speed;
+            repeatTimer += Time.deltaTime * framesPerSecond * animator.speed * (60.0f / framesPerSecond);
 
             if (repeatTimer > repeatFrames){
                 repeatTimer = 0;
             }
         }
+
 
         // For debugging
         ShowHitboxDisplay();
@@ -97,13 +101,13 @@ public class GroundedMonsterFD : MonoBehaviour
             case "Horn Attack":
                 damage = 20;
 
-                startUpFrames = 50;
+                startUpFrames = 40;
                 activeFrames = 25;
                 delayFrames = 25;
 
                 // Attack has movement
-                movementStart = 50;
-                movementStop = 80; 
+                movementStart = 40;
+                movementStop = 70; 
                 isMultiHit = false;
                 isRepeat = false;
                 break;
@@ -111,7 +115,7 @@ public class GroundedMonsterFD : MonoBehaviour
             case "Jump":
                 damage = 30;
 
-                startUpFrames = 100;
+                startUpFrames = 82;
                 activeFrames = 6;
                 delayFrames = 25;
 
@@ -122,7 +126,7 @@ public class GroundedMonsterFD : MonoBehaviour
             case "Bite":
                 damage = 15;
 
-                startUpFrames = 53;
+                startUpFrames = 30;
                 activeFrames = 10;
                 delayFrames = 25;
 
@@ -148,12 +152,12 @@ public class GroundedMonsterFD : MonoBehaviour
             case "Claw Attack":
                 damage = 20;
 
-                startUpFrames = 83;
+                startUpFrames = 50;
                 activeFrames = 32;
                 delayFrames = 5;
 
-                movementStart = 83;
-                movementStop = 93; 
+                movementStart = startUpFrames;
+                movementStop = startUpFrames + 20; 
 
                 isMultiHit = false;
                 isRepeat = false;
@@ -166,7 +170,7 @@ public class GroundedMonsterFD : MonoBehaviour
             default:
                 Debug.Log("Attack not found!!");
                 break;
-         }
+        }
 
         totalFrames = startUpFrames + activeFrames;
         currentFrame = 0;

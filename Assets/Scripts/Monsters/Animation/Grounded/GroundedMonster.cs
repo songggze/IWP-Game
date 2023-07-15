@@ -31,11 +31,12 @@ public class GroundedMonster : MonoBehaviour
         public float set_staggerCounter = 300;
         public float staggerCounter = 300;
 
+    [SerializeField] GameObject model;
     GameObject player;
     Vector3 direction;
     NavMeshAgent navMeshAgent;
 
-    Animator animator;
+    public Animator animator;
     int isDeadHash;
     int isAttackingHash;
 
@@ -58,6 +59,7 @@ public class GroundedMonster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(animator.speed);
         // Set new position to track
         navMeshAgent.SetDestination(player.transform.position);
 
@@ -104,6 +106,13 @@ public class GroundedMonster : MonoBehaviour
 
             isEnraged = true;
             enrageTimer = set_enrageTimer;
+            foreach (var trigger in animator.parameters)
+            {
+                if (trigger.type == AnimatorControllerParameterType.Trigger)
+                {
+                    animator.ResetTrigger(trigger.name);
+                }
+            }
             animator.Play("Roar");
             animator.speed = enrageSpeedModifier;
         }
@@ -119,6 +128,11 @@ public class GroundedMonster : MonoBehaviour
                 enrageThreshold = set_enrageThreshold;
                 animator.speed = 0.75f;
             }
+            model.GetComponent<SkinnedMeshRenderer>().material.color = Color.Lerp(model.GetComponent<SkinnedMeshRenderer>().material.color, Color.red, 2 * Time.deltaTime);
+        }
+        else{
+
+            model.GetComponent<SkinnedMeshRenderer>().material.color = Color.Lerp(model.GetComponent<SkinnedMeshRenderer>().material.color, Color.white, 2 * Time.deltaTime);
         }
     }
 

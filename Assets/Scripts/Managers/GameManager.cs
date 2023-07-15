@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     // Quest Timer
     float counterTimer;
-    float timeSecond, timeMinute;
+    public float timeSecond, timeMinute;
     float transitionTimer;
 
     // Start is called before the first frame update
@@ -96,15 +96,18 @@ public class GameManager : MonoBehaviour
                 else {
                     timerText.GetComponent<TextMeshProUGUI>().text = $"Clear time   {timeMinute} : {timeSecond}";
                 }
+
             }
             else{
 
                 loseCanvas.GetComponent<CanvasGroup>().alpha += 1 * Time.deltaTime;
 
-                // Restart game
-                if (Input.GetKeyDown(KeyCode.R)){
-                    SceneManager.LoadScene("Forest");
-                }
+            }
+
+            // Restart game
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene("Hub");
             }
         }
     }
