@@ -115,8 +115,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // Player is damaged
-        if (playerStats.isHit){
+        // Player is damaged or healing
+        if (playerStats.isHit || playerStats.isHealing){
             return;
         }
 

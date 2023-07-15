@@ -59,7 +59,6 @@ public class GroundedMonster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(animator.speed);
         // Set new position to track
         navMeshAgent.SetDestination(player.transform.position);
 

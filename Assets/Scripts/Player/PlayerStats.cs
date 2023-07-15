@@ -18,11 +18,13 @@ public class PlayerStats : MonoBehaviour
 
     // Frame Data
     [SerializeField] float iFrames = 1;
-    public float iFrameTimer;
+    [SerializeField] float set_healTimer = 2;
+    public float iFrameTimer, healTimer;
 
     // Set animation states
     public bool isHit, playHurtAnimation;
     public bool isDead, playDeadAnimation;
+    public bool isHealing, playHealingAnimation;
 
     private Animator animator;
     private PlayerAttack playerAttack;
@@ -41,9 +43,14 @@ public class PlayerStats : MonoBehaviour
 
         prevPosition = gameObject.transform.position;
 
+        // Animations and Timers
         iFrameTimer = 0;
         isHit = false;
         playHurtAnimation = false;
+        
+        healTimer = 0;
+        isHealing = false;
+        playHealingAnimation = false;
 
         isDead = false;
         
@@ -58,6 +65,7 @@ public class PlayerStats : MonoBehaviour
     void Update()
     {
         
+        // Iframes when hurt
         if (iFrameTimer > 0){
             iFrameTimer -= Time.deltaTime;
         }
@@ -66,10 +74,45 @@ public class PlayerStats : MonoBehaviour
             playHurtAnimation = false;
         }
 
+
+        // Healing animatiion
+        if (isHealing){
+            HealAnimation();
+        }
+
+        if (playHealingAnimation){
+            if (healTimer > 0)
+            {
+                healTimer -= Time.deltaTime;
+            }
+            else
+            {
+                isHealing = false;
+                playHealingAnimation = false;
+            }
+        }
+
         // Check if health == 0
         CheckHealthStatus();
     }
 
+    public void HealAnimation()
+    {
+
+        if (!playHealingAnimation){
+            // Set player hurt animation
+            animator.SetTrigger("Healing");
+            animator.Play("Standard Idle");
+
+            animator.SetBool(isAttackingHash, false);
+            animator.SetBool(isWalkingHash, false);
+            animator.SetBool(isRunningHash, false);
+            animator.SetBool(isDodgingHash, false);
+            healTimer = set_healTimer;
+            playHealingAnimation = true;
+            playerAttack.finalAttack = false;
+        }
+    }
 
     public void SetIFrames()
     {

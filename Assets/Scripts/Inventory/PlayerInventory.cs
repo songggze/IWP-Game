@@ -77,7 +77,7 @@ public class PlayerInventory : MonoBehaviour
 
 
         // Use item
-        if (Input.GetKeyDown(KeyCode.F)){
+        if (Input.GetKeyDown(KeyCode.F) && !playerStats.isHealing){
             UseItem();
         }
     }
@@ -191,5 +191,7 @@ public class PlayerInventory : MonoBehaviour
         else{
             DisplayEmptyHolders();
         }
+
+        playerStats.isHealing = true;
     }
 }

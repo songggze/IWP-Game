@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class HubManager : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class HubManager : MonoBehaviour
     [SerializeField] GameObject shopCanvas;
     [SerializeField] GameObject forgeCanvas;
 
-    [SerializeField] Button quitButton;
+    [SerializeField] Button _quitButton;
+    [SerializeField] TextMeshProUGUI _labelText;
 
     // Start is called before the first frame update
     void Start()
@@ -24,10 +26,24 @@ public class HubManager : MonoBehaviour
     {
 
         if (!isSelectedBuilding){
+
             // Check Selected
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
+            // Label text display when mouse over clickable building
+            if (Physics.Raycast(ray, out hit))
+            {
+                GameObject clickedObject = hit.collider.gameObject;
+                MeshFilter meshFilter = clickedObject.GetComponent<MeshFilter>();
+
+                if (meshFilter != null)
+                {
+                    HighlightBuilding(clickedObject.transform.root.name);
+                }
+            }
+
+            // Click Building
             if (Input.GetMouseButtonDown(0))
             {
                 if (Physics.Raycast(ray, out hit))
@@ -37,11 +53,12 @@ public class HubManager : MonoBehaviour
 
                     if (meshFilter != null)
                     {
-                        Debug.Log("Clicked Mesh: " + clickedObject.transform.root.name);
+                        _labelText.text = "";
                         SelectBuilding(clickedObject.transform.root.name);
                     }
                 }
             }
+
         }
 
         // Highlight
@@ -60,7 +77,15 @@ public class HubManager : MonoBehaviour
     {
         switch(objectName)
         {
-            case "Quest Bulletin":
+            case "Quests":
+            case "Shop":
+            case "Forge":
+
+                _labelText.text = objectName;
+                break;
+
+            default:
+                _labelText.text = "";
                 break;
         }
     }
@@ -69,7 +94,7 @@ public class HubManager : MonoBehaviour
     {
         switch(objectName)
         {
-            case "Quest Bulletin":
+            case "Quests":
                 SceneManager.LoadScene("Forest");
                 break;
             case "Shop":
