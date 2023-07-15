@@ -5550,7 +5550,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6183788220191203348, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: set_enrageTimer
-      value: 5
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6183788220191203348, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: enrageSpeedModifier
