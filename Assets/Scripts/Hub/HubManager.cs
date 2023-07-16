@@ -7,6 +7,7 @@ public class HubManager : MonoBehaviour
 {
     Ray ray;
     public bool isSelectedBuilding = false;
+    private bool updateDisplay = false;
 
     // Canvases
     [SerializeField] GameObject shopCanvas;
@@ -78,17 +79,31 @@ public class HubManager : MonoBehaviour
 
         }
 
-        // Highlight
-        // if (Physics.Raycast(ray, out hit))
-        // {
-        //     GameObject clickedObject = hit.collider.gameObject;
-        //     MeshFilter meshFilter = clickedObject.GetComponent<MeshFilter>();
 
-        //     if (meshFilter != null)
-        //     {
-        //         HighlightBuilding(clickedObject.transform.root.name);
-        //     }
-        // }
+        if (!isSelectedBuilding && !updateDisplay){
+
+            // Display quest clear status, if clear show fastest time record
+            if (PlayerPrefs.HasKey("GroundedMonster Time"))
+            {
+                float tempTime = PlayerPrefs.GetFloat("GroundedMonster Time");
+                float tempMinute = Mathf.Floor(tempTime / 60);
+                float tempSecond = tempTime % 60;
+                if (tempSecond < 10)
+                {
+                    _clearTime.text = $"Clear time   {tempMinute} : 0{tempSecond}";
+                }
+                else
+                {
+                    _clearTime.text = $"Clear time   {tempMinute} : {tempSecond}";
+                }
+            }
+            else
+            {
+                _clearTime.text = "NOT CLEARED!";
+            }
+
+            updateDisplay = true;
+        }
     }
     void HighlightBuilding(string objectName)
     {
@@ -123,6 +138,9 @@ public class HubManager : MonoBehaviour
                 forgeCanvas.SetActive(true);
                 break;
         }
+
+        _clearTime.text = "";
+        updateDisplay = false;
     }
 
     public void OnButtonQuit()

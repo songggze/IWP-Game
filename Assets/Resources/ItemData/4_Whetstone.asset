@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 4
   itemName: Whetstone
-  itemCount: 2
+  itemCount: 0
   maxCount: 20
   itemIcon: {fileID: 21300000, guid: 20889a7229d58eb41991435f687847d7, type: 3}
   itemType: Sharpen

@@ -6,6 +6,7 @@ public class MonsterAttackTrigger : MonoBehaviour
     private PlayerStats playerStats;
 
     [SerializeField] GameObject monster;
+    private GroundedMonster monsterStats;
     private GroundedMonsterFD frameData;
 
     // Start is called before the first frame update
@@ -14,6 +15,7 @@ public class MonsterAttackTrigger : MonoBehaviour
         gameObject.SetActive(false);
 
         playerStats = player.GetComponent<PlayerStats>();
+        monsterStats = monster.GetComponent<GroundedMonster>();
         frameData = monster.GetComponent<GroundedMonsterFD>();
     }
 
@@ -25,7 +27,15 @@ public class MonsterAttackTrigger : MonoBehaviour
             playerStats.isHit = true;
             playerStats.SetIFrames();
 
-            playerStats.health -= frameData.damage;
+            if (monsterStats.isEnraged)
+            {
+                Debug.Log("enraged collider");
+                playerStats.health -= frameData.damage * monsterStats.enrageAttackModifier;
+            }
+            else
+            {
+                playerStats.health -= frameData.damage;
+            }
         }
     }
 }

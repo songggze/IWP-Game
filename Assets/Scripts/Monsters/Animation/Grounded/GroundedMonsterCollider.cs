@@ -8,6 +8,7 @@ public class GroundedMonsterCollider : MonoBehaviour
     private Animator playerAnimator;
 
     [SerializeField] GameObject monster;
+    private GroundedMonster monsterStats;
     private Animator monsterAnimator;
 
     private GroundedMonsterFD frameData;
@@ -20,6 +21,7 @@ public class GroundedMonsterCollider : MonoBehaviour
     {
         playerStats = player.GetComponent<PlayerStats>();
         playerAnimator = player.GetComponent<Animator>();
+        monsterStats = player.GetComponent<GroundedMonster>();
         monsterAnimator = monster.GetComponent<Animator>();
 
         frameData = monster.GetComponent<GroundedMonsterFD>();
@@ -65,7 +67,15 @@ public class GroundedMonsterCollider : MonoBehaviour
 
                 playerStats.SetIFrames();
 
-                playerStats.health -= frameData.damage;
+                if (monsterStats.isEnraged)
+                {
+                    Debug.Log("enraged collider");
+                    playerStats.health -= frameData.damage * monsterStats.enrageAttackModifier;
+                }
+                else
+                {
+                    playerStats.health -= frameData.damage;
+                }
             }
 
             Debug.Log("Position is reverted");

@@ -8,6 +8,7 @@ public class GroundedMonsterSetCollider : MonoBehaviour
 
     // Monster
     [SerializeField] GameObject monster;
+    private GroundedMonster monsterStats;
 
     // Animator
     Animator monsterAnimator;
@@ -42,6 +43,7 @@ public class GroundedMonsterSetCollider : MonoBehaviour
 
         playerStats = player.GetComponent<PlayerStats>();
         monsterAnimator = monster.GetComponent<Animator>();
+        monsterStats = monster.GetComponent<GroundedMonster>();
         frameData = monster.GetComponent<GroundedMonsterFD>();
         isAttackingHash = Animator.StringToHash("isAttack");
         
@@ -128,7 +130,13 @@ public class GroundedMonsterSetCollider : MonoBehaviour
             playerStats.isHit = true;
             playerStats.SetIFrames();
 
-            playerStats.health -= 20;
+            if (monsterStats.isEnraged){
+                Debug.Log("enraged setcollider");
+                playerStats.health -= frameData.damage * monsterStats.enrageAttackModifier;
+            }
+            else{
+                playerStats.health -= frameData.damage;
+            }
         }
     }
 }

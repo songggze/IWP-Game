@@ -130,7 +130,6 @@ public class PlayerStats : MonoBehaviour
             healEffect = false;
             isHealing = false;
 
-            animator.ResetTrigger("Drinking");
             animator.SetTrigger("Hurt");
             animator.Play("Standard Idle");
 

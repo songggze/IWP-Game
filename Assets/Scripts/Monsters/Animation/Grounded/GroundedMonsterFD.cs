@@ -38,6 +38,7 @@ public class GroundedMonsterFD : MonoBehaviour
 
     // Debugging
     [SerializeField] GameObject hitboxTextDisplay;
+    public bool showDisplay = true;
     //GameObject hitText;
     //GameObject hitBoxDisplay;
     //[SerializeField] GameObject playerDamageText;
@@ -93,7 +94,9 @@ public class GroundedMonsterFD : MonoBehaviour
 
 
         // For debugging
-        ShowHitboxDisplay();
+        if (showDisplay){
+            ShowHitboxDisplay();
+        }
 
         //if (currentFrame > totalFrames && playAnimation){
 
