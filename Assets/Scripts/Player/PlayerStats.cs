@@ -19,7 +19,9 @@ public class PlayerStats : MonoBehaviour
     // Frame Data
     [SerializeField] float iFrames = 1;
     [SerializeField] float set_healTimer = 2;
-    public float iFrameTimer, healTimer;
+    [SerializeField] float set_healAnimationTimer = 2.0f;
+    public float iFrameTimer, healTimer, healAnimationTimer;
+    public bool healEffect = false;
 
     // Set animation states
     public bool isHit, playHurtAnimation;
@@ -81,9 +83,11 @@ public class PlayerStats : MonoBehaviour
         }
 
         if (playHealingAnimation){
-            if (healTimer > 0)
+            if (healAnimationTimer > 0)
             {
                 healTimer -= Time.deltaTime;
+                healAnimationTimer -= Time.deltaTime;
+                
             }
             else
             {
@@ -109,6 +113,8 @@ public class PlayerStats : MonoBehaviour
             animator.SetBool(isRunningHash, false);
             animator.SetBool(isDodgingHash, false);
             healTimer = set_healTimer;
+            healAnimationTimer = set_healAnimationTimer;
+            healEffect = false;
             playHealingAnimation = true;
             playerAttack.finalAttack = false;
         }
@@ -120,6 +126,11 @@ public class PlayerStats : MonoBehaviour
         if (!playHurtAnimation){
 
             // Set player hurt animation
+            playHealingAnimation = false;
+            healEffect = false;
+            isHealing = false;
+
+            animator.ResetTrigger("Drinking");
             animator.SetTrigger("Hurt");
             animator.Play("Standard Idle");
 
@@ -129,6 +140,7 @@ public class PlayerStats : MonoBehaviour
             animator.SetBool(isDodgingHash, false);
             playHurtAnimation = true;
             playerAttack.finalAttack = false;
+
         }
     }
 

@@ -18,9 +18,12 @@ public class PlayerInventory : MonoBehaviour
 
     // Item Selector Stuff
     [SerializeField] GameObject itemHolders;
+    [SerializeField] GameObject canvas;
 
     [SerializeField] GameObject player;
     private PlayerStats playerStats;
+
+    [SerializeField] GameObject _healingPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -75,11 +78,24 @@ public class PlayerInventory : MonoBehaviour
             UpdateHolder();
         }
 
+        if (playerStats.isHealing){
+
+            if (playerStats.healTimer <= 0 && !playerStats.healEffect)
+            {
+                Instantiate(_healingPrefab, player.transform);
+                playerStats.healEffect = true;
+                ConsumeItem();
+            }
+        }
 
         // Use item
         if (Input.GetKeyDown(KeyCode.F) && !playerStats.isHealing){
             UseItem();
         }
+        if (Input.GetKeyDown(KeyCode.F) && !playerStats.isHealing){
+            UseItem();
+        }
+
     }
 
     //void AddItem(string _itemName, int _itemId, int _count)
@@ -150,7 +166,12 @@ public class PlayerInventory : MonoBehaviour
         if (itemTypeCount < 0){
             return;
         }
+         
+        playerStats.isHealing = true;
+    }
 
+    void ConsumeItem()
+    {
         switch(itemList[selectedItem].itemType)
         {
             // Restores health
@@ -174,7 +195,7 @@ public class PlayerInventory : MonoBehaviour
 
         // Decrease the item count by one
         itemList[selectedItem].itemCount -= 1;
-         
+
         // Remove from itemList if item count is 0
         if (itemList[selectedItem].itemCount <= 0){
             itemList.RemoveAt(selectedItem);
@@ -192,6 +213,5 @@ public class PlayerInventory : MonoBehaviour
             DisplayEmptyHolders();
         }
 
-        playerStats.isHealing = true;
     }
 }

@@ -15,10 +15,27 @@ public class HubManager : MonoBehaviour
     [SerializeField] Button _quitButton;
     [SerializeField] TextMeshProUGUI _labelText;
 
+    // Display quest clear status
+    [SerializeField] TextMeshProUGUI _clearTime;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Display quest clear status, if clear show fastest time record
+        if (PlayerPrefs.HasKey("GroundedMonster Time")){
+            float tempTime = PlayerPrefs.GetFloat("GroundedMonster Time");
+            float tempMinute = Mathf.Floor(tempTime / 60);
+            float tempSecond = tempTime % 60;
+            if (tempSecond < 10){
+                _clearTime.text = $"Clear time   {tempMinute} : 0{tempSecond}";
+            }
+            else {
+                _clearTime.text = $"Clear time   {tempMinute} : {tempSecond}";
+            }
+        }
+        else{
+            _clearTime.text = "NOT CLEARED!";
+        }
     }
 
     // Update is called once per frame

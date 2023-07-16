@@ -6,6 +6,8 @@ public class GroundedMonsterFD : MonoBehaviour
     //  Frame data for Grounded Monster. 
     //
 
+    private bool init = false;
+
     public double currentFrame;
     public double startUpFrames;
     public double activeFrames;
@@ -71,7 +73,12 @@ public class GroundedMonsterFD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (!init){
+            framesPerSecond = 1.0f / Time.deltaTime;
+            init = true;
+        } 
+
         if (playAnimation){
             currentFrame += Time.deltaTime * framesPerSecond * animator.speed * (60.0f / framesPerSecond);
         }

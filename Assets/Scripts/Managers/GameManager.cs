@@ -57,6 +57,18 @@ public class GameManager : MonoBehaviour
                 endGame = true;
                 transitionTimer = 3;
                 winCanvas.SetActive(true);
+
+                // Saving time,
+                // will only update when key is null or set new record time
+                if (!PlayerPrefs.HasKey("GroundedMonster Time") || 
+                    PlayerPrefs.GetFloat("GroundedMonster Time", 9999) >= (timeMinute * 60) + timeSecond){
+
+                    PlayerPrefs.SetFloat("GroundedMonster Time", (timeMinute * 60) + timeSecond);
+                    Debug.Log("Quest time saved");
+                }
+                else{
+                    Debug.Log("Didn't save :(");
+                }
             }
 
         }
