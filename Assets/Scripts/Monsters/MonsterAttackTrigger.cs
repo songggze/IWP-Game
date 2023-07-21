@@ -19,9 +19,9 @@ public class MonsterAttackTrigger : MonoBehaviour
         frameData = monster.GetComponent<GroundedMonsterFD>();
     }
 
-    void OnTriggerEnter()
+    void OnTriggerEnter(Collider other)
     {
-        if (!playerStats.isHit){
+        if (!playerStats.isHit && other.gameObject.tag == "Player"){
 
             Debug.Log("attack collision engage");
             playerStats.isHit = true;

@@ -99,7 +99,7 @@ public class HubManager : MonoBehaviour
             }
             else
             {
-                _clearTime.text = "NOT CLEARED!";
+                _clearTime.text = "";
             }
 
             updateDisplay = true;

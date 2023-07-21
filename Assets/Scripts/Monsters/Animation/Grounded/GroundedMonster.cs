@@ -31,14 +31,17 @@ public class GroundedMonster : MonoBehaviour
         public float set_staggerCounter = 300;
         public float staggerCounter = 300;
 
+    // Trapped Stats
+        public float trappedTimer = 0;
+        public float set_trappedTimer = 5;
+
     [SerializeField] GameObject model;
     GameObject player;
     Vector3 direction;
     NavMeshAgent navMeshAgent;
 
     public Animator animator;
-    int isDeadHash;
-    int isAttackingHash;
+    int isDeadHash, isAttackingHash, isTrappedHash, isWalkingHash, isRushingHash;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +55,9 @@ public class GroundedMonster : MonoBehaviour
         enrageThreshold = set_enrageThreshold;
         isDeadHash = Animator.StringToHash("isDead");
         isAttackingHash = Animator.StringToHash("isAttack");
+        isTrappedHash = Animator.StringToHash("isTrapped");
+        isWalkingHash = Animator.StringToHash("isWalking");
+        isRushingHash = Animator.StringToHash("isRushing");
 
         staggerCounter = set_staggerCounter;
     }
@@ -59,6 +65,7 @@ public class GroundedMonster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         // Set new position to track
         navMeshAgent.SetDestination(player.transform.position);
 
@@ -67,6 +74,19 @@ public class GroundedMonster : MonoBehaviour
 
         // Handle stagger
         HandleStagger();
+
+        bool isTrapped = animator.GetBool("isTrapped");
+        if (isTrapped){
+            
+            if (trappedTimer >= 0){
+                trappedTimer -= Time.deltaTime;
+            }
+            else{
+                animator.SetBool(isTrappedHash, false);
+                // Reset to normal value to enable movement again
+                navMeshAgent.stoppingDistance = GetComponent<GroundedMonsterAI>().setStoppingDistance;
+            }
+        }
     }
 
     public float GetHitzoneModifier(string part)
@@ -145,5 +165,18 @@ public class GroundedMonster : MonoBehaviour
 
             staggerCounter = set_staggerCounter;            
         }
+    }
+
+    public void HandleTrapped()
+    {
+
+        animator.SetBool(isAttackingHash, false);
+        animator.SetBool(isRushingHash, false);
+        animator.SetBool(isWalkingHash, false);
+        animator.SetBool(isTrappedHash, true);
+        animator.Play("Trapped");
+        navMeshAgent.stoppingDistance = 999;
+
+        trappedTimer = set_trappedTimer;
     }
 }

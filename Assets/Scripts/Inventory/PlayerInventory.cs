@@ -25,6 +25,9 @@ public class PlayerInventory : MonoBehaviour
 
     [SerializeField] GameObject _healingPrefab;
 
+    // Shock Trap
+    [SerializeField] GameObject _shockTrapPrefab;
+
     // Start is called before the first frame update
     void Start()
     { 
@@ -61,19 +64,19 @@ public class PlayerInventory : MonoBehaviour
         }
 
         // Select Item
-        if (Input.GetKeyDown(KeyCode.Q) || Input.GetAxis("Mouse ScrollWheel") < 0){
-            selectedItem--;
-            if (selectedItem < 0){
-                selectedItem = itemTypeCount;
-            }
-            UpdateHolder();
-        }
-        else if (Input.GetKeyDown(KeyCode.E) || Input.GetAxis("Mouse ScrollWheel") > 0){
-
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetAxis("Mouse ScrollWheel") < 0){
             selectedItem++;
             if (selectedItem > itemTypeCount){
 
                 selectedItem = 0;
+            }
+            UpdateHolder();
+        }
+        else if (Input.GetKeyDown(KeyCode.Q) || Input.GetAxis("Mouse ScrollWheel") > 0){
+
+            selectedItem--;
+            if (selectedItem < 0){
+                selectedItem = itemTypeCount;
             }
             UpdateHolder();
         }
@@ -186,6 +189,10 @@ public class PlayerInventory : MonoBehaviour
 
             // Immobolizes monster
             case "Trap":
+                GameObject trap = Instantiate(_shockTrapPrefab);
+                trap.transform.position = playerStats.transform.position;
+                trap.transform.position += new Vector3(0, 1, 0);
+
                 break;
 
             // Sharpens weapon

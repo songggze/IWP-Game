@@ -8,12 +8,13 @@ public class GroundedMonsterAI : MonoBehaviour
     GroundedMonsterFD frameData;
     GroundedMonster monsterStats;
 
-    [SerializeField] float setStoppingDistance = 10;
+    [SerializeField] public float setStoppingDistance = 10;
 
     int isWalkingHash;
     int isAttackingHash;
     int isDeadHash;
     int isRushingHash;
+    int isTrappedHash;
     
     float timerDelay;
     Vector3 velocity;
@@ -41,6 +42,7 @@ public class GroundedMonsterAI : MonoBehaviour
         isAttackingHash = Animator.StringToHash("isAttack");
         isDeadHash = Animator.StringToHash("isDead");
         isRushingHash = Animator.StringToHash("isRushing");
+        isTrappedHash = Animator.StringToHash("isTrapped");
 
         navMeshAgent.stoppingDistance = setStoppingDistance;
         velocity = Vector3.zero;
@@ -56,6 +58,7 @@ public class GroundedMonsterAI : MonoBehaviour
         // Convert hash into bool
         bool isAttack = animator.GetBool(isAttackingHash);
         bool isDead = animator.GetBool(isDeadHash);
+        bool isTrapped = animator.GetBool(isTrappedHash);
 
         // Check if dead
         if (monsterStats.health <= 0 && !isDead){
@@ -70,13 +73,13 @@ public class GroundedMonsterAI : MonoBehaviour
         }
 
         // Movement
-        if (!isAttack){
+        if (!isAttack && !isTrapped){
             HandleMovement();
         }
 
         // Attack
         bool isWalking = animator.GetBool(isWalkingHash);
-        if (isWalking && !isAttack && startAttack){
+        if (isWalking && !isAttack && startAttack && !isTrapped){
             HandleAttacks();
         }
 
