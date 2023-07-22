@@ -127,7 +127,7 @@ public class HubManager : MonoBehaviour
         switch(objectName)
         {
             case "Quests":
-                SceneManager.LoadScene("Forest");
+                SceneManager.LoadScene("Forest Preview");
                 break;
             case "Shop":
                 isSelectedBuilding = true;

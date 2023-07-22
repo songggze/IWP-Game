@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class GroundedMonster : MonoBehaviour
+public class FireMonster : MonoBehaviour
 {
 
     // Stats
@@ -141,12 +141,12 @@ public class GroundedMonster : MonoBehaviour
                 enrageThreshold = set_enrageThreshold;
                 animator.speed = 0.75f;
             }
-            model.GetComponent<SkinnedMeshRenderer>().material.color = Color.Lerp(model.GetComponent<SkinnedMeshRenderer>().material.color, Color.red, 2 * Time.deltaTime);
+            // model.GetComponent<SkinnedMeshRenderer>().material.color = Color.Lerp(model.GetComponent<SkinnedMeshRenderer>().material.color, Color.red, 2 * Time.deltaTime);
         }
-        else{
+        // else{
 
-            model.GetComponent<SkinnedMeshRenderer>().material.color = Color.Lerp(model.GetComponent<SkinnedMeshRenderer>().material.color, Color.white, 2 * Time.deltaTime);
-        }
+        //     model.GetComponent<SkinnedMeshRenderer>().material.color = Color.Lerp(model.GetComponent<SkinnedMeshRenderer>().material.color, Color.white, 2 * Time.deltaTime);
+        // }
     }
 
     void HandleStagger()
