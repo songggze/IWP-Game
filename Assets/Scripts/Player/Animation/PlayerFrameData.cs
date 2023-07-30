@@ -11,8 +11,9 @@ public class PlayerFrameData : MonoBehaviour
     [SerializeField] GameObject player;
     PlayerStats playerStats;
 
-    [SerializeField] GameObject monster;
-    GroundedMonster monsterStats;
+    [SerializeField] GameObject groundedMonster, fireMonster;
+    GroundedMonster grounded_MonsterStats;
+    FireMonster fire_MonsterStats;
 
     // Frame data for attack collisions
     
@@ -67,7 +68,12 @@ public class PlayerFrameData : MonoBehaviour
         vcam = cameraObject.GetComponent<CameraShake>();
 
         playerStats = player.GetComponent<PlayerStats>();
-        monsterStats = monster.GetComponent<GroundedMonster>();
+        if (groundedMonster != null){
+            grounded_MonsterStats = groundedMonster.GetComponent<GroundedMonster>();
+        }
+        if (fireMonster != null){
+            fire_MonsterStats = fireMonster.GetComponent<FireMonster>();
+        }
 
         // Debugging
         hitBoxDisplay = GameObject.Find("Sword Hitbox Display");
@@ -96,7 +102,7 @@ public class PlayerFrameData : MonoBehaviour
 
         if (currentFrame > totalFrames && playAnimation){
 
-            Debug.Log("Attack ended");
+            // Debug.Log("Attack ended");
             playAnimation = false;
         }
         
@@ -228,16 +234,51 @@ public class PlayerFrameData : MonoBehaviour
 
     private void DamageMonster(GameObject target)
     {
-        // Get the attack mulitplier based on what body part is affected
-        float partModifier = monsterStats.GetHitzoneModifier(target.GetComponent<GroundedMonsterCollider>().bodyType);
+        float partModifier = 1;
+        int totalDamage = 0;
+        // Get current monster bodypart
+        switch(target.transform.root.name){
+            case "Grounded Monster":
 
-        // Damage calculation, rounded up
-        int totalDamage = (int) Mathf.Ceil((playerStats.attack * attackModifier) * partModifier);
-        monsterStats.health -= totalDamage;
+                // Get the attack mulitplier based on what body part is affected
+                partModifier = grounded_MonsterStats.GetHitzoneModifier(target.GetComponent<GroundedMonsterCollider>().bodyType);
+                // Damage calculation, rounded up
+                totalDamage = (int)Mathf.Ceil((playerStats.attack * attackModifier) * partModifier);
 
-        // Monster's enrage and stagger
-        monsterStats.enrageThreshold -= totalDamage;
-        monsterStats.staggerCounter -= totalDamage;
+                // Handle stats of current monster
+                grounded_MonsterStats.health -= totalDamage;
+                // Monster's enrage and stagger
+                grounded_MonsterStats.enrageThreshold -= totalDamage;
+                grounded_MonsterStats.staggerCounter -= totalDamage;
+
+                // Console output
+                Debug.Log("Monster Health: " + grounded_MonsterStats.health);
+                break;
+
+            case "Fire Monster":
+
+                // Get the attack mulitplier based on what body part is affected
+                partModifier = grounded_MonsterStats.GetHitzoneModifier(target.GetComponent<FireMonsterCollider>().bodyType);
+                // Damage calculation, rounded up
+                totalDamage = (int)Mathf.Ceil((playerStats.attack * attackModifier) * partModifier);
+
+                // Handle stats of current monster
+                fire_MonsterStats.health -= totalDamage;
+                // Monster's enrage and stagger
+                fire_MonsterStats.enrageThreshold -= totalDamage;
+                if (fire_MonsterStats.animator.GetBool("isFlying")){
+                    Debug.Log("Hit flying monster");
+                    fire_MonsterStats.flyStaggerCounter -= totalDamage;
+                }
+                else {
+                    Debug.Log("It's grounded right now");
+                    fire_MonsterStats.staggerCounter -= totalDamage;
+                }
+
+                // Console output
+                // Debug.Log("Monster Health: " + fire_MonsterStats.health);
+                break;
+        }
 
         // Damage Text rendering
         GameObject damageText;
@@ -261,6 +302,5 @@ public class PlayerFrameData : MonoBehaviour
         setText[1].SetText(totalDamage.ToString());
         isHit = true;
 
-        Debug.Log("Monster Health: " + monsterStats.health);
     }
 }

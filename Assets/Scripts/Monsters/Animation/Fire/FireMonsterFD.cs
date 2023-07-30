@@ -6,7 +6,6 @@ public class FireMonsterFD : MonoBehaviour
     //  Frame data for Fire Monster. 
     //
 
-    private bool init = false;
 
     public double currentFrame;
     public double startUpFrames;
@@ -17,7 +16,6 @@ public class FireMonsterFD : MonoBehaviour
     // Frame indicator when to start/stop movement during animation
     public double movementStart;
     public double movementStop;
-    [SerializeField] double framesPerSecond = 1000;
 
     // For attack animations that multi phases
     public double repeatFrames;
@@ -66,8 +64,6 @@ public class FireMonsterFD : MonoBehaviour
         hitboxTextDisplay.SetActive(false);
         animator = GetComponent<Animator>();
         monster = GetComponent<FireMonster>();
-
-        framesPerSecond = 1.0f / Time.deltaTime;
     }
 
 
@@ -75,17 +71,15 @@ public class FireMonsterFD : MonoBehaviour
     void Update()
     {
 
-        if (!init){
-            framesPerSecond = 1.0f / Time.deltaTime;
-            init = true;
-        } 
 
         if (playAnimation){
-            currentFrame += Time.deltaTime * framesPerSecond * animator.speed * (60.0f / framesPerSecond);
+            // currentFrame += Time.deltaTime * framesPerSecond * animator.speed * (60.0f / framesPerSecond);
+            currentFrame += 60 * Time.deltaTime * animator.speed;
         }
 
         if (isRepeat && currentFrame > startUpFrames){
-            repeatTimer += Time.deltaTime * framesPerSecond * animator.speed * (60.0f / framesPerSecond);
+            // repeatTimer += Time.deltaTime * framesPerSecond * animator.speed * (60.0f / framesPerSecond);
+            repeatFrames += Time.deltaTime * animator.speed;
 
             if (repeatTimer > repeatFrames){
                 repeatTimer = 0;
@@ -108,19 +102,19 @@ public class FireMonsterFD : MonoBehaviour
     public void SetValues(string animationName)
     {
         switch(animationName){
-            // case "Horn Attack":
-            //     damage = 20;
+            case "Shoot Fireball":
+                damage = 20;
 
-            //     startUpFrames = 40;
-            //     activeFrames = 25;
-            //     delayFrames = 25;
+                startUpFrames = 40;
+                activeFrames = 0;
+                delayFrames = 25;
 
-            //     // Attack has movement
-            //     movementStart = 40;
-            //     movementStop = 70; 
-            //     isMultiHit = false;
-            //     isRepeat = false;
-            //     break;
+                // Attack has movement
+                movementStart = 40;
+                movementStop = 70; 
+                isMultiHit = true;
+                isRepeat = true;
+                break;
 
             // case "Jump":
             //     damage = 30;

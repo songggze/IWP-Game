@@ -35,11 +35,16 @@ public class GameManager : MonoBehaviour
         counterTimer = 0;
         timeSecond = 0;
         timeMinute = 0;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Cursor.visible){
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;
+        }
         
         // Game ending criteria
         if (!endGame){

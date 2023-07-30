@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: New Weapon 2
   m_EditorClassIdentifier: 
   itemId: 2
-  itemName: okay
+  itemName: Chain Sword
+  itemDescription: 
   isOwned: 0
   itemIcon: {fileID: 0}
-  power: 10
+  power: 12
   craftingMaterials: []

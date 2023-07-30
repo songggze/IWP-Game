@@ -3,17 +3,22 @@ using UnityEngine.AI;
 
 public class FireMonsterAI : MonoBehaviour
 {
+    public enum AIState{
+        Close,
+        Ranged,
+    }
+
     Animator animator;
-    NavMeshAgent navMeshAgent;
+    public NavMeshAgent navMeshAgent;
     FireMonsterFD frameData;
     FireMonster monsterStats;
 
     [SerializeField] public float setStoppingDistance = 10;
+    public AIState currentState;
 
     int isWalkingHash;
     int isAttackingHash;
     int isDeadHash;
-    int isRushingHash;
     int isTrappedHash;
     
     float timerDelay;
@@ -29,6 +34,9 @@ public class FireMonsterAI : MonoBehaviour
     // Debugging
     [SerializeField] bool debugAttacking = false;
 
+    // Prefabs
+    [SerializeField] GameObject fireball_prefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +49,6 @@ public class FireMonsterAI : MonoBehaviour
         isWalkingHash = Animator.StringToHash("isWalking");
         isAttackingHash = Animator.StringToHash("isAttack");
         isDeadHash = Animator.StringToHash("isDead");
-        isRushingHash = Animator.StringToHash("isRushing");
         isTrappedHash = Animator.StringToHash("isTrapped");
 
         navMeshAgent.stoppingDistance = setStoppingDistance;
@@ -49,6 +56,9 @@ public class FireMonsterAI : MonoBehaviour
 
         timerDelay = 0;
         startAttack = false;
+
+        // Set AI state
+        SetState();
     }
 
     // Update is called once per frame
@@ -91,7 +101,8 @@ public class FireMonsterAI : MonoBehaviour
             animator.SetBool(isAttackingHash, false);
 
             // Reset to normal value to enable movement again
-            navMeshAgent.stoppingDistance = setStoppingDistance;
+            SetState();
+            // navMeshAgent.stoppingDistance = setStoppingDistance;
             velocity = Vector3.zero;
 
             if (monsterStats.isEnraged){
@@ -108,7 +119,6 @@ public class FireMonsterAI : MonoBehaviour
             // animator.ResetTrigger("Horn Attack");
             // animator.ResetTrigger("Jump");
 
-            animator.SetBool(isRushingHash, false);
         }
 
         // brute force thing
@@ -149,11 +159,12 @@ public class FireMonsterAI : MonoBehaviour
         int rand;
         if (!debugAttacking){
             if (monsterStats.isEnraged){
-                rand = Random.Range(1, 7);
+                rand = 1;
                 // rand = Random.Range(5, 7);
             }
             else{
-                rand = Random.Range(1, 3);
+                rand = 1;
+
             }
         }
         else{
@@ -161,54 +172,15 @@ public class FireMonsterAI : MonoBehaviour
             rand = PressAttack();
         }
 
-        // switch(rand){
-        //     case 1:
-        //         //Horn Attack
-        //         animator.SetTrigger("Horn Attack");
-        //         frameData.SetValues("Horn Attack");
-        //         animator.SetBool(isAttackingHash, true);
+        switch(rand){
+            case 1:
+                // Fireball shooting attack
+                animator.SetTrigger("Shoot Fireball");
+                frameData.SetValues("Shoot Fireball");
+                animator.SetBool(isAttackingHash, true);
 
-        //         break;
-
-        //     case 2:
-        //         // Horn Attack
-        //         animator.SetTrigger("Jump");
-        //         frameData.SetValues("Jump");
-        //         animator.SetBool(isAttackingHash, true);
-
-        //         break;
-
-        //     case 3:
-        //         // Bite attack
-        //         animator.SetTrigger("Bite");
-        //         frameData.SetValues("Bite");
-        //         animator.SetBool(isAttackingHash, true);
-
-        //         break;
-
-        //     case 4:
-        //         // Rush attack
-        //         animator.SetBool("isRushing", true);
-        //         frameData.SetValues("Rush");
-        //         animator.SetBool(isAttackingHash, true);
-
-        //         break;
-        //     case 5:
-        //         // Claw attack
-        //         animator.SetTrigger("Claw");
-        //         frameData.SetValues("Claw Attack");
-        //         animator.SetBool(isAttackingHash, true);
-
-        //         break;
-        //     case 6:
-        //         // Claw attack mirror
-        //         animator.SetTrigger("Claw");
-        //         frameData.SetValues("Claw Attack");
-        //         animator.SetBool(isAttackingHash, true);
-
-        //         mirrorAttack = true;
-        //         break;
-        // }
+                break;
+        }
 
         // To prevent idle animation when transitioning to an attack animation
         timerDelay = 2f;
@@ -263,12 +235,6 @@ public class FireMonsterAI : MonoBehaviour
     void AttackAnimationMovement()
     {
 
-        // Stop the rush attack
-        if (frameData.currentFrame > frameData.totalFrames)
-        {
-            animator.SetBool(isRushingHash, false);
-        }
-
         // This will move monster for a specific period of time
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
             frameData.currentFrame < frameData.movementStart ||
@@ -282,47 +248,44 @@ public class FireMonsterAI : MonoBehaviour
         }
 
             
-        // switch (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name){
-        //     case "Horn Attack":
-        //         velocity += transform.forward * 80 * Time.deltaTime * animator.speed;
-        //         navMeshAgent.Move(velocity * Time.deltaTime);
-        //         break;
-        //     case "Claw Attack":
-        //         if (mirrorAttack){
-        //             velocity += transform.right * 80 * Time.deltaTime;
-        //         }
-        //         else{
-        //             velocity -= transform.right * 80 * Time.deltaTime;
-        //         }
-        //         velocity += transform.forward * 25 * ClawDistance() * Time.deltaTime;
-        //         navMeshAgent.Move(velocity * Time.deltaTime);
-        //         break;
+        switch (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name){
+            case "Shoot Fireball":
+                if (frameData.isMultiHit && frameData.isRepeat){
 
-        //     case "Rush":
-
-        //         // Add a velocity limit to the rush attack
-        //         if (velocity.magnitude < 30){
-        //             velocity += transform.forward * 40 * Time.deltaTime;
-        //         }
-        //         navMeshAgent.Move(velocity * Time.deltaTime);
-
-        //         // This attack will track the player periodially
-        //         if (frameData.isRepeat && frameData.repeatTimer > frameData.repeatFrames - 20){
-        //             Vector3 direction = (player.transform.position - transform.position).normalized;
-        //             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        //             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 20);
-        //             velocity = Vector3.zero;
-
-        //         }
-        //         break;
-        // }
+                    GameObject fireBall = Instantiate(fireball_prefab, gameObject.transform);
+                    fireBall.transform.SetParent(null);
+                    fireBall.transform.position += new Vector3(0, 2, 0) - (transform.forward * 3);
+                    fireBall.GetComponent<Rigidbody>().velocity = transform.forward * 10;
+                    frameData.isRepeat = false;
+                }
+                break;
+        }
     }
 
     private void FaceTarget()
     {
+        animator.SetBool(isWalkingHash, false);
         Vector3 direction = (player.transform.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 1.5f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 4);
     }
 
+    private void SetState()
+    {
+        // Set AI state
+        int rand = Random.Range(0, System.Enum.GetValues(typeof(AIState)).Length);
+        currentState = (AIState) rand;
+
+        switch (currentState)
+        {
+            case AIState.Close:
+                Debug.Log(currentState);
+                navMeshAgent.stoppingDistance = setStoppingDistance;
+                break;
+            case AIState.Ranged:
+                Debug.Log(currentState);
+                navMeshAgent.stoppingDistance = 30;
+                break;
+        }
+    }
 }

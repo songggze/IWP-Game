@@ -25,6 +25,9 @@ public class FireMonster : MonoBehaviour
         public float set_staggerCounter = 300;
         public float staggerCounter = 300;
 
+        public float set_flyStaggerCounter = 150;
+        public float flyStaggerCounter = 150;
+
     // Trapped Stats
         public float trappedTimer = 0;
         public float set_trappedTimer = 5;
@@ -35,7 +38,7 @@ public class FireMonster : MonoBehaviour
     NavMeshAgent navMeshAgent;
 
     public Animator animator;
-    int isDeadHash, isAttackingHash, isTrappedHash, isWalkingHash, isRushingHash;
+    int isDeadHash, isAttackingHash, isTrappedHash, isWalkingHash, isFlyingHash;
 
     // Start is called before the first frame update
     void Start()
@@ -51,9 +54,10 @@ public class FireMonster : MonoBehaviour
         isAttackingHash = Animator.StringToHash("isAttack");
         isTrappedHash = Animator.StringToHash("isTrapped");
         isWalkingHash = Animator.StringToHash("isWalking");
-        isRushingHash = Animator.StringToHash("isRushing");
+        isFlyingHash = Animator.StringToHash("isFlying");
 
         staggerCounter = set_staggerCounter;
+        flyStaggerCounter = set_flyStaggerCounter;
     }
 
     // Update is called once per frame
@@ -67,7 +71,12 @@ public class FireMonster : MonoBehaviour
         HandleEnragedStatus();
 
         // Handle stagger
-        HandleStagger();
+        if (animator.GetBool("isFlying")){
+            HandleFlyingStagger();
+        }
+        else{
+            HandleStagger();
+        }
 
         bool isTrapped = animator.GetBool("isTrapped");
         if (isTrapped){
@@ -161,11 +170,24 @@ public class FireMonster : MonoBehaviour
         }
     }
 
+    void HandleFlyingStagger()
+    {
+        // Play staggered animation if staggerCounter reaches 0
+        if (flyStaggerCounter <= 0){
+
+            Debug.Log("A TOPPLE ANIMATION IS SUPPOSED TO PLAY HERE");
+            animator.SetBool(isAttackingHash, false);
+            animator.SetBool(isFlyingHash, false);
+            animator.Play("Stagger");
+
+            flyStaggerCounter = set_flyStaggerCounter;            
+        }
+    }
+
     public void HandleTrapped()
     {
 
         animator.SetBool(isAttackingHash, false);
-        animator.SetBool(isRushingHash, false);
         animator.SetBool(isWalkingHash, false);
         animator.SetBool(isTrappedHash, true);
         animator.Play("Trapped");

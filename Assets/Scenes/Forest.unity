@@ -9941,7 +9941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8465672969339142518, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: m_Name
-      value: Monster1
+      value: Grounded Monster
       objectReference: {fileID: 0}
     - target: {fileID: 8465672969339142518, guid: 6e6e1dc92e25689459e2f1582202ed93, type: 3}
       propertyPath: m_TagString
@@ -13457,6 +13457,10 @@ PrefabInstance:
       propertyPath: cameraObject
       value: 
       objectReference: {fileID: 1273116973}
+    - target: {fileID: 3174250840239834731, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
+      propertyPath: groundedMonster
+      value: 
+      objectReference: {fileID: 1510270048}
     - target: {fileID: 5715839804161898915, guid: 4162b16e53229be4abc9e30dffb4b9ab, type: 3}
       propertyPath: runSpeed
       value: 8

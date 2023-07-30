@@ -102,7 +102,7 @@ public class PlayerAttack : MonoBehaviour
         bool isAttack = animator.GetBool(isAttackHash);
         // allows movement when entering idle state (what it defaults to from any attack state)
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Standard Idle") && isAttack && timerDelay <= 0){
-            Debug.Log("Returning to idle state");
+            // Debug.Log("Returning to idle state");
             animator.SetBool(isAttackHash, false);
             leftClickTimer = leftClickDelay;
             finalAttack = false;

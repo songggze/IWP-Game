@@ -8,7 +8,7 @@ public class ShockTrap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        monster = GameObject.Find("Monster1");    
+        monster = GameObject.Find("Grounded Monster");    
     }
 
     // Update is called once per frame

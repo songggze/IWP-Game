@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd17d7ea44ee7d84c90c30164bc8c552, type: 3}
-  m_Name: New Weapon 1
+  m_Name: Broad Sword
   m_EditorClassIdentifier: 
   itemId: 1
-  itemName: weak
+  itemName: Long Sword
+  itemDescription: 
   isOwned: 0
   itemIcon: {fileID: 0}
   power: 5

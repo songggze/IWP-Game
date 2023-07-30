@@ -62,6 +62,7 @@ public class ShopManager : MonoBehaviour
             index++;
         }
 
+        playerGoldCount.text = playerData.gold.ToString() + " G";
         // selectedItem = 0;
         // itemTypeCount = itemList.Count() - 1;
 
@@ -73,7 +74,6 @@ public class ShopManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerGoldCount.text = playerData.gold.ToString() + " G";
         if (itemSelected != null){
             buyButton.interactable = true;
             itemCount.text = itemSelected.itemCount.ToString();
@@ -93,6 +93,7 @@ public class ShopManager : MonoBehaviour
             playerData.gold -= itemSelected.itemCost;
 
             textDisplay = "Purchased item!";
+            playerGoldCount.text = playerData.gold.ToString() + " G";
             Debug.Log($"Buy: {itemSelected.itemName} , {itemSelected.itemCount}");
             purchaseSuccess = true;
         }

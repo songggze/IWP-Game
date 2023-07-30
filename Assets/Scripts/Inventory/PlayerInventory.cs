@@ -120,7 +120,7 @@ public class PlayerInventory : MonoBehaviour
             return;
         }
 
-        Debug.Log($"Selected Item: {itemList[selectedItem].itemName}");
+        // Debug.Log($"Selected Item: {itemList[selectedItem].itemName}");
         // Update the item icons for all panels based on current selected item
         for (int index = 0; index < itemHolders.transform.childCount; index++){
 

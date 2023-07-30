@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: New Weapon
   m_EditorClassIdentifier: 
   itemId: 3
-  itemName: strong
+  itemName: Earth Sword
+  itemDescription: 
   isOwned: 0
   itemIcon: {fileID: 0}
-  power: 15
+  power: 20
   craftingMaterials:
   - {fileID: 0}
