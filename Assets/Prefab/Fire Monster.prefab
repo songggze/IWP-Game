@@ -844,6 +844,7 @@ GameObject:
   - component: {fileID: 3806591090965969875}
   - component: {fileID: 1887297337976349779}
   - component: {fileID: 5990135045693410409}
+  - component: {fileID: 4130780098467814643}
   m_Layer: 0
   m_Name: Fire Monster
   m_TagString: Untagged
@@ -916,6 +917,8 @@ MonoBehaviour:
   enrageAttackModifier: 1.4
   set_staggerCounter: 300
   staggerCounter: 300
+  set_flyStaggerCounter: 150
+  flyStaggerCounter: 150
   trappedTimer: 0
   set_trappedTimer: 5
   model: {fileID: 0}
@@ -932,11 +935,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a57b4708e6e29264e8cbbceebc4a1eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  navMeshAgent: {fileID: 0}
   setStoppingDistance: 10
+  currentState: 0
   player: {fileID: 0}
   startAttack: 0
   mirrorAttack: 0
   debugAttacking: 0
+  fireball_prefab: {fileID: 0}
 --- !u!195 &1887297337976349779
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -978,7 +984,6 @@ MonoBehaviour:
   delayFrames: 0
   movementStart: 0
   movementStop: 0
-  framesPerSecond: 1000
   repeatFrames: 0
   repeatTimer: 0
   damage: 0
@@ -989,6 +994,24 @@ MonoBehaviour:
   isRepeat: 0
   hitboxTextDisplay: {fileID: 0}
   showDisplay: 1
+--- !u!143 &4130780098467814643
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3096120359893409870}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3096120359893414038
 GameObject:
   m_ObjectHideFlags: 0

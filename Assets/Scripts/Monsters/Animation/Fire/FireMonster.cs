@@ -36,6 +36,7 @@ public class FireMonster : MonoBehaviour
     GameObject player;
     Vector3 direction;
     NavMeshAgent navMeshAgent;
+    CharacterController controller;
 
     public Animator animator;
     int isDeadHash, isAttackingHash, isTrappedHash, isWalkingHash, isFlyingHash;
@@ -58,6 +59,8 @@ public class FireMonster : MonoBehaviour
 
         staggerCounter = set_staggerCounter;
         flyStaggerCounter = set_flyStaggerCounter;
+
+        controller = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -178,9 +181,9 @@ public class FireMonster : MonoBehaviour
             Debug.Log("A TOPPLE ANIMATION IS SUPPOSED TO PLAY HERE");
             animator.SetBool(isAttackingHash, false);
             animator.SetBool(isFlyingHash, false);
-            animator.Play("Stagger");
 
             flyStaggerCounter = set_flyStaggerCounter;            
+            animator.Play("Fall");
         }
     }
 

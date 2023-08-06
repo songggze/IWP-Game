@@ -36,6 +36,8 @@ public class GroundedMonsterFD : MonoBehaviour
     Animator animator;
     GroundedMonster monster;
 
+    string currentAnimation;
+
     // Debugging
     [SerializeField] GameObject hitboxTextDisplay;
     public bool showDisplay = true;
@@ -91,6 +93,8 @@ public class GroundedMonsterFD : MonoBehaviour
                 repeatTimer = 0;
             }
         }
+
+        CheckAnimationChange();
 
 
         // For debugging
@@ -199,6 +203,22 @@ public class GroundedMonsterFD : MonoBehaviour
         }
         else{
             hitboxTextDisplay.SetActive(false);
+        }
+    }
+
+    void CheckAnimationChange()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Roar") ||
+            animator.GetCurrentAnimatorStateInfo(0).IsName("Trapped") ||
+            animator.GetCurrentAnimatorStateInfo(0).IsName("Dead") ||
+            animator.GetCurrentAnimatorStateInfo(0).IsName("Stagger")){
+            return;
+        }
+
+        if (currentAnimation != animator.GetCurrentAnimatorClipInfo(0)[0].clip.name){
+
+            currentAnimation = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+            currentFrame = 0;
         }
     }
 }

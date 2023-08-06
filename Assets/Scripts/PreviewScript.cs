@@ -13,6 +13,10 @@ public class PreviewScript : MonoBehaviour
         if (previewTime <= 0){
             SceneManager.LoadScene("Forest");
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.Return) ||
+            Input.GetKeyDown(KeyCode.Space)){
+            SceneManager.LoadScene("Forest");
+        }
     }
 }

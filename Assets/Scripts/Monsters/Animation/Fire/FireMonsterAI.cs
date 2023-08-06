@@ -20,6 +20,7 @@ public class FireMonsterAI : MonoBehaviour
     int isAttackingHash;
     int isDeadHash;
     int isTrappedHash;
+    int isFlyingHash;
     
     float timerDelay;
     Vector3 velocity;
@@ -50,6 +51,7 @@ public class FireMonsterAI : MonoBehaviour
         isAttackingHash = Animator.StringToHash("isAttack");
         isDeadHash = Animator.StringToHash("isDead");
         isTrappedHash = Animator.StringToHash("isTrapped");
+        isFlyingHash = Animator.StringToHash("isFlying");
 
         navMeshAgent.stoppingDistance = setStoppingDistance;
         velocity = Vector3.zero;
@@ -89,7 +91,8 @@ public class FireMonsterAI : MonoBehaviour
 
         // Attack
         bool isWalking = animator.GetBool(isWalkingHash);
-        if (isWalking && !isAttack && startAttack && !isTrapped){
+        bool isFlying = animator.GetBool(isFlyingHash);
+        if ((isWalking || isFlying) && !isAttack && startAttack && !isTrapped){
             HandleAttacks();
         }
 
@@ -97,7 +100,8 @@ public class FireMonsterAI : MonoBehaviour
         AttackAnimationMovement();
 
         // Return to idle state after attack atnimaton ends
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !isWalking && timerDelay <= 0){
+        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||  animator.GetCurrentAnimatorStateInfo(0).IsName("Fly Idle"))
+            && !isWalking && timerDelay <= 0){
             animator.SetBool(isAttackingHash, false);
 
             // Reset to normal value to enable movement again
@@ -156,15 +160,24 @@ public class FireMonsterAI : MonoBehaviour
         }
 
         // Choose Attacks
-        int rand;
+        int rand = 0;
         if (!debugAttacking){
             if (monsterStats.isEnraged){
-                rand = 1;
-                // rand = Random.Range(5, 7);
+                if (animator.GetBool(isFlyingHash)){
+                    rand = Random.Range(2, 4);
+                }
+                else{
+                    rand = 1;
+                }
             }
             else{
-                rand = 1;
-
+                if (animator.GetBool(isFlyingHash)){
+                    rand = Random.Range(2, 4);
+                    Debug.Log("aoesnting");
+                }
+                else{
+                    rand = 1;
+                }
             }
         }
         else{
@@ -178,7 +191,20 @@ public class FireMonsterAI : MonoBehaviour
                 animator.SetTrigger("Shoot Fireball");
                 frameData.SetValues("Shoot Fireball");
                 animator.SetBool(isAttackingHash, true);
+                break;
 
+            case 2:
+                // Fireball shooting attack
+                animator.SetTrigger("Fly Fireball Down");
+                frameData.SetValues("Fly Fireball Down");
+                animator.SetBool(isAttackingHash, true);
+                break;
+
+            case 3:
+                // Fly Forward
+                animator.SetTrigger("Fly Forward");
+                frameData.SetValues("Fly Forward");
+                animator.SetBool(isAttackingHash, true);
                 break;
         }
 
@@ -248,7 +274,8 @@ public class FireMonsterAI : MonoBehaviour
         }
 
             
-        switch (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name){
+        switch (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name)
+        {
             case "Shoot Fireball":
                 if (frameData.isMultiHit && frameData.isRepeat){
 
@@ -257,6 +284,21 @@ public class FireMonsterAI : MonoBehaviour
                     fireBall.transform.position += new Vector3(0, 2, 0) - (transform.forward * 3);
                     fireBall.GetComponent<Rigidbody>().velocity = transform.forward * 10;
                     frameData.isRepeat = false;
+                }
+                break;
+            // Flying attacks
+            case "Fly Forward":
+                    transform.position += transform.forward * 10 * Time.deltaTime;
+                break;
+            case "Fly Fireball Down":
+                if (frameData.isMultiHit && frameData.isRepeat){
+
+                    GameObject fireBall = Instantiate(fireball_prefab, gameObject.transform);
+                    fireBall.transform.SetParent(null);
+                    fireBall.transform.position += new Vector3(0, 8, 0) - (transform.forward * 5);
+                    fireBall.GetComponent<Rigidbody>().velocity = transform.up * -5;
+                    frameData.isRepeat = false;
+                    Debug.Log("I will shoop a fireball downwards, and you better run away and dodge it, okay?");
                 }
                 break;
         }

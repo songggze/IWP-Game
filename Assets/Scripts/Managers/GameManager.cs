@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     {
         if (Cursor.visible){
             Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.lockState = CursorLockMode.Locked;
         }
         
         // Game ending criteria

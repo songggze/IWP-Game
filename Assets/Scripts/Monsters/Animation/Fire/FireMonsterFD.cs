@@ -34,6 +34,8 @@ public class FireMonsterFD : MonoBehaviour
     Animator animator;
     FireMonster monster;
 
+    string currentAnimation;
+
     // Debugging
     [SerializeField] GameObject hitboxTextDisplay;
     public bool showDisplay = true;
@@ -86,6 +88,7 @@ public class FireMonsterFD : MonoBehaviour
             }
         }
 
+        CheckAnimationChange();
 
         // For debugging
         if (showDisplay){
@@ -111,6 +114,35 @@ public class FireMonsterFD : MonoBehaviour
 
                 // Attack has movement
                 movementStart = 40;
+                movementStop = 70; 
+                isMultiHit = true;
+                isRepeat = true;
+                break;
+
+            // ****************************************************************
+            // Flying attacks
+            // ****************************************************************
+            case "Fly Forward":
+                startUpFrames = 2;
+                activeFrames = 0;
+                delayFrames = 25;
+
+                // Attack has movement
+                movementStart = 5;
+                movementStop = 200; 
+                isMultiHit = true;
+                isRepeat = true;
+                break;
+
+            case "Fly Fireball Down":
+                damage = 20;
+
+                startUpFrames = 50;
+                activeFrames = 0;
+                delayFrames = 25;
+
+                // Attack has movement
+                movementStart = 50;
                 movementStop = 70; 
                 isMultiHit = true;
                 isRepeat = true;
@@ -193,6 +225,15 @@ public class FireMonsterFD : MonoBehaviour
         }
         else{
             hitboxTextDisplay.SetActive(false);
+        }
+    }
+
+    void CheckAnimationChange()
+    {
+        if (currentAnimation != animator.GetCurrentAnimatorClipInfo(0)[0].clip.name){
+
+            currentAnimation = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+            currentFrame = 0;
         }
     }
 }

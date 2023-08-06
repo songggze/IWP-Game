@@ -13801,6 +13801,18 @@ PrefabInstance:
       propertyPath: health
       value: 2000
       objectReference: {fileID: 0}
+    - target: {fileID: 4862321523967782972, guid: 16b0170ecb08af84da24293d839db1cc, type: 3}
+      propertyPath: staggerCounter
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862321523967782972, guid: 16b0170ecb08af84da24293d839db1cc, type: 3}
+      propertyPath: flyStaggerCounter
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862321523967782972, guid: 16b0170ecb08af84da24293d839db1cc, type: 3}
+      propertyPath: set_flyStaggerCounter
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 4895734341477808210, guid: 16b0170ecb08af84da24293d839db1cc, type: 3}
       propertyPath: player
       value: 

@@ -37,6 +37,11 @@ public class HubManager : MonoBehaviour
         else{
             _clearTime.text = "NOT CLEARED!";
         }
+
+        if (!Cursor.visible){
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     // Update is called once per frame
