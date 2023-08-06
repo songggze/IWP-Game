@@ -12,6 +12,7 @@ public class HubManager : MonoBehaviour
     // Canvases
     [SerializeField] GameObject shopCanvas;
     [SerializeField] GameObject forgeCanvas;
+    [SerializeField] GameObject questCanvas;
 
     [SerializeField] Button _quitButton;
     [SerializeField] TextMeshProUGUI _labelText;
@@ -132,7 +133,8 @@ public class HubManager : MonoBehaviour
         switch(objectName)
         {
             case "Quests":
-                SceneManager.LoadScene("Forest Preview");
+                isSelectedBuilding = true;
+                questCanvas.SetActive(true);
                 break;
             case "Shop":
                 isSelectedBuilding = true;
